@@ -241,11 +241,11 @@ function Index() {
         {/* About */}
         <section className="py-20 md:py-40 container mx-auto px-5 md:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative">
+            <Reveal className="relative" variant="scale">
               <div className="aspect-square rounded-2xl overflow-hidden sm-soft-shadow bg-brand-surface-2 border-4 border-white">
-                <img alt="استوديو صاد ميديا الإبداعي" className="w-full h-full object-cover" src={ABOUT_IMG} />
+                <img alt="استوديو صاد ميديا الإبداعي" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src={ABOUT_IMG} />
               </div>
-              <div className="absolute -bottom-10 -left-10 sm-glass p-8 rounded-2xl hidden md:block max-w-xs sm-soft-shadow border border-brand-pulse/10">
+              <div className="absolute -bottom-10 -left-10 sm-glass p-8 rounded-2xl hidden md:block max-w-xs sm-soft-shadow border border-brand-pulse/10 sm-float">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 bg-[#ffdada] rounded-full flex items-center justify-center text-brand-pulse">
                     <Icon name="speed" />
@@ -254,29 +254,30 @@ function Index() {
                 </div>
                 <p className="text-brand-muted">نقدر وقتك، لذا نلتزم بجداول زمنية صارمة لضمان وصول مشروعك للسوق في الوقت المناسب.</p>
               </div>
-            </div>
-            <div className="md:pr-12">
+            </Reveal>
+            <Reveal className="md:pr-12" delay={150}>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight">خبرة إبداعية تتجاوز الحدود</h2>
               <p className="text-lg text-brand-muted leading-relaxed">
                 نحن لسنا مجرد وكالة إنتاج، نحن شركاء نجاحك في{" "}
                 <span className="text-brand-pulse font-bold">صاد ميديا</span>. نمتلك فريقاً من المبدعين المتخصصين الذين يفهمون سيكولوجية المشاهد العربي، مما يجعلنا الخيار الأول للعلامات التجارية الطموحة. نركز على الدقة والابتكار والسرعة، لنمنحك تجربة تعاون لا تُنسى.
               </p>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* Services selector */}
         <section className="py-20 md:py-40 bg-brand-surface" id="services">
-          <div className="container mx-auto px-5 md:px-8 text-center mb-16">
+          <Reveal className="container mx-auto px-5 md:px-8 text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">خدماتنا الرئيسية</h2>
             <p className="text-brand-muted max-w-xl mx-auto">اختر المسار الذي يناسب أهدافك التسويقية</p>
-          </div>
+          </Reveal>
           <div className="container mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-8">
             {[
               { href: "#motion", img: MOTION_CARD, title: "الموشن جرافيك", desc: "قصص بصرية متحركة تشرح علامتك التجارية بأسلوب عصري." },
               { href: "#ugc", img: UGC_CARD, title: "فيديوهات UGC", desc: "محتوى واقعي من مستخدمين حقيقيين يبني الثقة مع جمهورك." },
-            ].map((s) => (
-              <a key={s.href} href={s.href} className="group relative overflow-hidden rounded-2xl bg-white sm-soft-shadow h-[400px] flex flex-col justify-end p-8 transition-all hover:-translate-y-2">
+            ].map((s, i) => (
+              <Reveal key={s.href} delay={i * 150} variant="scale">
+              <a href={s.href} className="sm-tilt group relative overflow-hidden rounded-2xl bg-white sm-soft-shadow h-[400px] flex flex-col justify-end p-8 block">
                 <div className="absolute inset-0 z-0">
                   <img alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={s.img} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -290,6 +291,7 @@ function Index() {
                   </div>
                 </div>
               </a>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -316,9 +318,14 @@ function Index() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-24">
               {PORTFOLIO.map((src, i) => (
-                <div key={i} className="aspect-video rounded-xl overflow-hidden sm-glass group cursor-pointer border border-brand-pulse/10">
-                  <img alt={`مشروع ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform" src={src} />
-                </div>
+                <Reveal key={i} delay={i * 80} variant="scale">
+                  <div className="aspect-video rounded-xl overflow-hidden sm-glass group cursor-pointer border border-brand-pulse/10 sm-tilt relative">
+                    <img alt={`مشروع ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={src} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <Icon name="play_circle" filled className="text-white !text-6xl drop-shadow-lg" />
+                    </div>
+                  </div>
+                </Reveal>
               ))}
             </div>
 
@@ -329,14 +336,15 @@ function Index() {
                 { name: "الباقة الاحترافية", price: "١٨٠٠ ر.س", features: ["فيديو ٦٠ ثانية", "تعليق صوتي مميز", "تعديلات غير محدودة"], cta: "اطلب الآن", featured: true },
                 { name: "باقة الأعمال", price: "٣٢٠٠ ر.س", features: ["فيديوهين (٦٠ ثانية)", "كتابة سكريبت إبداعي", "تسليم سريع (٤٨ ساعة)"], cta: "اطلب الآن", featured: false },
                 { name: "باقة مخصصة", price: "حسب الطلب", features: ["مشاريع طويلة", "حملات إعلانية متكاملة", "دعم فني مباشر ٢٤/٧"], cta: "تواصل معنا", featured: false, custom: true },
-              ].map((p) => (
-                <div key={p.name} className={`sm-glass p-8 rounded-2xl flex flex-col transition-colors relative ${p.featured ? "border-2 border-brand-pulse scale-105 shadow-xl bg-white" : "border border-brand-outline hover:border-brand-pulse/40"}`}>
+              ].map((p, i) => (
+                <Reveal key={p.name} delay={i * 120}>
+                <div className={`sm-glass p-8 rounded-2xl flex flex-col transition-all relative hover:-translate-y-2 hover:shadow-2xl h-full ${p.featured ? "border-2 border-brand-pulse md:scale-105 shadow-xl bg-white" : "border border-brand-outline hover:border-brand-pulse/40"}`}>
                   {p.featured && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-pulse text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">الأكثر طلباً</div>
                   )}
                   <h4 className="font-bold text-xl mb-2">{p.name}</h4>
                   <div className={`text-3xl font-bold mb-6 ${p.custom ? "text-brand-muted !text-xl" : "text-brand-pulse"}`}>{p.price}</div>
-                  <ul className="space-y-4 mb-8 flex-grow">
+                  <ul className="space-y-4 mb-8 grow">
                     {p.features.map((f) => (
                       <li key={f} className="flex items-center gap-2">
                         <Icon name="done" className="text-brand-pulse !text-base" />
@@ -344,10 +352,11 @@ function Index() {
                       </li>
                     ))}
                   </ul>
-                  <button className={`w-full py-3 rounded-xl font-bold transition-all ${p.featured ? "sm-primary-gradient text-white shadow-lg" : p.custom ? "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white" : "border border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white"}`}>
+                  <button className={`sm-shine w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 ${p.featured ? "sm-primary-gradient text-white shadow-lg" : p.custom ? "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white" : "border border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white"}`}>
                     {p.cta}
                   </button>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -369,12 +378,14 @@ function Index() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24">
               {UGC_IMGS.map((src, i) => (
-                <div key={i} className="aspect-[9/16] rounded-xl overflow-hidden relative group border border-brand-motion/20">
-                  <img alt={`UGC ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src={src} />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Icon name="play_circle" className="text-white !text-5xl" />
+                <Reveal key={i} delay={i * 100} variant="scale">
+                  <div className="aspect-[9/16] rounded-xl overflow-hidden relative group border border-brand-motion/20 sm-tilt">
+                    <img alt={`UGC ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={src} />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end justify-center pb-6 opacity-90">
+                      <Icon name="play_circle" filled className="text-white !text-5xl drop-shadow-lg group-hover:scale-125 transition-transform" />
+                    </div>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
 
@@ -384,15 +395,17 @@ function Index() {
                 { name: "حزمة ٣ فيديوهات", price: "١٢٠٠ ر.س", desc: "مثالية لحملة إعلانية متنوعة على تيك توك وسناب شات.", cta: "اطلب الآن", featured: true },
                 { name: "حزمة ٥ فيديوهات", price: "١٨٠٠ ر.س", desc: "تغطية شاملة لمنتجاتك مع زوايا تصوير مختلفة.", cta: "اطلب الآن", featured: false },
                 { name: "الاشتراك الشهري", price: "تبدأ من ٣٥٠٠ ر.س", desc: "١٠ فيديوهات شهرياً لضمان استمرارية المحتوى.", cta: "تواصل معنا", featured: false, custom: true },
-              ].map((p) => (
-                <div key={p.name} className={`sm-glass p-8 rounded-2xl flex flex-col ${p.featured ? "border-2 border-brand-motion scale-105 shadow-xl bg-white" : "border border-brand-outline hover:border-brand-motion/40"} transition-colors`}>
+              ].map((p, i) => (
+                <Reveal key={p.name} delay={i * 120}>
+                <div className={`sm-glass p-8 rounded-2xl flex flex-col h-full transition-all hover:-translate-y-2 hover:shadow-2xl ${p.featured ? "border-2 border-brand-motion md:scale-105 shadow-xl bg-white" : "border border-brand-outline hover:border-brand-motion/40"}`}>
                   <h4 className="font-bold text-xl mb-2">{p.name}</h4>
                   <div className={`font-bold mb-6 ${p.custom ? "text-brand-muted text-xl" : "text-brand-motion text-3xl"}`}>{p.price}</div>
                   <p className="mb-8 text-brand-muted">{p.desc}</p>
-                  <button className={`mt-auto w-full py-3 rounded-xl font-bold transition-all ${p.featured ? "bg-brand-motion text-white shadow-lg" : p.custom ? "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white" : "border border-brand-motion text-brand-motion hover:bg-brand-motion hover:text-white"}`}>
+                  <button className={`sm-shine mt-auto w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 ${p.featured ? "bg-brand-motion text-white shadow-lg" : p.custom ? "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white" : "border border-brand-motion text-brand-motion hover:bg-brand-motion hover:text-white"}`}>
                     {p.cta}
                   </button>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -407,14 +420,16 @@ function Index() {
                 { icon: "bolt", title: "سرعة قياسية", desc: "نظام عمل مرن يضمن تسليم المشاريع في وقت قياسي دون المساس بالجودة النهائية." },
                 { icon: "verified", title: "جودة استثنائية", desc: "نستخدم أحدث برمجيات التصوير والمونتاج لضمان خروج عملك بأفضل حلة بصرية ممكنة." },
                 { icon: "forum", title: "تواصل مباشر", desc: "مدير مشروع خاص بك يتواصل معك في كل خطوة لضمان تحقيق رؤيتك بالكامل." },
-              ].map((c) => (
-                <div key={c.title} className="p-8 rounded-2xl bg-brand-surface border border-brand-outline/40 hover:bg-brand-pulse/5 transition-colors group">
-                  <div className="w-16 h-16 rounded-xl sm-primary-gradient text-white flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+              ].map((c, i) => (
+                <Reveal key={c.title} delay={i * 150}>
+                <div className="p-8 rounded-2xl bg-brand-surface border border-brand-outline/40 hover:bg-brand-pulse/5 transition-all group h-full hover:-translate-y-2 hover:shadow-xl">
+                  <div className="w-16 h-16 rounded-xl sm-primary-gradient text-white flex items-center justify-center mb-6 group-hover:rotate-12 group-hover:scale-110 transition-transform">
                     <Icon name={c.icon} className="!text-3xl" />
                   </div>
                   <h4 className="text-2xl font-bold mb-4">{c.title}</h4>
                   <p className="text-brand-muted leading-relaxed">{c.desc}</p>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -431,7 +446,7 @@ function Index() {
               { stars: 4.5, quote: "فيديوهات الـ UGC كانت واقعية جداً وخلت عملائنا يثقون فينا أكثر. السرعة في التنفيذ كانت مذهلة.", name: "سارة العمري", role: "مؤسسة براند \"نضارة\"", initial: "S", tone: "motion" },
               { stars: 5, quote: "أفضل وكالة تعاملت معها في السعودية. احترافية عالية ودقة في المواعيد.", name: "خالد فيصل", role: "مدير عمليات - منصة زاد", initial: "K", tone: "flash" },
             ].map((t) => (
-              <div key={t.name} className="min-w-[320px] md:min-w-[400px] snap-start sm-glass p-8 rounded-2xl sm-soft-shadow border border-brand-pulse/10">
+              <div key={t.name} className="min-w-[320px] md:min-w-[400px] snap-start sm-glass p-8 rounded-2xl sm-soft-shadow border border-brand-pulse/10 hover:-translate-y-2 transition-transform">
                 <div className="flex text-brand-pulse mb-4">
                   {Array.from({ length: Math.floor(t.stars) }).map((_, i) => (
                     <Icon key={i} name="star" filled />
@@ -465,24 +480,34 @@ function Index() {
 
         {/* CTA */}
         <section className="py-20 md:py-40 container mx-auto px-5 md:px-8" id="cta">
-          <div
+          <Reveal
+            variant="scale"
             className="rounded-3xl p-12 md:p-24 text-center text-white relative overflow-hidden sm-soft-shadow border border-white/20 bg-cover bg-center"
-            style={{ backgroundImage: `url(${CTA_BG})` }}
           >
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${CTA_BG})` }} />
             <div className="absolute inset-0 bg-gradient-to-br from-brand-pulse/80 to-brand-motion/80" />
             <div className="relative z-10">
               <h2 className="text-4xl md:text-6xl font-bold mb-8 drop-shadow-lg tracking-tight">ابدأ رحلتك الإبداعية معنا</h2>
               <p className="text-xl opacity-90 mb-12 max-w-2xl mx-auto">دعنا نساعدك في بناء حضور مرئي قوي يجذب العملاء ويحقق مبيعات خيالية.</p>
               <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                <a className="bg-white text-brand-pulse px-12 py-5 rounded-xl font-bold text-2xl shadow-xl hover:scale-105 transition-transform" href="https://wa.me/">تواصل واتساب</a>
-                <a className="border-2 border-white/60 px-12 py-5 rounded-xl font-bold text-2xl hover:bg-white/10 transition-all backdrop-blur-sm" href="#motion">مشاهدة أعمالنا</a>
+                <a className="sm-shine bg-white text-brand-pulse px-12 py-5 rounded-xl font-bold text-2xl shadow-xl hover:scale-105 transition-transform" href="https://wa.me/">تواصل واتساب</a>
+                <a className="sm-shine border-2 border-white/60 px-12 py-5 rounded-xl font-bold text-2xl hover:bg-white/10 transition-all backdrop-blur-sm" href="#motion">مشاهدة أعمالنا</a>
               </div>
             </div>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-flash/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
-          </div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl sm-float" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-flash/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl sm-float-slow" />
+          </Reveal>
         </section>
       </main>
+
+      {/* Sticky WhatsApp */}
+      <a
+        href="https://wa.me/"
+        aria-label="واتساب"
+        className="fixed bottom-6 left-6 z-50 w-16 h-16 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform sm-whats-pulse"
+      >
+        <Icon name="chat" filled className="!text-3xl" />
+      </a>
 
       <footer className="w-full py-8 px-5 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 bg-brand-surface-2 border-t border-brand-outline/40">
         <div className="flex items-center gap-3">
