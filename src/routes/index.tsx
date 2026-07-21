@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,6 +59,82 @@ function Icon({ name, className = "", filled = false }: { name: string; classNam
     </span>
   );
 }
+
+function Reveal({
+  children,
+  className = "",
+  delay = 0,
+  variant = "up",
+  as: As = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  variant?: "up" | "scale";
+  as?: keyof HTMLElementTagNameMap;
+}) {
+  const ref = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setVisible(true);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const base = variant === "scale" ? "sm-reveal-scale" : "sm-reveal";
+  return (
+    // @ts-expect-error dynamic tag
+    <As
+      ref={ref}
+      className={`${base} ${visible ? "is-visible" : ""} ${className}`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      {children}
+    </As>
+  );
+}
+
+function Counter({ to, suffix = "", duration = 1800 }: { to: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const step = (t: number) => {
+            const p = Math.min(1, (t - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setVal(Math.round(to * eased));
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to, duration]);
+  return <span ref={ref}>{val.toLocaleString("ar-EG")}{suffix}</span>;
+}
+
+const BRANDS = ["إيجاز", "نضارة", "زاد", "بلوم", "قطاف", "مرام", "أوج", "رحال", "نوّر", "شغف"];
 
 function FaqItem({ q, a }: { q: string; a: string }) {
   return (
