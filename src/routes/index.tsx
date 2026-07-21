@@ -65,15 +65,13 @@ function Reveal({
   className = "",
   delay = 0,
   variant = "up",
-  as: As = "div",
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
   variant?: "up" | "scale";
-  as?: keyof HTMLElementTagNameMap;
 }) {
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const el = ref.current;
@@ -94,14 +92,13 @@ function Reveal({
   }, []);
   const base = variant === "scale" ? "sm-reveal-scale" : "sm-reveal";
   return (
-    // @ts-expect-error dynamic tag
-    <As
+    <div
       ref={ref}
       className={`${base} ${visible ? "is-visible" : ""} ${className}`}
       style={{ animationDelay: `${delay}ms` }}
     >
       {children}
-    </As>
+    </div>
   );
 }
 
