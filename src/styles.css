@@ -133,6 +133,8 @@ html[dir="rtl"] body {
 @media (prefers-reduced-motion: reduce) {
   .sm-reveal, .sm-reveal-scale { opacity: 1 !important; animation: none !important; }
   .sm-marquee-track, .sm-float, .sm-float-slow, .sm-animated-gradient { animation: none !important; }
+  .sm-whats-pulse::before { animation: none !important; display: none; }
+  .sm-shine::after { animation: none !important; display: none; }
 }
 
 .material-symbols-outlined {
