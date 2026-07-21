@@ -96,7 +96,7 @@ export const Route = createRootRouteWithContext()({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "https://res.cloudinary.com/dtsyxlkgw/image/upload/v1784677526/Favicon_1x64_snhswm.png", type: "image/png" },
     ],
   }),
   shellComponent: RootShell,
