@@ -1,4 +1,5 @@
 import { Reveal } from "../shared/Reveal";
+import { MagneticButton } from "../shared/MagneticButton";
 import { CTA_BG } from "../../data/images";
 
 export function CtaSection() {
@@ -14,8 +15,8 @@ export function CtaSection() {
           <h2 className="text-4xl md:text-6xl font-bold mb-8 drop-shadow-lg tracking-tight">ابدأ رحلتك الإبداعية معنا</h2>
           <p className="text-xl opacity-90 mb-12 max-w-2xl mx-auto">دعنا نساعدك في بناء حضور مرئي قوي يجذب العملاء ويحقق مبيعات خيالية.</p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <a className="sm-shine bg-white text-brand-pulse px-12 py-5 rounded-xl font-bold text-2xl shadow-xl hover:scale-105 transition-transform" href="https://wa.me/97470624227" target="_blank" rel="noopener noreferrer">تواصل واتساب</a>
-            <a className="sm-shine border-2 border-white/60 px-12 py-5 rounded-xl font-bold text-2xl hover:bg-white/10 transition-all backdrop-blur-sm" href="#motion">مشاهدة أعمالنا</a>
+            <MagneticButton className="sm-shine bg-white text-brand-pulse px-12 py-5 rounded-xl font-bold text-2xl shadow-xl transition-transform" href="https://wa.me/97470624227" target="_blank" rel="noopener noreferrer">تواصل واتساب</MagneticButton>
+            <MagneticButton className="sm-shine border-2 border-white/60 px-12 py-5 rounded-xl font-bold text-2xl backdrop-blur-sm transition-all" href="#motion">مشاهدة أعمالنا</MagneticButton>
           </div>
         </div>
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl sm-float" />

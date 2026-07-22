@@ -27,7 +27,7 @@ export function MotionPortfolio() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-24">
           {PORTFOLIO.map((src, i) => (
-            <Reveal key={i} delay={i * 80} variant="scale">
+            <Reveal key={i} delay={i * 80} variant="clip">
               <div className="aspect-video rounded-xl overflow-hidden sm-glass group cursor-pointer border border-brand-pulse/10 sm-tilt relative">
                 <img loading="lazy" alt={`مشروع موشن جرافيك ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={src} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

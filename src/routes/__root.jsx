@@ -12,6 +12,10 @@ import { useEffect } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SplashScreen } from "../components/shared/SplashScreen";
+import { CustomCursor } from "../components/shared/CustomCursor";
+import { ScrollProgress } from "../components/shared/ScrollProgress";
+import { BackToTop } from "../components/shared/BackToTop";
+import { useSmoothScroll } from "../hooks/useSmoothScroll";
 
 function NotFoundComponent() {
   return (
@@ -106,12 +110,15 @@ export const Route = createRootRouteWithContext()({
 });
 
 function RootShell({ children }) {
+  useSmoothScroll();
+
   return (
-    <html lang="ar" dir="rtl">
+      <html lang="ar" dir="rtl" className="scroll-smooth" style={{ scrollbarGutter: "stable" }}>
       <head>
         <HeadContent />
       </head>
       <body>
+        <CustomCursor />
         {children}
         <Scripts />
       </body>
@@ -125,6 +132,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <SplashScreen />
+      <ScrollProgress />
+      <BackToTop />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>

@@ -2,21 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import { BRAND_SPLASH } from "../../data/images";
 
 export function SplashScreen() {
-  const [dismissed, setDismissed] = useState(false);
-  const [exiting, setExiting] = useState(false);
+  const [state, setState] = useState("init");
   const [progress, setProgress] = useState(0);
-  const [ready, setReady] = useState(false);
   const dismissedRef = useRef(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("sadd_splash_seen") === "true") {
-      dismissedRef.current = true;
-      setDismissed(true);
-      return;
-    }
+    setState("loading");
+
     const duration = 2500;
     const start = performance.now();
     let raf;
+
     function step(t) {
       const p = Math.min(1, (t - start) / duration);
       const eased = 1 - Math.pow(1 - p, 3);
@@ -24,7 +20,7 @@ export function SplashScreen() {
       if (p < 1) {
         raf = requestAnimationFrame(step);
       } else {
-        setReady(true);
+        setState("ready");
       }
     }
     raf = requestAnimationFrame(step);
@@ -34,14 +30,13 @@ export function SplashScreen() {
   function handleDismiss() {
     if (dismissedRef.current) return;
     dismissedRef.current = true;
-    setExiting(true);
+    setState("exiting");
     setTimeout(() => {
-      setDismissed(true);
-      try { sessionStorage.setItem("sadd_splash_seen", "true"); } catch {}
+      setState("hidden");
     }, 700);
   }
 
-  if (dismissed) return null;
+  if (state === "init" || state === "hidden") return null;
 
   return (
     <div
@@ -49,8 +44,8 @@ export function SplashScreen() {
       style={{
         backgroundColor: "#FFFAFD",
         transition: "opacity 0.7s ease-out, transform 0.7s ease-out",
-        opacity: exiting ? 0 : 1,
-        transform: exiting ? "scale(0.95)" : "scale(1)",
+        opacity: state === "exiting" ? 0 : 1,
+        transform: state === "exiting" ? "scale(0.95)" : "scale(1)",
       }}
     >
       <img
@@ -74,7 +69,7 @@ export function SplashScreen() {
           className={`text-xl font-bold tracking-wide cursor-pointer select-none
                       bg-gradient-to-r from-[#db003e] via-[#f94c10] to-[#ffe31a] bg-clip-text text-transparent
                       transition-all duration-700 ease-out
-                      ${ready ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"}
+                      ${state === "ready" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"}
                       hover:scale-110 active:scale-95`}
         >
           اضغط للدخول

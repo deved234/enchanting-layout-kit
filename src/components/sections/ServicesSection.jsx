@@ -10,7 +10,7 @@ const SERVICE_IMGS = {
 
 export function ServicesSection() {
   return (
-    <section className="py-20 md:py-40 bg-brand-surface" id="services">
+    <section className="py-20 md:py-40 bg-brand-surface sm-section-divider" id="services">
       <Reveal className="container mx-auto px-5 md:px-8 text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">خدماتنا الرئيسية</h2>
         <p className="text-brand-muted max-w-xl mx-auto">اختر المسار الذي يناسب أهدافك التسويقية</p>

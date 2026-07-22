@@ -82,7 +82,12 @@ html[dir="rtl"] body {
 .sm-marquee-track {
   display: flex;
   width: max-content;
-  animation: sm-marquee 30s linear infinite;
+  animation: sm-marquee 60s linear infinite;
+}
+
+.sm-marquee-fade {
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
 }
 .sm-float { animation: sm-float 8s ease-in-out infinite; }
 .sm-float-slow { animation: sm-float 12s ease-in-out infinite; }
@@ -130,9 +135,39 @@ html[dir="rtl"] body {
   z-index: -1;
 }
 
+@keyframes sm-scroll-dot {
+  0%,100% { transform: translateY(0); opacity: 1; }
+  50%     { transform: translateY(6px); opacity: 0.3; }
+}
+
+.sm-scroll-dot { animation: sm-scroll-dot 1.8s ease-in-out infinite; }
+
+/* Clip reveal animation */
+@keyframes sm-reveal-clip {
+  from { clip-path: inset(0 0 100% 0); opacity: 0; }
+  to   { clip-path: inset(0); opacity: 1; }
+}
+.sm-reveal-clip { opacity: 0; }
+.sm-reveal-clip.is-visible { animation: sm-reveal-clip 0.9s cubic-bezier(.22,1,.36,1) forwards; }
+
+/* Section gradient divider */
+.sm-section-divider {
+  position: relative;
+}
+.sm-section-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #db003e 20%, #f94c10 50%, #ffe31a 80%, transparent);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sm-reveal, .sm-reveal-scale { opacity: 1 !important; animation: none !important; }
-  .sm-marquee-track, .sm-float, .sm-float-slow, .sm-animated-gradient { animation: none !important; }
+  .sm-reveal, .sm-reveal-scale, .sm-reveal-clip { opacity: 1 !important; animation: none !important; }
+  .sm-marquee-track, .sm-float, .sm-float-slow, .sm-animated-gradient, .sm-scroll-dot { animation: none !important; }
   .sm-whats-pulse::before { animation: none !important; display: none; }
   .sm-shine::after { animation: none !important; display: none; }
 }

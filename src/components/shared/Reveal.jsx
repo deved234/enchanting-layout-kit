@@ -27,7 +27,8 @@ export function Reveal({
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  const base = variant === "scale" ? "sm-reveal-scale" : "sm-reveal";
+  const variants = { scale: "sm-reveal-scale", up: "sm-reveal", clip: "sm-reveal-clip" };
+  const base = variants[variant] || variants.up;
   return (
     <div
       ref={ref}

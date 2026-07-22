@@ -21,7 +21,7 @@ export function UgcPortfolio() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24">
           {UGC_IMGS.map((src, i) => (
-            <Reveal key={i} delay={i * 100} variant="scale">
+            <Reveal key={i} delay={i * 100} variant="clip">
               <div className="aspect-[9/16] rounded-xl overflow-hidden relative group border border-brand-motion/20 sm-tilt">
                 <img loading="lazy" alt={`فيديو UGC تسويقي ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={src} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end justify-center pb-6 opacity-90">
