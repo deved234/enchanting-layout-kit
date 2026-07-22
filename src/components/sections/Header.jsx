@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Icon } from "../shared/Icon";
 import { MagneticButton } from "../shared/MagneticButton";
 import { LOGO_MARK, LOGO_WORD } from "../../data/images";
+import { COMPANY } from "../../config/company";
 import { getLenis } from "../../hooks/useSmoothScroll";
 
 const NAV_LINKS = [
@@ -42,7 +43,14 @@ export function Header() {
     );
     els.forEach((el) => io.observe(el));
     const onScroll = () => {
-      if (window.scrollY < 100 && els.every((el) => el.getBoundingClientRect().top >= window.innerHeight || el.getBoundingClientRect().bottom <= 80)) {
+      if (
+        window.scrollY < 100 &&
+        els.every(
+          (el) =>
+            el.getBoundingClientRect().top >= window.innerHeight ||
+            el.getBoundingClientRect().bottom <= 80,
+        )
+      ) {
         setActiveSection("#");
       }
     };
@@ -132,9 +140,17 @@ export function Header() {
             : "bg-transparent"
         }`}
       >
-        <a href="#" onClick={(e) => handleNavClick(e, "#")} className="flex items-center gap-3 cursor-pointer">
+        <a
+          href="#"
+          onClick={(e) => handleNavClick(e, "#")}
+          className="flex items-center gap-3 cursor-pointer"
+        >
           <img alt="صاد ميديا" className="h-10 md:h-12 w-auto object-contain" src={LOGO_MARK} />
-          <img alt="صاد ميديا" className="h-6 md:h-7 w-auto object-contain hidden sm:block" src={LOGO_WORD} />
+          <img
+            alt="صاد ميديا"
+            className="h-6 md:h-7 w-auto object-contain hidden sm:block"
+            src={LOGO_WORD}
+          />
         </a>
         <nav className="hidden md:flex items-center gap-1" aria-label="القائمة الرئيسية">
           {NAV_LINKS.map((link) => (
@@ -181,7 +197,9 @@ export function Header() {
           aria-label="القائمة الجانبية"
           onClick={closeMenu}
         >
-          <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${menuVisible ? "opacity-100" : "opacity-0"}`} />
+          <div
+            className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${menuVisible ? "opacity-100" : "opacity-0"}`}
+          />
           <aside
             ref={menuRef}
             tabIndex={-1}

@@ -1,12 +1,26 @@
 import { Icon } from "./Icon";
 import { Reveal } from "./Reveal";
+import { MagneticButton } from "./MagneticButton";
 
-export function PricingCard({ name, price, features, desc, cta, featured = false, custom = false, accent = "pulse", delay = 0 }) {
+export function PricingCard({
+  name,
+  price,
+  features,
+  desc,
+  cta,
+  href,
+  featured = false,
+  custom = false,
+  accent = "pulse",
+  delay = 0,
+}) {
   const isPulse = accent === "pulse";
 
   let cardBorder = "border border-brand-outline hover:border-brand-pulse/40";
-  if (isPulse && featured) cardBorder = "border-2 border-brand-pulse md:scale-105 shadow-xl bg-white";
-  else if (!isPulse && featured) cardBorder = "border-2 border-brand-motion md:scale-105 shadow-xl bg-white";
+  if (isPulse && featured)
+    cardBorder = "border-2 border-brand-pulse md:scale-105 shadow-xl bg-white";
+  else if (!isPulse && featured)
+    cardBorder = "border-2 border-brand-motion md:scale-105 shadow-xl bg-white";
 
   let badgeBg = "bg-brand-pulse text-white";
   if (!isPulse) badgeBg = "bg-brand-motion text-white";
@@ -21,7 +35,8 @@ export function PricingCard({ name, price, features, desc, cta, featured = false
   let btnClass = "border border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white";
   if (isPulse && featured) btnClass = "sm-primary-gradient text-white shadow-lg";
   else if (!isPulse && featured) btnClass = "bg-brand-motion text-white shadow-lg";
-  else if (custom) btnClass = "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white";
+  else if (custom)
+    btnClass = "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white";
 
   let hoverBorder = "hover:border-brand-pulse/40";
   if (!isPulse) hoverBorder = "hover:border-brand-motion/40";
@@ -34,7 +49,9 @@ export function PricingCard({ name, price, features, desc, cta, featured = false
         className={`sm-glass p-8 rounded-2xl flex flex-col transition-all relative hover:-translate-y-2 hover:shadow-2xl h-full ${featured ? cardBorder : nonFeaturedCard}`}
       >
         {featured && (
-          <div className={`absolute -top-4 left-1/2 -translate-x-1/2 ${badgeBg} px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider`}>
+          <div
+            className={`absolute -top-4 left-1/2 -translate-x-1/2 ${badgeBg} px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider`}
+          >
             الأكثر طلباً
           </div>
         )}
@@ -52,9 +69,15 @@ export function PricingCard({ name, price, features, desc, cta, featured = false
             ))}
           </ul>
         )}
-        <button className={`sm-shine w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 ${btnClass}`}>
+        <MagneticButton
+          as="a"
+          href={href}
+          target={href?.startsWith("http") ? "_blank" : undefined}
+          rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+          className={`sm-shine w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center ${btnClass}`}
+        >
           {cta}
-        </button>
+        </MagneticButton>
       </div>
     </Reveal>
   );

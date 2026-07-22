@@ -1,8 +1,8 @@
-import { Reveal } from "../shared/Reveal";
 import { Icon } from "../shared/Icon";
 import { PricingCard } from "../shared/PricingCard";
-import { UGC_IMGS } from "../../data/portfolio";
-import { UGC_PRICING } from "../../data/pricing";
+import { PortfolioVideoGrid } from "../shared/PortfolioVideoGrid";
+import { PACKAGES } from "../../data/packages";
+import { PORTFOLIO_VIDEOS } from "../../data/portfolioVideos";
 
 export function UgcPortfolio() {
   return (
@@ -19,29 +19,19 @@ export function UgcPortfolio() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-24">
-          {UGC_IMGS.map((src, i) => (
-            <Reveal key={i} delay={i * 100} variant="clip">
-              <div className="aspect-[9/16] rounded-xl overflow-hidden relative group border border-brand-motion/20 sm-tilt">
-                <img loading="lazy" alt={`فيديو UGC تسويقي ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={src} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end justify-center pb-6 opacity-90">
-                  <Icon name="play_circle" filled className="text-white !text-5xl drop-shadow-lg group-hover:scale-125 transition-transform" />
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <PortfolioVideoGrid items={PORTFOLIO_VIDEOS.ugc} provider="vimeo" />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {UGC_PRICING.map((p, i) => (
+          {PACKAGES.ugc.map((p, i) => (
             <PricingCard
-              key={p.name}
+              key={p.id}
               name={p.name}
               price={p.price}
-              desc={p.desc}
-              cta={p.cta}
-              featured={p.featured}
-              custom={p.custom}
+              desc={p.features[0]}
+              cta="Buy Now"
+              href={p.stripeLink}
+              featured={p.id === "ugc-pack-3"}
+              custom={p.id === "ugc-monthly"}
               accent="motion"
               delay={i * 120}
             />

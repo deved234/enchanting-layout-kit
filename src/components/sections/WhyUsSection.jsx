@@ -6,7 +6,9 @@ export function WhyUsSection() {
   return (
     <section className="py-20 md:py-40 bg-white" id="why-us">
       <div className="container mx-auto px-5 md:px-8">
-        <h2 className="text-center text-3xl md:text-4xl font-bold mb-16">لماذا يختارنا المحترفون؟</h2>
+        <h2 className="text-center text-3xl md:text-4xl font-bold mb-16">
+          لماذا يختارنا المحترفون؟
+        </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {WHY_US_REASONS.map((c, i) => (
             <Reveal key={c.title} delay={i * 150}>

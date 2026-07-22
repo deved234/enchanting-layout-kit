@@ -27,14 +27,12 @@ export function TextReveal({ text, className = "", delay = 0, as: Tag = "span" }
   return (
     <Tag ref={ref} className={`inline-flex flex-wrap gap-[0.3em] ${className}`}>
       {words.map((word, i) => (
-        <span
-          key={i}
-          className="inline-block overflow-hidden"
-        >
+        <span key={i} className="inline-block overflow-hidden">
           <span
             className="inline-block"
             style={{
-              transition: "opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1)",
+              transition:
+                "opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1)",
               transitionDelay: visible ? `${delay + i * 80}ms` : "0ms",
               opacity: visible ? 1 : mounted ? 0 : 1,
               transform: visible ? "translateY(0)" : mounted ? "translateY(24px)" : "translateY(0)",

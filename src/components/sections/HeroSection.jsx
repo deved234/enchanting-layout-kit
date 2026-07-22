@@ -42,30 +42,42 @@ export function HeroSection() {
         </Reveal>
         <Reveal delay={120}>
           <h1 className="text-[40px] md:text-[64px] font-bold leading-tight max-w-4xl mx-auto mb-8 tracking-tight">
-            <TextReveal text="نحول خيالك إلى" delay={120} />
-            {" "}
+            <TextReveal text="نحول خيالك إلى" delay={120} />{" "}
             <span className="sm-animated-gradient inline-block">واقع ملموس</span>
           </h1>
         </Reveal>
         <Reveal delay={240}>
           <p className="text-lg text-brand-muted max-w-2xl mx-auto mb-12 opacity-90 leading-relaxed">
-            في صاد ميديا، ندمج بين الفن والتقنية لنقدم لك محتوى مرئي يخطف الأنظار، من الموشن جرافيك الاحترافي إلى فيديوهات الـ UGC التي تلامس القلوب.
+            في صاد ميديا، ندمج بين الفن والتقنية لنقدم لك محتوى مرئي يخطف الأنظار، من الموشن جرافيك
+            الاحترافي إلى فيديوهات الـ UGC التي تلامس القلوب.
           </p>
         </Reveal>
         <Reveal delay={360} className="flex flex-col md:flex-row items-center justify-center gap-4">
-          <MagneticButton className="sm-shine w-full md:w-auto px-10 py-5 sm-primary-gradient text-white font-bold rounded-xl text-xl shadow-xl hover:shadow-brand-pulse/30 transition-all flex items-center justify-center gap-2" href="#motion">
+          <MagneticButton
+            className="sm-shine w-full md:w-auto px-10 py-5 sm-primary-gradient text-white font-bold rounded-xl text-xl shadow-xl hover:shadow-brand-pulse/30 transition-all flex items-center justify-center gap-2"
+            href="#motion"
+          >
             <span>موشن جرافيك</span>
             <Icon name="arrow_back" />
           </MagneticButton>
-          <MagneticButton className="sm-shine w-full md:w-auto px-10 py-5 sm-glass text-brand-ink font-bold rounded-xl text-xl hover:bg-white transition-all flex items-center justify-center gap-2 border border-brand-outline" href="#ugc">
+          <MagneticButton
+            className="sm-shine w-full md:w-auto px-10 py-5 sm-glass text-brand-ink font-bold rounded-xl text-xl hover:bg-white transition-all flex items-center justify-center gap-2 border border-brand-outline"
+            href="#ugc"
+          >
             <span>فيديوهات UGC</span>
             <Icon name="videocam" />
           </MagneticButton>
         </Reveal>
 
-        <Reveal delay={520} className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-20">
+        <Reveal
+          delay={520}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-20"
+        >
           {HERO_STATS.map((st) => (
-            <div key={st.l} className="sm-glass border border-brand-pulse/10 rounded-2xl p-5 text-center">
+            <div
+              key={st.l}
+              className="sm-glass border border-brand-pulse/10 rounded-2xl p-5 text-center"
+            >
               <div className="text-3xl md:text-4xl font-extrabold text-brand-pulse">
                 <Counter to={st.n} suffix={st.s} />
               </div>
@@ -75,14 +87,14 @@ export function HeroSection() {
         </Reveal>
       </div>
       <div
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700 ease-out z-10
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700 ease-out z-10
                       ${scrolled ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
-        >
-          <span className="text-sm text-brand-muted tracking-wider">ادر للأسفل</span>
-          <span className="w-5 h-8 rounded-full border-2 border-brand-muted/50 flex items-start justify-center p-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-pulse sm-scroll-dot" />
-          </span>
-        </div>
+      >
+        <span className="text-sm text-brand-muted tracking-wider">ادر للأسفل</span>
+        <span className="w-5 h-8 rounded-full border-2 border-brand-outline/60 flex items-start justify-center p-1">
+          <span className="w-1.5 h-1.5 rounded-full sm-primary-gradient sm-scroll-dot" />
+        </span>
+      </div>
       <div ref={orbsRef} className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-10 w-40 h-40 bg-brand-pulse/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
         <div className="absolute bottom-1/4 right-10 w-56 h-56 bg-brand-motion/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />

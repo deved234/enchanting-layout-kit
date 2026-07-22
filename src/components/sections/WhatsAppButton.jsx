@@ -1,9 +1,10 @@
 import { Icon } from "../shared/Icon";
+import { COMPANY } from "../../config/company";
 
 export function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/97470624227"
+      href={COMPANY.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="واتساب"

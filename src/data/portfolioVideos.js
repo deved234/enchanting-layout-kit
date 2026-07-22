@@ -1,0 +1,76 @@
+export const PORTFOLIO_VIDEOS = {
+  motion: [
+    {
+      id: "motion-1",
+      provider: "youtube",
+      videoId: "dQw4w9WgXcQ",
+      title: "مشروع موشن جرافيك 1",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    },
+    {
+      id: "motion-2",
+      provider: "vimeo",
+      videoId: "76979871",
+      title: "مشروع موشن جرافيك 2",
+      thumbnail: "https://vumbnail.com/76979871.jpg",
+    },
+    {
+      id: "motion-3",
+      provider: "youtube",
+      videoId: "ysz5S6PUM-U",
+      title: "مشروع موشن جرافيك 3",
+      thumbnail: "https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg",
+    },
+    {
+      id: "motion-4",
+      provider: "vimeo",
+      videoId: "22439234",
+      title: "مشروع موشن جرافيك 4",
+      thumbnail: "https://vumbnail.com/22439234.jpg",
+    },
+    {
+      id: "motion-5",
+      provider: "youtube",
+      videoId: "jNQXAC9IVRw",
+      title: "مشروع موشن جرافيك 5",
+      thumbnail: "https://img.youtube.com/vi/jNQXAC9IVRw/hqdefault.jpg",
+    },
+    {
+      id: "motion-6",
+      provider: "vimeo",
+      videoId: "148751763",
+      title: "مشروع موشن جرافيك 6",
+      thumbnail: "https://vumbnail.com/148751763.jpg",
+    },
+  ],
+  ugc: [
+    {
+      id: "ugc-1",
+      provider: "youtube",
+      videoId: "dQw4w9WgXcQ",
+      title: "فيديو UGC 1",
+      thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    },
+    {
+      id: "ugc-2",
+      provider: "vimeo",
+      videoId: "76979871",
+      title: "فيديو UGC 2",
+      thumbnail: "https://vumbnail.com/76979871.jpg",
+    },
+    {
+      id: "ugc-3",
+      provider: "youtube",
+      videoId: "ysz5S6PUM-U",
+      title: "فيديو UGC 3",
+      thumbnail: "https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg",
+    },
+    {
+      id: "ugc-4",
+      provider: "vimeo",
+      videoId: "22439234",
+      title: "فيديو UGC 4",
+      thumbnail: "https://vumbnail.com/22439234.jpg",
+    },
+  ],
+};

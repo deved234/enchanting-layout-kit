@@ -1,8 +1,8 @@
-import { Reveal } from "../shared/Reveal";
 import { Icon } from "../shared/Icon";
 import { PricingCard } from "../shared/PricingCard";
-import { PORTFOLIO } from "../../data/portfolio";
-import { MOTION_PRICING } from "../../data/pricing";
+import { PortfolioVideoGrid } from "../shared/PortfolioVideoGrid";
+import { PACKAGES } from "../../data/packages";
+import { PORTFOLIO_VIDEOS } from "../../data/portfolioVideos";
 
 export function MotionPortfolio() {
   return (
@@ -25,30 +25,20 @@ export function MotionPortfolio() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-24">
-          {PORTFOLIO.map((src, i) => (
-            <Reveal key={i} delay={i * 80} variant="clip">
-              <div className="aspect-video rounded-xl overflow-hidden sm-glass group cursor-pointer border border-brand-pulse/10 sm-tilt relative">
-                <img loading="lazy" alt={`مشروع موشن جرافيك ${i + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src={src} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <Icon name="play_circle" filled className="text-white !text-6xl drop-shadow-lg" />
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <PortfolioVideoGrid items={PORTFOLIO_VIDEOS.motion} provider="youtube" />
 
         <h3 className="text-center text-2xl md:text-3xl font-bold mb-12">باقات الموشن جرافيك</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {MOTION_PRICING.map((p, i) => (
+          {PACKAGES.motion.map((p, i) => (
             <PricingCard
-              key={p.name}
+              key={p.id}
               name={p.name}
               price={p.price}
               features={p.features}
-              cta={p.cta}
-              featured={p.featured}
-              custom={p.custom}
+              cta="Buy Now"
+              href={p.stripeLink}
+              featured={p.id === "motion-pro"}
+              custom={p.id === "motion-custom"}
               accent="pulse"
               delay={i * 120}
             />

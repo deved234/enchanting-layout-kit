@@ -1,11 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 
-export function Reveal({
-  children,
-  className = "",
-  delay = 0,
-  variant = "up",
-}) {
+export function Reveal({ children, className = "", delay = 0, variant = "up" }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);

@@ -20,14 +20,14 @@ export const Route = createFileRoute("/")({
       { title: "صاد ميديا | وكالة إبداعية متخصصة في الموشن جرافيك و UGC" },
       {
         name: "description",
-        content:
-          "صاد ميديا: موشن جرافيك احترافي وفيديوهات UGC تسويقية تحوّل خيالك إلى واقع ملموس.",
+        content: "صاد ميديا: موشن جرافيك احترافي وفيديوهات UGC تسويقية تحوّل خيالك إلى واقع ملموس.",
       },
       { property: "og:title", content: "صاد ميديا | وكالة إبداعية" },
       {
         property: "og:description",
         content: "موشن جرافيك احترافي وفيديوهات UGC للعلامات التجارية الطموحة.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,

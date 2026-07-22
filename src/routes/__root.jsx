@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import { COMPANY } from "../config/company";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SplashScreen } from "../components/shared/SplashScreen";
 import { CustomCursor } from "../components/shared/CustomCursor";
@@ -82,16 +83,29 @@ export const Route = createRootRouteWithContext()({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "صاد ميديا | وكالة إبداعية متخصصة في الموشن جرافيك و UGC" },
-      { name: "description", content: "صاد ميديا وكالة إبداعية سعودية متخصصة في إنتاج الموشن جرافيك الاحترافي وفيديوهات UGC التسويقية." },
+      { title: `${COMPANY.name} | وكالة إبداعية متخصصة في الموشن جرافيك و UGC` },
+      {
+        name: "description",
+        content: "وكالة عربية متخصصة في إنتاج الموشن جرافيك وفيديوهات UGC التسويقية.",
+      },
       { property: "og:type", content: "website" },
+      { property: "og:title", content: `${COMPANY.name} | وكالة إبداعية` },
+      {
+        property: "og:description",
+        content: "موشن جرافيك احترافي وفيديوهات UGC للعلامات التجارية الطموحة.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: `${COMPANY.name} | وكالة إبداعية` },
+      {
+        name: "twitter:description",
+        content: "موشن جرافيك احترافي وفيديوهات UGC للعلامات التجارية الطموحة.",
+      },
+      { rel: "canonical", href: COMPANY.website },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap",
@@ -100,7 +114,9 @@ export const Route = createRootRouteWithContext()({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap",
       },
-      { rel: "icon", href: "https://res.cloudinary.com/dtsyxlkgw/image/upload/v1784677526/Favicon_1x64_snhswm.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "robots", href: "/robots.txt" },
+      { rel: "sitemap", href: "/sitemap.xml" },
     ],
   }),
   shellComponent: RootShell,
@@ -113,7 +129,7 @@ function RootShell({ children }) {
   useSmoothScroll();
 
   return (
-      <html lang="ar" dir="rtl" className="scroll-smooth" style={{ scrollbarGutter: "stable" }}>
+    <html lang="ar" dir="rtl" className="scroll-smooth" style={{ scrollbarGutter: "stable" }}>
       <head>
         <HeadContent />
       </head>
@@ -134,7 +150,6 @@ function RootComponent() {
       <SplashScreen />
       <ScrollProgress />
       <BackToTop />
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
