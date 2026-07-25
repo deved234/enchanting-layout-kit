@@ -1,23 +1,6 @@
 import { Reveal } from "../shared/Reveal";
 import { BRANDS } from "../../data/brands";
 
-const DOT_COLORS = ["bg-brand-pulse", "bg-brand-motion", "bg-brand-flash"];
-
-function BrandPill({ name, dot, index }) {
-  const color = DOT_COLORS[index % DOT_COLORS.length];
-  return (
-    <div className="flex items-center gap-6 whitespace-nowrap">
-      <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/70 border border-brand-outline/30 hover:border-brand-pulse/30 transition-all duration-300 hover:-translate-y-0.5">
-        <span className={`w-2 h-2 rounded-full ${color} shrink-0`} />
-        <span className="text-base md:text-lg font-bold text-brand-muted/80 hover:text-brand-pulse transition-colors">
-          {name}
-        </span>
-      </div>
-      <span className="w-1 h-1 rounded-full bg-brand-outline/40 shrink-0" />
-    </div>
-  );
-}
-
 export function BrandsMarquee() {
   return (
     <section className="py-16 border-y border-brand-outline/40 bg-white overflow-hidden">
@@ -26,18 +9,21 @@ export function BrandsMarquee() {
           علامات تجارية تثق بنا
         </span>
       </Reveal>
-      <div className="sm-marquee-fade">
-        <div aria-hidden="true" className="sm-marquee-track flex items-center w-max">
-          <div className="flex items-center gap-6 flex-shrink-0">
-            {BRANDS.map((b, i) => (
-              <BrandPill key={b} name={b} index={i} />
-            ))}
-          </div>
-          <div className="flex items-center gap-6 flex-shrink-0">
-            {BRANDS.map((b, i) => (
-              <BrandPill key={b} name={b} index={i} />
-            ))}
-          </div>
+      <div className="container mx-auto px-5 md:px-8">
+        <div className="flex items-center justify-center gap-8 md:gap-12">
+          {BRANDS.map((b) => (
+            <div
+              key={b.id}
+              className="w-28 md:w-36 h-16 md:h-20 flex items-center justify-center px-4 rounded-xl bg-white/60 border border-brand-outline/20"
+            >
+              <img
+                src={b.image}
+                alt=""
+                className="max-w-full max-h-full object-contain"
+                loading="lazy"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

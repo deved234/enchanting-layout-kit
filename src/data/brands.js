@@ -1,12 +1,4 @@
-export const BRANDS = [
-  "إيجاز",
-  "نضارة",
-  "زاد",
-  "بلوم",
-  "قطاف",
-  "مرام",
-  "أوج",
-  "رحال",
-  "نوّر",
-  "شغف",
-];
+export const BRANDS = Array.from({ length: 8 }, (_, i) => ({
+  id: i + 1,
+  image: `/assets/brands/brand-${i + 1}.jpeg`,
+}));

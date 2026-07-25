@@ -34,7 +34,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20 md:py-40 sm-hero-gradient">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10 md:py-16 sm-hero-gradient">
       <div className="container mx-auto px-5 md:px-8 relative z-10 text-center">
         <Reveal className="inline-flex items-center gap-2 px-4 py-2 sm-glass rounded-full text-brand-pulse mb-8 border border-brand-pulse/10">
           <Icon name="auto_awesome" className="!text-base" filled />
@@ -48,8 +48,8 @@ export function HeroSection() {
         </Reveal>
         <Reveal delay={240}>
           <p className="text-lg text-brand-muted max-w-2xl mx-auto mb-12 opacity-90 leading-relaxed">
-            في صاد ميديا، ندمج بين الفن والتقنية لنقدم لك محتوى مرئي يخطف الأنظار، من الموشن جرافيك
-            الاحترافي إلى فيديوهات الـ UGC التي تلامس القلوب.
+            في صاد ميديا نصنع لك الصوت والصورة ، ندمج بين الفن والتقنية لنقدم لك محتوى مرئي يخطف
+            الأنظار، من الموشن جرافيك الاحترافي إلى فيديوهات الـ UGC التي تلامس القلوب.
           </p>
         </Reveal>
         <Reveal delay={360} className="flex flex-col md:flex-row items-center justify-center gap-4">

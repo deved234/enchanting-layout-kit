@@ -9,72 +9,84 @@ export function PricingCard({
   desc,
   cta,
   href,
-  featured = false,
   custom = false,
   accent = "pulse",
   delay = 0,
+  badge,
+  duration,
 }) {
   const isPulse = accent === "pulse";
+  const accentBg = isPulse ? "bg-brand-pulse/10" : "bg-brand-motion/10";
+  const accentDot = isPulse ? "bg-brand-pulse" : "bg-brand-motion";
 
-  let cardBorder = "border border-brand-outline hover:border-brand-pulse/40";
-  if (isPulse && featured)
-    cardBorder = "border-2 border-brand-pulse md:scale-105 shadow-xl bg-white";
-  else if (!isPulse && featured)
-    cardBorder = "border-2 border-brand-motion md:scale-105 shadow-xl bg-white";
+  let priceClass = "text-3xl font-black tracking-tight";
+  if (isPulse) priceClass += " text-brand-pulse";
+  else priceClass += " text-brand-motion";
+  if (custom) priceClass = "text-2xl text-brand-muted font-bold";
 
-  let badgeBg = "bg-brand-pulse text-white";
-  if (!isPulse) badgeBg = "bg-brand-motion text-white";
+  const btnBase = "w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center";
+  let btnClass = `${btnBase} border-2`;
+  if (isPulse)
+    btnClass += " border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white";
+  else
+    btnClass += " border-brand-motion text-brand-motion hover:bg-brand-motion hover:text-white";
+  if (custom)
+    btnClass = `${btnBase} border-2 border-brand-ink/30 text-brand-muted hover:bg-brand-ink hover:text-white hover:border-brand-ink`;
 
-  let priceClass = "text-brand-pulse text-3xl";
-  if (!isPulse) priceClass = "text-brand-motion text-3xl";
-  if (custom) priceClass = "text-brand-muted text-xl";
-
-  let iconClass = "text-brand-pulse !text-base";
-  if (!isPulse) iconClass = "text-brand-motion !text-base";
-
-  let btnClass = "border border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white";
-  if (isPulse && featured) btnClass = "sm-primary-gradient text-white shadow-lg";
-  else if (!isPulse && featured) btnClass = "bg-brand-motion text-white shadow-lg";
-  else if (custom)
-    btnClass = "border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white";
-
-  let hoverBorder = "hover:border-brand-pulse/40";
-  if (!isPulse) hoverBorder = "hover:border-brand-motion/40";
-
-  const nonFeaturedCard = `border border-brand-outline ${hoverBorder}`;
+  const containerClass = custom
+    ? "border-2 border-dashed border-brand-outline/30 rounded-2xl p-8 flex flex-col transition-all hover:-translate-y-2 hover:shadow-xl hover:border-brand-ink/30 h-full bg-white/40"
+    : "bg-white rounded-2xl p-8 flex flex-col transition-all hover:-translate-y-2 hover:shadow-2xl h-full border border-brand-outline/10 shadow-sm hover:shadow-brand-pulse/5";
 
   return (
     <Reveal delay={delay}>
-      <div
-        className={`sm-glass p-8 rounded-2xl flex flex-col transition-all relative hover:-translate-y-2 hover:shadow-2xl h-full ${featured ? cardBorder : nonFeaturedCard}`}
-      >
-        {featured && (
-          <div
-            className={`absolute -top-4 left-1/2 -translate-x-1/2 ${badgeBg} px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider`}
-          >
-            الأكثر طلباً
+      <div className={containerClass}>
+        {badge && (
+          <div className="flex justify-center mb-6">
+            <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-brand-pulse to-brand-pulse/80 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-brand-pulse/20">
+              <Icon name="local_fire_department" filled className="!text-sm" />
+              {badge}
+            </span>
           </div>
         )}
-        <h4 className="font-bold text-xl mb-2">{name}</h4>
-        <div className={`font-bold mb-6 ${priceClass}`}>{price}</div>
+
+        {duration && !badge && (
+          <div className="flex justify-center mb-5">
+            <span className="inline-flex items-center gap-1.5 bg-brand-outline/10 text-brand-muted px-3 py-1 rounded-full text-xs font-semibold">
+              <span className={`w-1.5 h-1.5 rounded-full ${accentDot}`} />
+              {duration}
+            </span>
+          </div>
+        )}
+
+        <h4 className="font-bold text-lg text-center">{name}</h4>
+
+        <div className="mt-3 mb-5 border-b border-brand-outline/10 pb-5">
+          <div className={`text-center mb-5 ${priceClass}`}>{price}</div>
+        </div>
+
         {desc ? (
-          <p className="mb-8 text-brand-muted grow">{desc}</p>
+          <p className="mb-8 text-brand-muted grow text-sm leading-relaxed">{desc}</p>
         ) : (
-          <ul className="space-y-4 mb-8 grow">
+          <ul className="space-y-3 mb-8 grow">
             {features.map((f) => (
-              <li key={f} className="flex items-center gap-2">
-                <Icon name="done" className={iconClass} />
+              <li key={f} className="flex items-start gap-2.5 text-sm text-brand-muted">
+                <span
+                  className={`w-5 h-5 rounded-full ${accentBg} flex items-center justify-center shrink-0 mt-0.5`}
+                >
+                  <Icon name="done" className={`!text-xs ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`} />
+                </span>
                 {f}
               </li>
             ))}
           </ul>
         )}
+
         <MagneticButton
           as="a"
           href={href}
           target={href?.startsWith("http") ? "_blank" : undefined}
           rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-          className={`sm-shine w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center ${btnClass}`}
+          className={btnClass}
         >
           {cta}
         </MagneticButton>

@@ -1,7 +1,11 @@
 import { Reveal } from "../shared/Reveal";
-import { MOTION_CARD, UGC_CARD } from "../../data/images";
 import { SERVICES } from "../../data/services";
 import { ServiceCard } from "../shared/ServiceCard";
+
+const SERVICE_IMAGES = {
+  motion: "/assets/services/motion graphic.jpeg",
+  ugc: "/assets/services/ugc.jpeg",
+};
 
 export function ServicesSection() {
   return (
@@ -15,7 +19,7 @@ export function ServicesSection() {
           <ServiceCard
             key={service.id}
             service={service}
-            image={service.imageKey === "motion" ? MOTION_CARD : UGC_CARD}
+            image={SERVICE_IMAGES[service.imageKey]}
             delay={i * 150}
           />
         ))}
