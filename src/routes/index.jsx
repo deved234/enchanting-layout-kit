@@ -8,7 +8,6 @@ import { ServicesSection } from "../components/sections/ServicesSection";
 import { MotionPortfolio } from "../components/sections/MotionPortfolio";
 import { UgcPortfolio } from "../components/sections/UgcPortfolio";
 import { WhyUsSection } from "../components/sections/WhyUsSection";
-import { Testimonials } from "../components/sections/Testimonials";
 import { FaqSection } from "../components/sections/FaqSection";
 import { CtaSection } from "../components/sections/CtaSection";
 import { WhatsAppButton } from "../components/sections/WhatsAppButton";
@@ -45,7 +44,6 @@ function Index() {
         <MotionPortfolio />
         <UgcPortfolio />
         <WhyUsSection />
-        <Testimonials />
         <FaqSection />
         <CtaSection />
       </main>

@@ -5,6 +5,13 @@ const BASE_FEATURES = [
   "مدة التسليم 3-5 أيام",
 ];
 
+const UGC_BASE_FEATURES = [
+  "سكربت إبداعي",
+  "مدة التسليم 3-5 أيام",
+  "معدات تصوير واستوديو وإضاءة احترافية",
+  "نشر على مواقع التواصل الاجتماعي",
+];
+
 export const PACKAGES = {
   motion: [
     {
@@ -79,32 +86,55 @@ export const PACKAGES = {
   ],
   ugc: [
     {
-      id: "ugc-single",
-      name: "فيديو واحد",
-      price: "450 ر.س",
-      features: ["مراجعة أو تجربة منتج بجودة عالية"],
-      stripeLink: "https://buy.stripe.com/test_ugc_single",
+      id: "ugc-15s",
+      type: "individual",
+      name: "الباقة التجريبية",
+      price: "197 ر.س",
+      duration: "15 ثانية",
+      features: ["فيديو 15 ثانية", ...UGC_BASE_FEATURES],
+      stripeLink: "https://buy.stripe.com/test_ugc_15s",
     },
     {
-      id: "ugc-pack-3",
-      name: "حزمة 3 فيديوهات",
-      price: "1200 ر.س",
-      features: ["مثالية لحملة متنوعة على تيك توك وسناب شات"],
-      stripeLink: "https://buy.stripe.com/test_ugc_pack_3",
+      id: "ugc-30s",
+      type: "individual",
+      name: "باقة التأثير",
+      price: "297 ر.س",
+      duration: "30 ثانية",
+      features: ["فيديو 30 ثانية", ...UGC_BASE_FEATURES],
+      stripeLink: "https://buy.stripe.com/test_ugc_30s",
     },
     {
-      id: "ugc-pack-5",
-      name: "حزمة 5 فيديوهات",
-      price: "1800 ر.س",
-      features: ["تغطية شاملة لمنتجاتك مع زوايا تصوير مختلفة"],
-      stripeLink: "https://buy.stripe.com/test_ugc_pack_5",
+      id: "ugc-60s",
+      type: "individual",
+      name: "باقة متكاملة",
+      price: "397 ر.س",
+      duration: "60 ثانية",
+      features: ["فيديو 60 ثانية", ...UGC_BASE_FEATURES],
+      stripeLink: "https://buy.stripe.com/test_ugc_60s",
     },
     {
-      id: "ugc-monthly",
-      name: "الاشتراك الشهري",
-      price: "تبدأ من 3500 ر.س",
-      features: ["10 فيديوهات شهرياً لضمان استمرارية المحتوى"],
-      stripeLink: "https://buy.stripe.com/test_ugc_monthly",
+      id: "ugc-bundle-1",
+      type: "bundle",
+      name: "حزمة UGC 1",
+      price: "599 ر.س",
+      duration: "4 فيديوهات 15 ثانية",
+      features: ["4 فيديوهات (15 ثانية لكل فيديو)", ...UGC_BASE_FEATURES],
+    },
+    {
+      id: "ugc-bundle-2",
+      type: "bundle",
+      name: "حزمة UGC 2",
+      price: "799 ر.س",
+      duration: "4 فيديوهات 30 ثانية",
+      features: ["4 فيديوهات (30 ثانية لكل فيديو)", ...UGC_BASE_FEATURES],
+    },
+    {
+      id: "ugc-custom",
+      type: "custom",
+      name: "باقة مخصصة",
+      price: "حسب الطلب",
+      duration: "حسب الاحتياج",
+      features: ["مشاريع طويلة وحملات إعلانية متكاملة", "دعم فني مباشر 24/7"],
     },
   ],
 };

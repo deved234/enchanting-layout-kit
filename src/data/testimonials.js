@@ -1,4 +1,10 @@
+export const SERVICE_LABELS = {
+  motion: "موشن جرافيك",
+  ugc: "UGC",
+};
+
 export const TESTIMONIALS = [
+  // — موشن جرافيك —
   {
     id: "mohamed",
     stars: 5,
@@ -8,6 +14,7 @@ export const TESTIMONIALS = [
     role: "فلسطين",
     initial: "م",
     tone: "pulse",
+    service: "motion",
   },
   {
     id: "asmaa",
@@ -18,6 +25,7 @@ export const TESTIMONIALS = [
     role: "السعودية",
     initial: "أ",
     tone: "motion",
+    service: "motion",
   },
   {
     id: "roqaya",
@@ -28,6 +36,7 @@ export const TESTIMONIALS = [
     role: "السعودية",
     initial: "ر",
     tone: "flash",
+    service: "motion",
   },
   {
     id: "amro",
@@ -38,6 +47,7 @@ export const TESTIMONIALS = [
     role: "قطر",
     initial: "ع",
     tone: "pulse",
+    service: "motion",
   },
   {
     id: "abdullah",
@@ -48,6 +58,7 @@ export const TESTIMONIALS = [
     role: "مصر",
     initial: "ع",
     tone: "motion",
+    service: "motion",
   },
   {
     id: "ahmed-s",
@@ -58,5 +69,40 @@ export const TESTIMONIALS = [
     role: "مصر",
     initial: "A",
     tone: "flash",
+    service: "motion",
+  },
+  // — UGC —
+  {
+    id: "abdulrahman",
+    stars: 5,
+    quote:
+      "ما شاء الله تبارك الرحمن، إتقان وجودة ممتازة وسرعة في التنفيذ. نشكر الفريق القائم على العمل بصراحة، ونتمنى لهم دوام التوفيق والنجاح يا رب العالمين",
+    name: "عبدالرحمن أ",
+    role: "السعودية",
+    initial: "ع",
+    tone: "pulse",
+    service: "ugc",
+  },
+  {
+    id: "naif",
+    stars: 5,
+    quote:
+      "يعطيهم العافية، أحب أشكر الفريق على احترافيتهم العالية وحسن تعاملهم طوال فترة العمل. بصراحة كانوا مثالاً في سرعة الإنجاز، ودقة التنفيذ، وتقبّل جميع الملاحظات والتعديلات بكل رحابة صدر حرصاً على رضا العميل. أسأل الله أن يبارك لهم ويكتب لهم المزيد من النجاح، وأتشرف بالتعامل معهم مجدداً في الأعمال القادمة وأنصح بكل ثقة بالتعامل معهم",
+    name: "نايف",
+    role: "السعودية",
+    initial: "ن",
+    tone: "motion",
+    service: "ugc",
+  },
+  {
+    id: "waleed",
+    stars: 5,
+    quote:
+      "عمل ممتاز جداً، تنفيذ سريع ومتقن، والتعامل كان احترافياً ومتعاوناً للغاية. الطلب تم تنفيذه بشكل أفضل من المتوقع، وننصح بالتعامل معهم وبإذن الله يجمعنا عمل آخر قريباً",
+    name: "وليد",
+    role: "ليبيا",
+    initial: "و",
+    tone: "flash",
+    service: "ugc",
   },
 ];

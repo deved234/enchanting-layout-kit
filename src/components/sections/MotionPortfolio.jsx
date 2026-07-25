@@ -4,6 +4,8 @@ import { PortfolioVideoGrid } from "../shared/PortfolioVideoGrid";
 import { PACKAGES } from "../../data/packages";
 import { PORTFOLIO_VIDEOS } from "../../data/portfolioVideos";
 import { COMPANY } from "../../config/company";
+import { TestimonialSlider } from "../shared/TestimonialSlider";
+import { TESTIMONIALS } from "../../data/testimonials";
 
 const NOTES = [
   {
@@ -41,7 +43,7 @@ export function MotionPortfolio() {
           </div>
         </div>
 
-        <PortfolioVideoGrid items={PORTFOLIO_VIDEOS.motion} provider="youtube" />
+        <PortfolioVideoGrid items={PORTFOLIO_VIDEOS.motion} accent="pulse" />
 
         <div className="space-y-3 max-w-3xl mx-auto mb-12">
           {NOTES.map((n) => (
@@ -138,6 +140,9 @@ export function MotionPortfolio() {
           </div>
         </div>
 
+        <div className="mt-24">
+          <TestimonialSlider items={TESTIMONIALS.filter((t) => t.service === "motion")} />
+        </div>
       </div>
     </section>
   );

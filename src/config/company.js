@@ -5,9 +5,8 @@ export const COMPANY = {
   whatsapp: "https://wa.me/97470624227",
   website: "https://sadmedia.com",
   social: {
-    instagram: "https://instagram.com/",
-    tiktok: "https://tiktok.com/",
-    linkedin: "https://linkedin.com/",
-    youtube: "https://youtube.com/",
+    instagram: "https://www.instagram.com/saadmedia_co?igsh=MXZza295cHZhODNkZg%3D%3D&utm_source=qr",
+    tiktok: "https://www.tiktok.com/@saadmedia_co?_r=1&_t=ZS-98JDJtmHJC9",
+    facebook: "https://www.facebook.com/share/1FxKfsoAFn/?mibextid=wwXIfr",
   },
 };
