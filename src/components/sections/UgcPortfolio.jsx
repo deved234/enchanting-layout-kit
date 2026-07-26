@@ -52,7 +52,7 @@ export function UgcPortfolio() {
               </span>
               <h3 className="text-2xl md:text-3xl font-bold">الباقات الفردية</h3>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {PACKAGES.ugc.filter((p) => p.type === "individual").map((p, i) => (
                 <PricingCard
                   key={p.id}

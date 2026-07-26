@@ -19,12 +19,12 @@ export function PricingCard({
   const accentBg = isPulse ? "bg-brand-pulse/10" : "bg-brand-motion/10";
   const accentDot = isPulse ? "bg-brand-pulse" : "bg-brand-motion";
 
-  let priceClass = "text-3xl font-black tracking-tight";
+  let priceClass = "text-[28px] font-black tracking-tight";
   if (isPulse) priceClass += " text-brand-pulse";
   else priceClass += " text-brand-motion";
   if (custom) priceClass = "text-2xl text-brand-muted font-bold";
 
-  const btnBase = "w-full py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center";
+  const btnBase = "w-full py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center text-sm";
   let btnClass = `${btnBase} border-2`;
   if (isPulse)
     btnClass += " border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white";
@@ -34,46 +34,46 @@ export function PricingCard({
     btnClass = `${btnBase} border-2 border-brand-ink/30 text-brand-muted hover:bg-brand-ink hover:text-white hover:border-brand-ink`;
 
   const containerClass = custom
-    ? "border-2 border-dashed border-brand-outline/30 rounded-2xl p-8 flex flex-col transition-all hover:-translate-y-2 hover:shadow-xl hover:border-brand-ink/30 h-full bg-white/40"
-    : "bg-white rounded-2xl p-8 flex flex-col transition-all hover:-translate-y-2 hover:shadow-2xl h-full border border-brand-outline/10 shadow-sm hover:shadow-brand-pulse/5";
+    ? "border-2 border-dashed border-brand-outline/30 rounded-2xl p-6 flex flex-col transition-all hover:-translate-y-2 hover:shadow-xl hover:border-brand-ink/30 h-full bg-white/40"
+    : "bg-white rounded-2xl p-6 flex flex-col transition-all hover:-translate-y-2 hover:shadow-xl h-full border border-brand-outline/10 shadow-sm";
 
   return (
     <Reveal delay={delay}>
       <div className={containerClass}>
         {badge && (
-          <div className="flex justify-center mb-6">
-            <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-brand-pulse to-brand-pulse/80 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-brand-pulse/20">
-              <Icon name="local_fire_department" filled className="!text-sm" />
+          <div className="flex justify-center mb-4">
+            <span className="inline-flex items-center gap-1 bg-gradient-to-r from-brand-pulse to-brand-pulse/80 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg shadow-brand-pulse/20">
+              <Icon name="local_fire_department" filled className="!text-xs" />
               {badge}
             </span>
           </div>
         )}
 
         {duration && !badge && (
-          <div className="flex justify-center mb-5">
-            <span className="inline-flex items-center gap-1.5 bg-brand-outline/10 text-brand-muted px-3 py-1 rounded-full text-xs font-semibold">
-              <span className={`w-1.5 h-1.5 rounded-full ${accentDot}`} />
+          <div className="flex justify-center mb-3">
+            <span className="inline-flex items-center gap-1.5 bg-brand-outline/10 text-brand-muted px-2.5 py-0.5 rounded-full text-[10px] font-semibold">
+              <span className={`w-1 h-1 rounded-full ${accentDot}`} />
               {duration}
             </span>
           </div>
         )}
 
-        <h4 className="font-bold text-lg text-center">{name}</h4>
+        <h4 className="font-bold text-base text-center leading-tight">{name}</h4>
 
-        <div className="mt-3 mb-5 border-b border-brand-outline/10 pb-5">
-          <div className={`text-center mb-5 ${priceClass}`}>{price}</div>
+        <div className="mt-2 mb-4 text-center border-b border-brand-outline/10 pb-4">
+          <div className={priceClass}>{price}</div>
         </div>
 
         {desc ? (
-          <p className="mb-8 text-brand-muted grow text-sm leading-relaxed">{desc}</p>
+          <p className="mb-6 text-brand-muted grow text-sm leading-relaxed">{desc}</p>
         ) : (
-          <ul className="space-y-3 mb-8 grow">
+          <ul className="space-y-2 mb-6 grow">
             {features.map((f) => (
-              <li key={f} className="flex items-start gap-2.5 text-sm text-brand-muted">
+              <li key={f} className="flex items-start gap-2 text-xs text-brand-muted leading-relaxed">
                 <span
-                  className={`w-5 h-5 rounded-full ${accentBg} flex items-center justify-center shrink-0 mt-0.5`}
+                  className={`w-4 h-4 rounded-full ${accentBg} flex items-center justify-center shrink-0 mt-0.5`}
                 >
-                  <Icon name="done" className={`!text-xs ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`} />
+                  <Icon name="done" className={`!text-[9px] ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`} />
                 </span>
                 {f}
               </li>

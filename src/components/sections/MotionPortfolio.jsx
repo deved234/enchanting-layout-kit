@@ -66,7 +66,7 @@ export function MotionPortfolio() {
               </span>
               <h3 className="text-2xl md:text-3xl font-bold">الباقات الفردية</h3>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {PACKAGES.motion.filter((p) => p.type === "individual").map((p, i) => (
                 <PricingCard
                   key={p.id}
