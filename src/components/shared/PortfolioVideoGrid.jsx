@@ -60,9 +60,9 @@ export function PortfolioVideoGrid({ items, accent = "pulse" }) {
   const hasOrientation = landscape.length > 0 || portrait.length > 0;
 
   function colClass(count) {
-    if (count <= 2) return "grid-cols-2";
-    if (count === 3) return "grid-cols-2 md:grid-cols-3";
-    return "grid-cols-2 md:grid-cols-4";
+    if (count <= 2) return "grid-cols-1 sm:grid-cols-2";
+    if (count === 3) return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3";
+    return "grid-cols-1 sm:grid-cols-2 md:grid-cols-4";
   }
 
   function barClass() {
@@ -107,7 +107,7 @@ export function PortfolioVideoGrid({ items, accent = "pulse" }) {
             <span className={`text-xs font-bold tracking-widest ${labelClass()}`}>طولي</span>
             <span className="h-px grow bg-brand-outline/10" />
           </div>
-          <div className={`grid ${colClass(portrait.length)} gap-4 md:gap-6`}>
+          <div className={`grid ${colClass(portrait.length)} gap-4 md:gap-6 max-w-4xl mx-auto`}>
             {portrait.map((video, index) => (
               <VideoCard key={video.id} video={video} index={landscape.length + index} accent={accent} />
             ))}

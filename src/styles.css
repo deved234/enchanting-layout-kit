@@ -136,7 +136,7 @@ html[dir="rtl"] body {
 .sm-marquee-track {
   display: flex;
   width: max-content;
-  animation: sm-marquee 60s linear infinite;
+  animation: sm-marquee 30s linear infinite;
 }
 
 .sm-marquee-fade {
