@@ -6,7 +6,7 @@ export function ServiceCard({ service, image, delay = 0 }) {
     <Reveal delay={delay} variant="scale">
       <a
         href={service.href}
-        className="sm-tilt group relative overflow-hidden rounded-2xl bg-white sm-soft-shadow h-[400px] flex flex-col justify-end p-8 block"
+        className="sm-tilt group relative overflow-hidden rounded-2xl bg-white sm-soft-shadow h-[300px] md:h-[400px] flex flex-col justify-end p-8 block"
       >
         <div className="absolute inset-0 z-0">
           <img

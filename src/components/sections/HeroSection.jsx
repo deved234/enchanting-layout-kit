@@ -87,7 +87,7 @@ export function HeroSection() {
         </Reveal>
       </div>
       <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700 ease-out z-10
+        className={`absolute bottom-8 start-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700 ease-out z-10
                       ${scrolled ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"}`}
       >
         <span className="text-sm text-brand-muted tracking-wider">ادر للأسفل</span>
@@ -95,10 +95,10 @@ export function HeroSection() {
           <span className="w-1.5 h-1.5 rounded-full sm-primary-gradient sm-scroll-dot" />
         </span>
       </div>
-      <div ref={orbsRef} className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-10 w-40 h-40 bg-brand-pulse/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
-        <div className="absolute bottom-1/4 right-10 w-56 h-56 bg-brand-motion/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
-        <div className="absolute top-1/2 right-1/3 w-24 h-24 bg-brand-flash/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
+      <div ref={orbsRef} className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/4 start-10 w-40 h-40 bg-brand-pulse/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
+        <div className="absolute bottom-1/4 end-10 w-56 h-56 bg-brand-motion/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
+        <div className="absolute top-1/2 end-1/3 w-24 h-24 bg-brand-flash/20 blur-3xl rounded-full transition-transform duration-700 ease-out" />
       </div>
     </section>
   );

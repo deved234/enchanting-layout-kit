@@ -18,14 +18,14 @@ export function TestimonialSlider({ items }) {
         <button
           onClick={() => scroll(-360)}
           aria-label="السابق"
-          className="absolute end-0 md:-end-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-brand-outline/30 flex items-center justify-center text-brand-muted hover:text-brand-pulse hover:border-brand-pulse/30 transition-all hover:scale-110"
+           className="absolute end-0 md:-end-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg border border-brand-outline/30 flex items-center justify-center text-brand-muted hover:text-brand-pulse hover:border-brand-pulse/30 transition-all hover:scale-110"
         >
           <Icon name="arrow_back" className="!text-xl" />
         </button>
         <button
           onClick={() => scroll(360)}
           aria-label="التالي"
-          className="absolute start-0 md:-start-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-brand-outline/30 flex items-center justify-center text-brand-muted hover:text-brand-pulse hover:border-brand-pulse/30 transition-all hover:scale-110"
+           className="absolute start-0 md:-start-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg border border-brand-outline/30 flex items-center justify-center text-brand-muted hover:text-brand-pulse hover:border-brand-pulse/30 transition-all hover:scale-110"
         >
           <Icon name="arrow_forward" className="!text-xl" />
         </button>

@@ -18,10 +18,9 @@ export function TestimonialCard({ testimonial }) {
     <div
       role="group"
       aria-roledescription="slide"
-      className={`relative sm-glass p-8 md:p-10 rounded-2xl sm-soft-shadow border overflow-hidden hover:-translate-y-1.5 transition-all duration-300 h-full ${toneStyles[tone]}`}
-      style={{ borderLeftWidth: "3px" }}
+      className={`relative sm-glass p-8 md:p-10 rounded-2xl sm-soft-shadow border overflow-hidden hover:-translate-y-1.5 transition-all duration-300 h-full ${toneStyles[tone]} border-s-[3px]`}
     >
-      <div className="absolute -top-6 -right-6 text-7xl opacity-[0.06] pointer-events-none select-none leading-none font-serif">
+      <div className="absolute -top-6 -end-6 text-7xl opacity-[0.06] pointer-events-none select-none leading-none font-serif">
         "
       </div>
       <div className="flex text-brand-pulse mb-5 gap-0.5">

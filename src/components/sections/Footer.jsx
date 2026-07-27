@@ -37,19 +37,23 @@ export function Footer() {
     <footer className="w-full py-12 px-5 md:px-8 bg-brand-surface-2 border-t border-brand-outline/40">
       <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-3">
-          <img alt={COMPANY.name} className="h-10 w-auto" src={LOGO_MARK} />
-          <img alt={COMPANY.name} className="h-6 w-auto" src={LOGO_WORD} />
+          <img alt={COMPANY.name} className="h-10 w-auto" src={LOGO_MARK} loading="lazy" />
+          <img alt={COMPANY.name} className="h-6 w-auto" src={LOGO_WORD} loading="lazy" />
         </div>
         <nav className="flex gap-6" aria-label="روابط إضافية">
           <a
             className="text-brand-muted hover:text-brand-pulse transition-colors px-2 py-1 text-sm"
-            href="#cta"
+            href={COMPANY.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             سياسة الخصوصية
           </a>
           <a
             className="text-brand-muted hover:text-brand-pulse transition-colors px-2 py-1 text-sm"
-            href="#cta"
+            href={COMPANY.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             الشروط والأحكام
           </a>
@@ -70,7 +74,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-10 h-10 rounded-full bg-brand-surface flex items-center justify-center text-brand-muted hover:text-brand-pulse hover:bg-brand-pulse/10 hover:-translate-y-1 transition-all"
+              className="w-12 h-12 rounded-full bg-brand-surface flex items-center justify-center text-brand-muted hover:text-brand-pulse hover:bg-brand-pulse/10 hover:-translate-y-1 transition-all"
             >
               <s.icon />
             </a>

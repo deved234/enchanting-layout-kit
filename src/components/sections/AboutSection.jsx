@@ -15,7 +15,7 @@ export function AboutSection() {
               src={ABOUT_IMG}
             />
           </div>
-          <div className="absolute -bottom-10 -left-10 sm-glass p-8 rounded-2xl md:block max-w-xs sm-soft-shadow border border-brand-pulse/10 sm-float">
+          <div className="absolute -bottom-10 -start-10 sm-glass p-8 rounded-2xl md:block max-w-xs sm-soft-shadow border border-brand-pulse/10 sm-float">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-brand-pulse/20 rounded-full flex items-center justify-center text-brand-pulse">
                 <Icon name="speed" />
@@ -27,7 +27,7 @@ export function AboutSection() {
             </p>
           </div>
         </Reveal>
-        <Reveal className="md:pr-12" delay={150}>
+        <Reveal className="md:pe-12" delay={150}>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight">
             خبرة إبداعية تتجاوز الحدود
           </h2>

@@ -1,17 +1,41 @@
+import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Header } from "../components/sections/Header";
 import { HeroSection } from "../components/sections/HeroSection";
 import { BrandsMarquee } from "../components/sections/BrandsMarquee";
-import { AboutSection } from "../components/sections/AboutSection";
-import { ServicesSection } from "../components/sections/ServicesSection";
-import { MotionPortfolio } from "../components/sections/MotionPortfolio";
-import { UgcPortfolio } from "../components/sections/UgcPortfolio";
-import { WhyUsSection } from "../components/sections/WhyUsSection";
-import { FaqSection } from "../components/sections/FaqSection";
-import { CtaSection } from "../components/sections/CtaSection";
-import { WhatsAppButton } from "../components/sections/WhatsAppButton";
-import { Footer } from "../components/sections/Footer";
+
+const AboutSection = lazy(() =>
+  import("../components/sections/AboutSection").then((m) => ({ default: m.AboutSection })),
+);
+const ServicesSection = lazy(() =>
+  import("../components/sections/ServicesSection").then((m) => ({ default: m.ServicesSection })),
+);
+const MotionPortfolio = lazy(() =>
+  import("../components/sections/MotionPortfolio").then((m) => ({ default: m.MotionPortfolio })),
+);
+const UgcPortfolio = lazy(() =>
+  import("../components/sections/UgcPortfolio").then((m) => ({ default: m.UgcPortfolio })),
+);
+const WhyUsSection = lazy(() =>
+  import("../components/sections/WhyUsSection").then((m) => ({ default: m.WhyUsSection })),
+);
+const FaqSection = lazy(() =>
+  import("../components/sections/FaqSection").then((m) => ({ default: m.FaqSection })),
+);
+const CtaSection = lazy(() =>
+  import("../components/sections/CtaSection").then((m) => ({ default: m.CtaSection })),
+);
+const WhatsAppButton = lazy(() =>
+  import("../components/sections/WhatsAppButton").then((m) => ({ default: m.WhatsAppButton })),
+);
+const Footer = lazy(() =>
+  import("../components/sections/Footer").then((m) => ({ default: m.Footer })),
+);
+
+function SectionFallback() {
+  return <div className="h-32" />;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,16 +63,34 @@ function Index() {
       <main className="pt-20">
         <HeroSection />
         <BrandsMarquee />
-        <AboutSection />
-        <ServicesSection />
-        <MotionPortfolio />
-        <UgcPortfolio />
-        <WhyUsSection />
-        <FaqSection />
-        <CtaSection />
+        <Suspense fallback={<SectionFallback />}>
+          <AboutSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <ServicesSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <MotionPortfolio />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <UgcPortfolio />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <WhyUsSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <FaqSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <CtaSection />
+        </Suspense>
       </main>
-      <WhatsAppButton />
-      <Footer />
+      <Suspense fallback={null}>
+        <WhatsAppButton />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }

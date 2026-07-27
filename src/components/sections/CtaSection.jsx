@@ -39,8 +39,8 @@ export function CtaSection() {
             </MagneticButton>
           </div>
         </div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl sm-float" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-flash/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl sm-float-slow" />
+        <div className="absolute top-0 end-0 w-64 h-64 bg-white/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl sm-float" />
+        <div className="absolute bottom-0 start-0 w-96 h-96 bg-brand-flash/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl sm-float-slow" />
       </Reveal>
     </section>
   );

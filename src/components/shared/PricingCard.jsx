@@ -24,7 +24,7 @@ export function PricingCard({
   else priceClass += " text-brand-motion";
   if (custom) priceClass = "text-2xl text-brand-muted font-bold";
 
-  const btnBase = "w-full py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center text-sm";
+  const btnBase = "w-full py-3.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center text-sm";
   let btnClass = `${btnBase} border-2`;
   if (isPulse)
     btnClass += " border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white";
@@ -42,7 +42,7 @@ export function PricingCard({
       <div className={containerClass}>
         {badge && (
           <div className="flex justify-center mb-4">
-            <span className="inline-flex items-center gap-1 bg-gradient-to-r from-brand-pulse to-brand-pulse/80 text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-lg shadow-brand-pulse/20">
+            <span className="inline-flex items-center gap-1 bg-gradient-to-r from-brand-pulse to-brand-pulse/80 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg shadow-brand-pulse/20">
               <Icon name="local_fire_department" filled className="!text-xs" />
               {badge}
             </span>
@@ -51,7 +51,7 @@ export function PricingCard({
 
         {duration && !badge && (
           <div className="flex justify-center mb-3">
-            <span className="inline-flex items-center gap-1.5 bg-brand-outline/10 text-brand-muted px-2.5 py-0.5 rounded-full text-[10px] font-semibold">
+            <span className="inline-flex items-center gap-1.5 bg-brand-outline/10 text-brand-muted px-2.5 py-0.5 rounded-full text-xs font-semibold">
               <span className={`w-1 h-1 rounded-full ${accentDot}`} />
               {duration}
             </span>
@@ -73,7 +73,7 @@ export function PricingCard({
                 <span
                   className={`w-4 h-4 rounded-full ${accentBg} flex items-center justify-center shrink-0 mt-0.5`}
                 >
-                  <Icon name="done" className={`!text-[9px] ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`} />
+                  <Icon name="done" className={`!text-xs ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`} />
                 </span>
                 {f}
               </li>

@@ -179,7 +179,7 @@ export function Header() {
           </MagneticButton>
           <button
             ref={triggerRef}
-            className="md:hidden text-brand-pulse size-11 flex items-center justify-center rounded-xl hover:bg-brand-pulse/10 transition-colors"
+            className="md:hidden text-brand-pulse size-12 flex items-center justify-center rounded-xl hover:bg-brand-pulse/10 transition-colors"
             aria-label="فتح القائمة"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -212,7 +212,7 @@ export function Header() {
               <button
                 aria-label="إغلاق القائمة"
                 onClick={closeMenu}
-                className="size-11 flex items-center justify-center rounded-xl hover:bg-brand-surface transition-colors"
+                className="size-12 flex items-center justify-center rounded-xl hover:bg-brand-surface transition-colors"
               >
                 <Icon name="close" className="!text-3xl text-brand-ink" />
               </button>
@@ -225,7 +225,7 @@ export function Header() {
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={`flex items-center gap-3 text-base font-medium transition-all duration-200 px-4 py-3 rounded-xl ${
                     isActive(link.href)
-                      ? "text-brand-pulse bg-brand-pulse/10 border-r-4 border-brand-pulse"
+                      ? "text-brand-pulse bg-brand-pulse/10 border-e-4 border-brand-pulse"
                       : "text-brand-muted hover:text-brand-pulse hover:bg-brand-surface"
                   }`}
                 >

@@ -37,11 +37,11 @@ function VideoCard({ video, index, accent }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 flex items-center justify-center transition-opacity group-hover:bg-black/40">
               <span className={`w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg transform group-hover:scale-110 ${playHover} transition-all duration-300`}>
-                <Icon name="play_arrow" filled className="text-white !text-4xl ml-0.5" />
+                <Icon name="play_arrow" filled className="text-white !text-4xl ms-0.5" />
               </span>
             </div>
             {isPortrait && (
-              <span className={`absolute top-3 right-3 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 rounded-full border border-white/10 ${isMotion ? "bg-brand-pulse/60" : "bg-brand-motion/60"}`}>
+              <span className={`absolute top-3 end-3 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 rounded-full border border-white/10 ${isMotion ? "bg-brand-pulse/60" : "bg-brand-motion/60"}`}>
                 طولي
               </span>
             )}
