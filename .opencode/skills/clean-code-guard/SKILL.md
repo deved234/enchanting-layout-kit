@@ -22,19 +22,21 @@ for the judgement layer around code quality and review.
 
 This skill has three modes — pick based on the user's request.
 
-**Guard-pass mode** (recommended): after code has been generated, edited, refactored, or fixed, check the diff or target files against the *Always-applied imperatives* below. Fix violations before presenting, committing, or merging the work.
+**Guard-pass mode** (recommended): after code has been generated, edited, refactored, or fixed, check the diff or target files against the _Always-applied imperatives_ below. Fix violations before presenting, committing, or merging the work.
 
-**Live mode** (explicit): when the user invokes this skill before a risky code edit, apply the same imperatives while writing, then run the *Self-check before delivery* checklist. If you violate any rule, fix it before showing the user.
+**Live mode** (explicit): when the user invokes this skill before a risky code edit, apply the same imperatives while writing, then run the _Self-check before delivery_ checklist. If you violate any rule, fix it before showing the user.
 
 **Review mode** (triggered when the user asks you to review, audit, critique, or rate code): walk [references/review-checklist.md](references/review-checklist.md) against the target file(s) and produce a structured findings report. Do not edit code in review mode unless asked.
 
 Across all three modes, the rule bodies live in [references/](references/). Read the relevant reference file when:
+
 - You hit a rule you don't fully remember the reasoning for.
 - The user pushes back on a rule and you need the source citation.
 - You're in review mode and need the full checklist.
 - The code under review touches a specific principle (e.g., subclassing → [references/solid.md](references/solid.md); deduplication → [references/dry-kiss-yagni.md](references/dry-kiss-yagni.md)).
 
 The reference files are:
+
 - [references/naming-and-functions.md](references/naming-and-functions.md) — names, function size, parameters, command/query separation.
 - [references/comments-and-formatting.md](references/comments-and-formatting.md) — when to comment, when to delete, matching neighbor style.
 - [references/solid.md](references/solid.md) — SRP, OCP, LSP, ISP, DIP with the modern phrasings and detection smells.
@@ -73,7 +75,7 @@ LLM-generated code has measurable, systematic failure modes that generic "follow
 - AI agents **"declare success despite failing tests"** by returning hardcoded fixture values (Fowler, Patterns for Reducing Friction).
 - Function size grew from 142 to 267 LoC, cyclomatic complexity from 4.2 to 8.1 in AI-assisted commits (GitClear).
 
-The classic principles (Clean Code, SOLID, DRY/KISS/YAGNI) are still the foundation — but this skill adds the *AI-specific* layer most rule packs miss.
+The classic principles (Clean Code, SOLID, DRY/KISS/YAGNI) are still the foundation — but this skill adds the _AI-specific_ layer most rule packs miss.
 
 ## Always-applied imperatives
 
@@ -81,14 +83,14 @@ These are the rules to follow on every code change. They are imperative, not sug
 
 ### Functions and names
 
-1. **Names reveal intent.** Never use `data`, `data2`, `result`, `result_final`, `item`, `temp`, `value`, `obj`, `info`, `helper`, `manager`, `utils`, or `handle_*`/`process_*`/`do_*` without a qualifier. A name must answer *why it exists and what it does*. (Clean Code Ch. 2)
+1. **Names reveal intent.** Never use `data`, `data2`, `result`, `result_final`, `item`, `temp`, `value`, `obj`, `info`, `helper`, `manager`, `utils`, or `handle_*`/`process_*`/`do_*` without a qualifier. A name must answer _why it exists and what it does_. (Clean Code Ch. 2)
 2. **Functions stay small.** Target ≤20 lines, one level of abstraction, one thing. If you can extract a function with a name that doesn't restate the body, the parent was doing more than one thing. (Clean Code Ch. 3)
 3. **Four arguments is the hard ceiling.** At five, stop and introduce a request/config object (record, struct, DTO, or equivalent). Never use boolean flag arguments — split into two functions instead.
 4. **No output arguments.** A function either returns a value (query) or has a side effect (command). Never both. Command names use verbs; query names use nouns or getter-style names. (CQS)
 
 ### Comments and structure
 
-5. **Comments explain *why*, never *what*.** Delete any comment that paraphrases the line below it. Delete step-number scaffolding comments. Delete commented-out code — version control exists. (Clean Code Ch. 4)
+5. **Comments explain _why_, never _what_.** Delete any comment that paraphrases the line below it. Delete step-number scaffolding comments. Delete commented-out code — version control exists. (Clean Code Ch. 4)
 6. **Match the file's existing style.** Read the file you're editing and at least one neighbor before writing. Mirror the casing, import order, error handling, logging, and HTTP/DB client choices. Do not introduce a second pattern.
 
 ### SOLID
@@ -100,7 +102,7 @@ These are the rules to follow on every code change. They are imperative, not sug
 
 ### DRY, KISS, YAGNI
 
-11. **Delete duplicated *knowledge*, not duplicated *text*.** Two functions that look alike but encode different rules are not a DRY violation. One rule expressed in code + docs + schema is. (Pragmatic Programmer, "DRY")
+11. **Delete duplicated _knowledge_, not duplicated _text_.** Two functions that look alike but encode different rules are not a DRY violation. One rule expressed in code + docs + schema is. (Pragmatic Programmer, "DRY")
 12. **The wrong abstraction is worse than duplication.** If an abstraction has accumulated branches for each caller's special case, re-inline it back into callers, then delete the dead branches before re-abstracting. (Sandi Metz, "The Wrong Abstraction")
 13. **Complexity ceiling: cyclomatic ≤10, nesting depth ≤5.** Refactor before exceeding. (McCabe 1976)
 14. **No speculative anything.** No optional parameter, config flag, env var, feature toggle, interface, factory, or base class without a present-day caller. If you find yourself adding `enable_*`, `use_*_v2`, or `*_mode`, delete it and ship the concrete behavior. (Fowler, "Yagni")
@@ -108,7 +110,7 @@ These are the rules to follow on every code change. They are imperative, not sug
 ### AI-specific guardrails — the highest-leverage section
 
 15. **Never swallow errors with broad catch-all handling.** Catch only the specific error type you can recover from. If you cannot recover, let the error propagate. Returning null/none/empty success from a catch handler is forbidden unless the function contract documents that behavior. (Karpathy)
-16. **Guard the boundary; trust the contract.** At a trust boundary — external input, request/API payloads, deserialized or cross-process data, anything from an untrusted source — validate, even when the happy path looks fine. *Inside* the boundary, do not add null checks or runtime type checks for values whose declared type or caller contract already excludes that case. The test for a guard is not "could this theoretically be wrong" but "can untrusted data reach here." (arXiv 2409.19182)
+16. **Guard the boundary; trust the contract.** At a trust boundary — external input, request/API payloads, deserialized or cross-process data, anything from an untrusted source — validate, even when the happy path looks fine. _Inside_ the boundary, do not add null checks or runtime type checks for values whose declared type or caller contract already excludes that case. The test for a guard is not "could this theoretically be wrong" but "can untrusted data reach here." (arXiv 2409.19182)
 17. **Verify every import and external call.** Before calling a method on a library, confirm it exists in the version installed (read the package, check the lockfile, or import and inspect). Do not generate code based on what the API "should" look like. (USENIX Security '25)
 18. **No hardcoded "success" returns or mock fixtures in production code.** Never return `{"status": "ok", ...}` or canned data from a function whose spec says it does real work. If you cannot implement, fail explicitly with the language's unimplemented or unsupported-operation mechanism and say so. Never disable, skip, or weaken a test to make it pass. (Fowler, Claude Code issue #6984)
 19. **Re-derive, do not copy from similar.** When tempted to copy a function and modify it, stop. Re-derive from the spec. Off-by-one and wrong-null-semantic bugs almost always enter through copy-from-similar. (arXiv 2411.01414)
@@ -119,7 +121,7 @@ These are the rules to follow on every code change. They are imperative, not sug
 
 ### The floor — never cut these for simplicity
 
-Rule 16 trusts the contract *inside* the boundary; the items below stay even while you strip speculation (14), defensive guards (16), and dead code (21). Removing one of these is a behavior change, not a cleanup — keep it, or flag it and ask.
+Rule 16 trusts the contract _inside_ the boundary; the items below stay even while you strip speculation (14), defensive guards (16), and dead code (21). Removing one of these is a behavior change, not a cleanup — keep it, or flag it and ask.
 
 - **Validation and sanitization at every trust boundary** — external input, request/API payloads, deserialized or cross-process data.
 - **Error handling that prevents data loss.**
@@ -128,7 +130,7 @@ Rule 16 trusts the contract *inside* the boundary; the items below stay even whi
 
 ### Refactoring discipline
 
-24. **Preserve observable behavior when refactoring.** When the user asks you to clean up, simplify, or refactor existing code, do not change the contract — same inputs produce the same outputs, same exceptions raised, same side effects, same ordering guarantees. If you spot a bug while refactoring, flag it separately and ask before changing it. Refactoring is defined as *"a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior"* (Fowler, *Refactoring*). Bug fixes and refactors are two operations — never bundle them in a single change.
+24. **Preserve observable behavior when refactoring.** When the user asks you to clean up, simplify, or refactor existing code, do not change the contract — same inputs produce the same outputs, same exceptions raised, same side effects, same ordering guarantees. If you spot a bug while refactoring, flag it separately and ask before changing it. Refactoring is defined as _"a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior"_ (Fowler, _Refactoring_). Bug fixes and refactors are two operations — never bundle them in a single change.
 
 ## Self-check before delivery
 
@@ -136,9 +138,9 @@ Before you show the user the code you wrote or edited:
 
 1. Walk imperatives 1–24 against your diff. Fix every violation.
 2. For new functions, count: lines ≤ 20? params ≤ 4? complexity feels ≤ 10? names reveal intent?
-3. For new comments, ask: does this explain *why*? If it explains *what*, delete it.
+3. For new comments, ask: does this explain _why_? If it explains _what_, delete it.
 4. For new error handling: is the caught error type specific? Does the handler do something other than silently return?
-5. For new abstractions (interface, factory, base class, registry): is there a second concrete user *today*? If no, inline it.
+5. For new abstractions (interface, factory, base class, registry): is there a second concrete user _today_? If no, inline it.
 6. Did you read the file you edited and at least one neighbor? Did your style match?
 7. Is there any hardcoded "ok" return or fixture data? If yes, replace with real implementation or an explicit unimplemented/unsupported-operation failure.
 8. If this is a refactor: did you change observable behavior? If yes, you bundled a bug fix — split it out and ask the user.
@@ -166,6 +168,6 @@ Refer them to the source name in the relevant [references/](references/) file an
 
 ## What this skill does not do
 
-- Run linters or static analysis. Those are tool-level concerns; this skill is about *what to write* and *what to look for*.
+- Run linters or static analysis. Those are tool-level concerns; this skill is about _what to write_ and _what to look for_.
 - Enforce language-specific formatter or linter preferences. Defer to the project's style tooling.
 - Replace tests. Clean code passes tests; tests do not pass without clean code, but clean code without tests is also a defect.

@@ -1,6 +1,6 @@
 # Comments and Formatting — Clean Code Chapters 4 and 5
 
-Source: Robert C. Martin, *Clean Code*. Summaries: Vivek Khatri Ch. 4, Vivek Khatri Ch. 5, LinkedIn summary of Ch. 4.
+Source: Robert C. Martin, _Clean Code_. Summaries: Vivek Khatri Ch. 4, Vivek Khatri Ch. 5, LinkedIn summary of Ch. 4.
 
 ## Contents
 
@@ -25,10 +25,10 @@ The foundational rule: **"Don't comment bad code — rewrite it."** Comments are
 A short list of comments that earn their keep:
 
 - **Legal headers** — license boilerplate, copyright.
-- **Intent** — explaining *why* a decision was made when the choice is non-obvious. Example: `// Use exponential backoff to avoid hammering the rate limiter during retries.`
+- **Intent** — explaining _why_ a decision was made when the choice is non-obvious. Example: `// Use exponential backoff to avoid hammering the rate limiter during retries.`
 - **Warnings of consequences** — `// This function is called during transaction commit; do not raise.`
 - **TODOs** — sparingly, with a tracking ticket reference. `// TODO(JIRA-1234): switch to streaming once API supports it.`
-- **Public API documentation** — docstrings that document *contract* (preconditions, postconditions, raises), not body.
+- **Public API documentation** — docstrings that document _contract_ (preconditions, postconditions, raises), not body.
 - **Amplification** — calling attention to something non-obvious. `# The `+ 1` accounts for the inclusive end of the range; see RFC §3.2.`
 
 ### C2. Banned comments
@@ -48,6 +48,7 @@ Delete on sight:
 A documentation comment that paraphrases the function signature is noise:
 
 **Bad:**
+
 ```text
 add(a, b)
   // Adds a and b and returns the result.
@@ -55,6 +56,7 @@ add(a, b)
 ```
 
 **Good:**
+
 ```text
 add(a, b)
   return a + b
@@ -63,6 +65,7 @@ add(a, b)
 A documentation comment earns its keep when it documents contract: what may be passed, what may be returned, what errors are raised, and any non-obvious side effects.
 
 **Good:**
+
 ```text
 // Charge a payment source.
 // Returns: charge identifier.
@@ -107,7 +110,7 @@ Team rules override personal preference. Read the file, then write.
 
 Before you ship code:
 
-1. Walk every comment you added. For each, ask: does it explain *why*? If it explains *what*, delete it.
+1. Walk every comment you added. For each, ask: does it explain _why_? If it explains _what_, delete it.
 2. Walk every documentation comment you added. Is it paraphrasing the signature? Delete the paraphrase; keep only contract documentation.
 3. Any commented-out code? Delete it.
 4. Any `Step 1`, `Step 2`, `First, ...`, or `Then, ...` scaffolding comments? Delete.

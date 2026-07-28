@@ -89,14 +89,30 @@ function parseArgs(argv) {
         process.stdout.write(headerComment());
         process.exit(0);
         break;
-      case "--brief": opts.brief = next(); break;
-      case "--cd": opts.cd = resolve(next()); break;
-      case "--model": opts.model = next(); break;
-      case "--sandbox": opts.sandbox = next(); break;
-      case "--read-only": opts.sandbox = "read-only"; break;
-      case "--resume-last": opts.resumeLast = true; break;
-      case "--skip-git-repo-check": opts.skipGitRepoCheck = true; break;
-      case "--out-dir": opts.outDir = resolve(next()); break;
+      case "--brief":
+        opts.brief = next();
+        break;
+      case "--cd":
+        opts.cd = resolve(next());
+        break;
+      case "--model":
+        opts.model = next();
+        break;
+      case "--sandbox":
+        opts.sandbox = next();
+        break;
+      case "--read-only":
+        opts.sandbox = "read-only";
+        break;
+      case "--resume-last":
+        opts.resumeLast = true;
+        break;
+      case "--skip-git-repo-check":
+        opts.skipGitRepoCheck = true;
+        break;
+      case "--out-dir":
+        opts.outDir = resolve(next());
+        break;
       default:
         fail(`unknown option: ${arg}`);
     }
@@ -139,7 +155,10 @@ function codexVersion() {
     // auto-appends .exe, never .cmd, so launching it needs shell:true there or it
     // ENOENTs on a working install. POSIX is unaffected. (git installs a real
     // git.exe and must NOT get this flag — see gitTouchedFiles.)
-    return execFileSync("codex", ["--version"], { encoding: "utf8", shell: process.platform === "win32" }).trim();
+    return execFileSync("codex", ["--version"], {
+      encoding: "utf8",
+      shell: process.platform === "win32",
+    }).trim();
   } catch {
     return null;
   }
@@ -151,7 +170,10 @@ function gitTouchedFiles(cwd) {
   // "Codex changed nothing." [] means git ran and the working tree is clean.
   try {
     const out = execFileSync("git", ["status", "--porcelain"], { cwd, encoding: "utf8" });
-    return out.split("\n").map((line) => line.trimEnd()).filter(Boolean);
+    return out
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .filter(Boolean);
   } catch {
     return null;
   }
@@ -207,7 +229,9 @@ function prepareRunDir(opts, brief) {
   const startedAt = new Date().toISOString();
   // Default the run dir to system temp so the repo under review stays pristine —
   // the touched-files report must show only Codex's edits, not relay's artifacts.
-  const outDir = opts.outDir || join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
+  const outDir =
+    opts.outDir ||
+    join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
   mkdirSync(outDir, { recursive: true });
   const run = {
     startedAt,
@@ -246,9 +270,18 @@ function makeResultWriter(opts, version, run) {
 }
 
 function reportUnavailable(writeResult, resultPath) {
-  const result = writeResult({ status: "codex_unavailable", exitCode: 127, signal: null, threadId: null, finalMessage: "", touchedFiles: null });
+  const result = writeResult({
+    status: "codex_unavailable",
+    exitCode: 127,
+    signal: null,
+    threadId: null,
+    finalMessage: "",
+    touchedFiles: null,
+  });
   printSummary(result, resultPath);
-  process.stderr.write("relay: `codex` not found on PATH. Install it (npm i -g @openai/codex) and run `codex login`.\n");
+  process.stderr.write(
+    "relay: `codex` not found on PATH. Install it (npm i -g @openai/codex) and run `codex login`.\n",
+  );
   process.exit(127);
 }
 
@@ -257,7 +290,11 @@ function dispatchToCodex(opts, brief, run, writeResult) {
   // shell:true on Windows so the codex.cmd shim resolves (see codexVersion). Safe:
   // the brief is fed via child.stdin below — never argv — and argv holds only
   // sandbox enums, model names, and file paths, with no shell metacharacters.
-  const child = spawn("codex", argv, { cwd: opts.cd, stdio: ["pipe", "pipe", "pipe"], shell: process.platform === "win32" });
+  const child = spawn("codex", argv, {
+    cwd: opts.cd,
+    stdio: ["pipe", "pipe", "pipe"],
+    shell: process.platform === "win32",
+  });
 
   let threadId = null;
   let stdoutBuf = "";
@@ -293,7 +330,15 @@ function dispatchToCodex(opts, brief, run, writeResult) {
   child.on("error", (err) => {
     if (settled) return;
     settled = true;
-    const result = writeResult({ status: "failed", exitCode: 1, signal: null, threadId, finalMessage: "", touchedFiles: gitTouchedFiles(opts.cd), error: String(err && err.message ? err.message : err) });
+    const result = writeResult({
+      status: "failed",
+      exitCode: 1,
+      signal: null,
+      threadId,
+      finalMessage: "",
+      touchedFiles: gitTouchedFiles(opts.cd),
+      error: String(err && err.message ? err.message : err),
+    });
     printSummary(result, run.resultPath);
     process.exit(1);
   });
@@ -305,7 +350,9 @@ function dispatchToCodex(opts, brief, run, writeResult) {
       const tid = recordEventLine(run.eventsPath, stdoutBuf);
       if (tid) threadId = tid;
     }
-    const finalMessage = existsSync(run.finalPath) ? readFileSync(run.finalPath, "utf8").trim() : "";
+    const finalMessage = existsSync(run.finalPath)
+      ? readFileSync(run.finalPath, "utf8").trim()
+      : "";
     const result = writeResult({
       status: code === 0 ? "completed" : "failed",
       exitCode: code ?? (constants.signals[signal] ? 128 + constants.signals[signal] : 1),
@@ -346,10 +393,16 @@ function main() {
 function printSummary(result, resultPath) {
   const lines = [];
   lines.push("");
-  lines.push(`relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  codex ${result.codexVersion ?? "?"}`);
-  if (result.signal === "SIGKILL") lines.push("hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not a codex error; check host memory and re-dispatch, or split the task into smaller briefs.");
+  lines.push(
+    `relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  codex ${result.codexVersion ?? "?"}`,
+  );
+  if (result.signal === "SIGKILL")
+    lines.push(
+      "hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not a codex error; check host memory and re-dispatch, or split the task into smaller briefs.",
+    );
   if (result.resumeLast) lines.push("mode: resumed most recent session");
-  if (result.threadId) lines.push(`thread id (resume with: codex exec resume ${result.threadId}): ${result.threadId}`);
+  if (result.threadId)
+    lines.push(`thread id (resume with: codex exec resume ${result.threadId}): ${result.threadId}`);
   const touched = result.touchedFiles;
   if (touched === null) {
     lines.push("touched files: git unavailable — inspect the working tree directly");
@@ -368,7 +421,9 @@ function printSummary(result, resultPath) {
   lines.push("--- end report ---");
   lines.push("");
   lines.push(`result: ${resultPath}`);
-  lines.push("relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.");
+  lines.push(
+    "relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.",
+  );
   process.stdout.write(`${lines.join("\n")}\n`);
 }
 

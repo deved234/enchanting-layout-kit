@@ -3,6 +3,7 @@
 This file catalogs 15 systematic ways LLMs produce bad code, each backed by published research or widely-documented engineering observations. Read this first if you are an AI agent applying this skill — these are the patterns most likely to enter your own output.
 
 For each failure mode you get:
+
 - **Pattern:** one-line description.
 - **Source:** the research or post documenting it as systematic, not incidental.
 - **Bad / Good:** short before-and-after.
@@ -37,6 +38,7 @@ For each failure mode you get:
 **Source.** Karpathy directly observed that LLMs are unusually afraid of exceptions. Reinforced by field reports on LLM error suppression. Root cause is the reward signal during training — propagating exceptions penalizes the model, so the model learns to suppress them.
 
 **Bad:**
+
 ```text
 getEmail(userId):
   attempt:
@@ -45,9 +47,11 @@ getEmail(userId):
   catch anyError:
     return null
 ```
+
 Looks safe. In practice, a database outage is now indistinguishable from "user has no email."
 
 **Good:**
+
 ```text
 getEmail(userId):
   user = userStore.get(userId)  // storage errors propagate
@@ -65,21 +69,24 @@ getEmail(userId):
 **Source.** arXiv 2409.19182, "AI-Generated Code Considered Harmful"; HN discussion of defensive code overuse. Same reward-shaping mechanism as #1.
 
 **Bad:**
+
 ```text
 total(orderItems):
   if orderItems is null: return 0
   if orderItems is not a collection: return 0
   return sum(order.amount for each non-null order in orderItems)
 ```
+
 The contract says `orderItems` is a collection of orders. None of these guards can fire under normal call paths.
 
 **Good:**
+
 ```text
 total(orderItems):
   return sum(order.amount for each order in orderItems)
 ```
 
-**Rule.** Do not add null checks, runtime type checks, or truthiness checks for values whose type annotation or caller contract already excludes that case. Trust the contract. This applies *inside* a trust boundary; at the boundary itself — external input, payloads, deserialized or cross-process data — validation is required, not defensive bloat.
+**Rule.** Do not add null checks, runtime type checks, or truthiness checks for values whose type annotation or caller contract already excludes that case. Trust the contract. This applies _inside_ a trust boundary; at the boundary itself — external input, payloads, deserialized or cross-process data — validation is required, not defensive bloat.
 
 ---
 
@@ -90,6 +97,7 @@ total(orderItems):
 **Source.** Martin Fowler, "Patterns for Reducing Friction in AI-Assisted Development" — names "overeagerness (adding unrequested features)" as a documented AI pattern. Fowler, "I still care about the code". Fowler, "Conversation: LLMs and Building Abstractions".
 
 **Bad:**
+
 ```text
 PaymentProcessor interface
   charge(amount)
@@ -102,9 +110,11 @@ PaymentProcessorFactory
   create():
     return new CardPaymentProcessor()
 ```
+
 There is exactly one payment processor. The abstract interface, the factory, and the indirection are pure ceremony.
 
 **Good:**
+
 ```text
 charge(amount):
   return paymentProvider.createCharge(amount).id
@@ -118,9 +128,10 @@ charge(amount):
 
 **Pattern.** Line-by-line comments restating the code in English; step-number scaffolding comments left in; documentation comments that paraphrase the signature.
 
-**Source.** HN thread #43929768 — *"The most common thing that makes agentic code ugly is the overuse of comments."* arXiv 2402.13013, "Code Needs Comments" and arXiv on multi-intent comment generation — LLM-generated comments answer "what?" rather than "why?", averaging ~5 descriptive words versus 19-word mixed-intent author comments.
+**Source.** HN thread #43929768 — _"The most common thing that makes agentic code ugly is the overuse of comments."_ arXiv 2402.13013, "Code Needs Comments" and arXiv on multi-intent comment generation — LLM-generated comments answer "what?" rather than "why?", averaging ~5 descriptive words versus 19-word mixed-intent author comments.
 
 **Bad:**
+
 ```text
 // Increment counter by one
 counter += 1
@@ -130,6 +141,7 @@ return result
 ```
 
 **Good:**
+
 ```text
 counter += 1
 
@@ -138,7 +150,7 @@ if counter > daily_limit:
     counter = 0
 ```
 
-**Rule.** Comments explain *why*, never *what*. Strip restating-code comments and any leftover "Step N" scaffolding before finalizing. Keep comments only where the rationale wouldn't be obvious to a reader of the code.
+**Rule.** Comments explain _why_, never _what_. Strip restating-code comments and any leftover "Step N" scaffolding before finalizing. Keep comments only where the rationale wouldn't be obvious to a reader of the code.
 
 ---
 
@@ -169,6 +181,7 @@ if counter > daily_limit:
 **Source.** arXiv 2512.01141, "Neural Variable Name Repair" — generic identifiers are an explicit target of name-repair models because LLM code over-produces them. arXiv 2510.03178, "When Names Disappear" — semantic names act as anchors during generation.
 
 **Bad:**
+
 ```text
 processData(data):
   result = []
@@ -179,6 +192,7 @@ processData(data):
 ```
 
 **Good:**
+
 ```text
 doublePrices(orders):
   return orders.map(order -> order.priceCents * 2)
@@ -205,6 +219,7 @@ doublePrices(orders):
 **Source.** arXiv 2304.10778 quality study and Fowler's overeagerness pattern. The triggering behavior is "AI does not pause to extract a config struct."
 
 **Bad:**
+
 ```text
 sendEmail(to, subject, body, retry=true, backoff="exp",
           html=false, fromAddress=null, encoding="utf-8",
@@ -212,6 +227,7 @@ sendEmail(to, subject, body, retry=true, backoff="exp",
 ```
 
 **Good:**
+
 ```text
 EmailRequest
   to
@@ -253,13 +269,16 @@ sendEmail(request: EmailRequest)
 **Source.** Fowler, "Patterns for Reducing Friction" — names "declaring success despite failing tests" and "brute-force fixes." claude-code issue #6984 "Systematic Mock Data Generation Bias". Anthropic Claude Code best practices explicitly tell agents: no mock implementations.
 
 **Bad:**
+
 ```text
 getUserBalance(userId):
   return 1000  // TODO: actual provider call
 ```
+
 Shipped as the implementation, function body is fiction.
 
 **Good:**
+
 ```text
 getUserBalance(userId):
   raise NotImplemented("Wire to billing.getBalance() after auth is available")
@@ -273,9 +292,10 @@ getUserBalance(userId):
 
 **Pattern.** Code that compiles and reads correctly but encodes a slightly wrong formula, range, or null semantic — often lifted from a similar-but-different function.
 
-**Source.** arXiv 2411.01414 — 4 of the 7 mistake categories are non-syntactic semantic mistakes prior work had missed; root cause is "misunderstanding of specification." Katanaquant, "Your LLM Doesn't Write Correct Code. It Writes Plausible Code". Simon Willison: hallucinations in code are *less* dangerous because they fail loudly — the corollary is that the dangerous class is plausible-but-wrong semantic code that runs.
+**Source.** arXiv 2411.01414 — 4 of the 7 mistake categories are non-syntactic semantic mistakes prior work had missed; root cause is "misunderstanding of specification." Katanaquant, "Your LLM Doesn't Write Correct Code. It Writes Plausible Code". Simon Willison: hallucinations in code are _less_ dangerous because they fail loudly — the corollary is that the dangerous class is plausible-but-wrong semantic code that runs.
 
 **Bad:**
+
 ```text
 # Compute median
 median = (values[values.length / 2] + values[values.length / 2 + 1]) / 2
@@ -297,15 +317,18 @@ for index from 1 to items.length - 1:
 **Source.** Fowler's overeagerness pattern and the HN defensive-code thread. Anecdotal but widely observed.
 
 **Bad:**
+
 ```text
 renderInvoice(invoice,
               format="pdf", template=null, locale="en",
               includeQr=false, currencyOverride=null,
               debug=false, legacyMode=false)
 ```
+
 Only one caller exists. It passes `(invoice,)`.
 
 **Good:**
+
 ```text
 renderInvoice(invoice)
 ```
@@ -321,6 +344,7 @@ renderInvoice(invoice)
 **Source.** Field reports on AI over-building (Fowler's overeagerness pattern) and long-standing supply-chain guidance: every dependency is permanent maintenance surface — version churn, transitive vulnerabilities, audit and licensing weight — that a small local function never carries. Same emit-more bias as modes 3 and 14.
 
 **Bad:**
+
 ```text
 # add a package to sum a column of numbers
 import stats_helpers
@@ -328,6 +352,7 @@ total = stats_helpers.sum_column(rows, "amount")
 ```
 
 **Good:**
+
 ```text
 total = sum(row.amount for row in rows)
 ```
@@ -338,7 +363,7 @@ total = sum(row.amount for row in rows)
 
 ## Cross-cutting observation
 
-Nine of the 15 failure modes (1, 2, 3, 9, 12, 14, 15, plus pieces of 8 and 11) trace to one root cause: **the model is biased toward emitting more code, more parameters, more guards, more abstractions** — anything but the minimum required by the spec. The cure is restraint, not knowledge. Before writing each line, ask: *does the spec require this, today?* If no, do not write it.
+Nine of the 15 failure modes (1, 2, 3, 9, 12, 14, 15, plus pieces of 8 and 11) trace to one root cause: **the model is biased toward emitting more code, more parameters, more guards, more abstractions** — anything but the minimum required by the spec. The cure is restraint, not knowledge. Before writing each line, ask: _does the spec require this, today?_ If no, do not write it.
 
 ## Where this skill differs from generic clean-code rules
 

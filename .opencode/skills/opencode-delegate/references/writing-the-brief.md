@@ -81,7 +81,7 @@ report you can read: it tells OpenCode to end with a written summary, so the res
 
 ## Discover the real gates — don't hardcode
 
-`<verification_loop>` is only useful if it names the project's *actual* commands. Read the repo's
+`<verification_loop>` is only useful if it names the project's _actual_ commands. Read the repo's
 `AGENTS.md` / `CLAUDE.md` / `Makefile` / `package.json` first and copy the real ones in (`make test`,
 `npm run lint`, `cargo test`, `pytest -q`, whatever it is). A brief that says "run the tests" without
 naming them gets you an OpenCode that guesses — or skips.

@@ -86,7 +86,7 @@ when it returns:
   the result file — `… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job`
   in PowerShell, `start /b` in cmd). The run is done when `result.json` exists with a `status`. (A
   pre-run usage error — bad args or an empty brief — instead exits with code 2 and a stderr message and
-  writes no result file, so check the exit code too. A missing `grok` binary exits 127 but *does* write
+  writes no result file, so check the exit code too. A missing `grok` binary exits 127 but _does_ write
   a `result.json` with status `grok_unavailable`.)
 
 Do not trust progress trackers over reality: a run is finished when `result.json` is written and the
@@ -119,19 +119,19 @@ Full checklist: [references/review-and-land.md](references/review-and-land.md).
 Grok's default permission mode is `ask`, which **blocks on approval prompts in a headless pipe**. The
 relay therefore always sets autonomy explicitly:
 
-| Relay flag | What Grok gets | Use when |
-| --- | --- | --- |
-| *(default)* | `--always-approve --sandbox workspace` | Normal implementation — writes scoped to the working tree |
-| `--read-only` | `--sandbox read-only --permission-mode plan` | Review / diagnosis — **best-effort, not enforced** (see caveat below) |
-| `--full-access` | `--always-approve --sandbox off` | Explicit opt-in when the task needs unrestricted tools |
+| Relay flag      | What Grok gets                               | Use when                                                              |
+| --------------- | -------------------------------------------- | --------------------------------------------------------------------- |
+| _(default)_     | `--always-approve --sandbox workspace`       | Normal implementation — writes scoped to the working tree             |
+| `--read-only`   | `--sandbox read-only --permission-mode plan` | Review / diagnosis — **best-effort, not enforced** (see caveat below) |
+| `--full-access` | `--always-approve --sandbox off`             | Explicit opt-in when the task needs unrestricted tools                |
 
-`--always-approve` alone would approve *all* tools (writes, shell, network) — closer to unrestricted
+`--always-approve` alone would approve _all_ tools (writes, shell, network) — closer to unrestricted
 than to a workspace-scoped write. Pairing it with `--sandbox workspace` is what keeps the default
 safe. Reach for `--full-access` only when the human asks for it.
 
 **`--read-only` is best-effort, not a hard guarantee.** The read-only sandbox restricts out-of-workspace
 filesystem/network access, not grok's own edit tool, and headless `plan` mode is advisory — a run
-verified here still wrote the working tree when told to. Use `--read-only` to *signal* review intent,
+verified here still wrote the working tree when told to. Use `--read-only` to _signal_ review intent,
 but always confirm `touchedFiles` afterward; treat the diff, not the flag, as the guarantee. The relay
 automates the check: it snapshots `git status` before a `--read-only` run and sets
 `readOnlyViolation: true` in `result.json` (with a summary warning) when the tree changed anyway.

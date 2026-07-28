@@ -66,7 +66,7 @@ a report you can read.
 
 ## Discover the real gates
 
-`<verification_loop>` is only useful if it names the project's *actual* commands. Read the repo's
+`<verification_loop>` is only useful if it names the project's _actual_ commands. Read the repo's
 `AGENTS.md` / `CLAUDE.md` / `Makefile` / `package.json` first and copy the real ones in (`make test`,
 `npm run lint`, `cargo test`, `pytest -q`, whatever it is). A brief that says "run the tests" without
 naming them gets you an implementer that guesses - or skips.

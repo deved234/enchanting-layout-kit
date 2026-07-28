@@ -23,17 +23,17 @@ node "<skill-dir>/scripts/relay.mjs" --brief brief.txt --cd /path/to/repo
 
 `<skill-dir>` is the installed folder containing this skill's `SKILL.md`.
 
-| Flag | Effect |
-| --- | --- |
-| `--brief <file>` | Brief path. Omit it to read the brief from stdin. |
-| `--cd <dir>` | Working root and child process cwd (default: current directory). |
-| `--model <alias>` | Kimi model alias for this run (default: Kimi's own `default_model`). |
-| `--session <id>` | Resume a specific Kimi session; send only the delta brief. |
-| `--resume-last` | Resume the most recent Kimi session for this cwd (`kimi --continue`); send only the delta brief. |
-| `--add-dir <dir>` | Add an extra workspace directory. Repeatable. Edits there are not reported in `touchedFiles`. |
-| `--timeout <dur>` | Relay watchdog (default: `30m`; h/m/s strings). Kimi has no timeout flag. |
-| `--out-dir <dir>` | Artifact directory (default: a fresh directory under the system temp dir). |
-| `-h`, `--help` | Print the relay's header help. |
+| Flag              | Effect                                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `--brief <file>`  | Brief path. Omit it to read the brief from stdin.                                                |
+| `--cd <dir>`      | Working root and child process cwd (default: current directory).                                 |
+| `--model <alias>` | Kimi model alias for this run (default: Kimi's own `default_model`).                             |
+| `--session <id>`  | Resume a specific Kimi session; send only the delta brief.                                       |
+| `--resume-last`   | Resume the most recent Kimi session for this cwd (`kimi --continue`); send only the delta brief. |
+| `--add-dir <dir>` | Add an extra workspace directory. Repeatable. Edits there are not reported in `touchedFiles`.    |
+| `--timeout <dur>` | Relay watchdog (default: `30m`; h/m/s strings). Kimi has no timeout flag.                        |
+| `--out-dir <dir>` | Artifact directory (default: a fresh directory under the system temp dir).                       |
+| `-h`, `--help`    | Print the relay's header help.                                                                   |
 
 `--session` and `--resume-last` are mutually exclusive. The child cwd pins the primary workspace;
 `--add-dir` adds extra workspaces only.

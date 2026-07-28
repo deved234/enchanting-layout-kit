@@ -1,6 +1,6 @@
 # Naming and Functions — Clean Code Chapters 2 and 3
 
-Source: Robert C. Martin, *Clean Code*. Sample chapters online at the Pearson PDF; chapter summaries at Vivek Khatri's Ch. 2 notes and Herberto Graça's Ch. 3 summary.
+Source: Robert C. Martin, _Clean Code_. Sample chapters online at the Pearson PDF; chapter summaries at Vivek Khatri's Ch. 2 notes and Herberto Graça's Ch. 3 summary.
 
 ## Contents
 
@@ -28,9 +28,10 @@ Source: Robert C. Martin, *Clean Code*. Sample chapters online at the Pearson PD
 
 ### N1. Intention-revealing
 
-A name should tell you *why it exists, what it does, and how it's used*. If you need a comment to explain a name, the name is wrong.
+A name should tell you _why it exists, what it does, and how it's used_. If you need a comment to explain a name, the name is wrong.
 
 **Bad:**
+
 ```text
 d  // elapsed time in days
 ts = []
@@ -38,6 +39,7 @@ fn(xs)
 ```
 
 **Good:**
+
 ```text
 elapsedDays
 timestamps
@@ -95,6 +97,7 @@ A function does one thing when you cannot extract another function from it with 
 Mixing levels is the most common subtle defect. Do not put an HTTP call, a SQL query, a regex parse, and a business rule in the same function — those are four levels.
 
 **Bad:**
+
 ```text
 renderUserReport(userId):
   connection = openDatabaseConnection()
@@ -103,9 +106,11 @@ renderUserReport(userId):
   markup = "<h1>" + displayName + "</h1>"
   return markup
 ```
+
 Four levels: connection, query, formatting, presentation.
 
 **Good:**
+
 ```text
 renderUserReport(userId):
   user = userRepository.findById(userId)
@@ -127,6 +132,7 @@ At five parameters, stop and extract a request/config object: record, struct, DT
 A boolean parameter that switches behavior is always wrong. Split into two functions.
 
 **Bad:**
+
 ```text
 render(invoice, asHtml):
   if asHtml:
@@ -136,25 +142,29 @@ render(invoice, asHtml):
 ```
 
 **Good:**
+
 ```text
 renderInvoiceHtml(invoice)
 renderInvoicePdf(invoice)
 ```
 
-The same applies to `mode="x"` string enums when the mode changes behavior. If `mode` parameterizes data (locale, currency), it's fine. If it parameterizes *which function runs*, split.
+The same applies to `mode="x"` string enums when the mode changes behavior. If `mode` parameterizes data (locale, currency), it's fine. If it parameterizes _which function runs_, split.
 
 ### F7. No output arguments / Command-Query Separation
 
 A function either returns a value (query) or has a side effect (command). Never both.
 
 **Bad:**
+
 ```text
 save(record) -> boolean
 // Returns true if saved, false if record was not found.
 ```
+
 What does the bool mean? Success? Found-ness? The caller can't tell.
 
 **Good:**
+
 ```text
 save(record)
 recordExists(recordId) -> boolean
@@ -184,4 +194,4 @@ Before you ship code:
 4. Are mixed abstraction levels eliminated?
 5. Are there any functions with >4 parameters? Extract a config object.
 6. Are there boolean flag arguments? Split.
-7. Do any functions both return a value *and* mutate state in a way callers depend on? Split.
+7. Do any functions both return a value _and_ mutate state in a way callers depend on? Split.

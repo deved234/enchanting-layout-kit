@@ -100,14 +100,30 @@ function parseArgs(argv) {
         process.stdout.write(headerComment());
         process.exit(0);
         break;
-      case "--brief": opts.brief = next(); break;
-      case "--cd": opts.cd = resolve(next()); break;
-      case "--model": opts.model = next(); break;
-      case "--session": opts.session = next(); break;
-      case "--resume-last": opts.resumeLast = true; break;
-      case "--add-dir": opts.addDirs.push(next()); break;
-      case "--timeout": opts.timeout = next(); break;
-      case "--out-dir": opts.outDir = resolve(next()); break;
+      case "--brief":
+        opts.brief = next();
+        break;
+      case "--cd":
+        opts.cd = resolve(next());
+        break;
+      case "--model":
+        opts.model = next();
+        break;
+      case "--session":
+        opts.session = next();
+        break;
+      case "--resume-last":
+        opts.resumeLast = true;
+        break;
+      case "--add-dir":
+        opts.addDirs.push(next());
+        break;
+      case "--timeout":
+        opts.timeout = next();
+        break;
+      case "--out-dir":
+        opts.outDir = resolve(next());
+        break;
       default:
         fail(`unknown option: ${arg}`);
     }
@@ -122,7 +138,9 @@ function parseArgs(argv) {
   // The watchdog is relay-only (kimi has no timeout flag), so a malformed
   // --timeout must fail loudly here - a silent 30m fallback would be wrong.
   if (parseDuration(opts.timeout) === null) {
-    fail(`--timeout "${opts.timeout}" is not a duration; use h/m/s strings like 30m, 90s, or 1h30m`);
+    fail(
+      `--timeout "${opts.timeout}" is not a duration; use h/m/s strings like 30m, 90s, or 1h30m`,
+    );
   }
   return opts;
 }
@@ -177,7 +195,10 @@ function gitTouchedFiles(cwd) {
   // [] means git ran and the working tree is clean.
   try {
     const out = execFileSync("git", ["status", "--porcelain"], { cwd, encoding: "utf8" });
-    return out.split("\n").map((line) => line.trimEnd()).filter(Boolean);
+    return out
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .filter(Boolean);
   } catch {
     return null;
   }
@@ -217,7 +238,10 @@ function makeEventScanner(onObject) {
         else if (ch === '"') inString = false;
         continue;
       }
-      if (ch === '"') { if (depth > 0) inString = true; continue; }
+      if (ch === '"') {
+        if (depth > 0) inString = true;
+        continue;
+      }
       if (ch === "{") {
         if (depth === 0) start = i;
         depth += 1;
@@ -226,7 +250,11 @@ function makeEventScanner(onObject) {
           depth -= 1;
           if (depth === 0 && start !== -1) {
             const slice = buf.slice(start, i + 1);
-            try { onObject(JSON.parse(slice)); } catch { /* ignore non-objects */ }
+            try {
+              onObject(JSON.parse(slice));
+            } catch {
+              /* ignore non-objects */
+            }
             start = -1;
           }
         }
@@ -242,7 +270,9 @@ function makeEventScanner(onObject) {
 
 function prepareRunDir(opts, brief) {
   const startedAt = new Date().toISOString();
-  const outDir = opts.outDir || join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
+  const outDir =
+    opts.outDir ||
+    join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
   mkdirSync(outDir, { recursive: true });
   const run = {
     startedAt,
@@ -290,7 +320,9 @@ function reportUnavailable(writeResult, resultPath) {
     touchedFiles: null,
   });
   printSummary(result, resultPath);
-  process.stderr.write("relay: `kimi` not found on PATH. Install Kimi Code and run `kimi login`.\n");
+  process.stderr.write(
+    "relay: `kimi` not found on PATH. Install Kimi Code and run `kimi login`.\n",
+  );
   process.exit(127);
 }
 
@@ -307,7 +339,11 @@ function dispatchToKimi(opts, brief, run, writeResult) {
     if (event.role === "assistant" && typeof event.content === "string") {
       textChunks.push(event.content);
     }
-    if (event.role === "meta" && event.type === "session.resume_hint" && typeof event.session_id === "string") {
+    if (
+      event.role === "meta" &&
+      event.type === "session.resume_hint" &&
+      typeof event.session_id === "string"
+    ) {
       sessionId = event.session_id;
     }
   });
@@ -392,7 +428,11 @@ function dispatchToKimi(opts, brief, run, writeResult) {
       finalMessage: assembleFinal(),
       touchedFiles: gitTouchedFiles(opts.cd),
       ...(succeeded ? {} : { stderrTail: stderrTail.slice(-20) }),
-      ...(watchdogFired ? { error: `kimi did not finish within --timeout ${opts.timeout}; killed by the relay watchdog` } : {}),
+      ...(watchdogFired
+        ? {
+            error: `kimi did not finish within --timeout ${opts.timeout}; killed by the relay watchdog`,
+          }
+        : {}),
     });
     printSummary(result, run.resultPath);
     process.exit(result.exitCode);
@@ -410,7 +450,9 @@ function main() {
   const briefBytes = Buffer.byteLength(brief, "utf8");
   const MAX_BRIEF_BYTES = 120 * 1024;
   if (briefBytes > MAX_BRIEF_BYTES) {
-    fail(`brief is ${Math.round(briefBytes / 1024)}KB; kimi passes the prompt as a CLI argument, which the OS caps (~128KB on Linux). Trim it, or have kimi read large context from the workspace instead of inlining it.`);
+    fail(
+      `brief is ${Math.round(briefBytes / 1024)}KB; kimi passes the prompt as a CLI argument, which the OS caps (~128KB on Linux). Trim it, or have kimi read large context from the workspace instead of inlining it.`,
+    );
   }
 
   const version = kimiVersion();
@@ -426,10 +468,16 @@ function main() {
 function printSummary(result, resultPath) {
   const lines = [];
   lines.push("");
-  lines.push(`relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  kimi ${result.kimiVersion ?? "?"}`);
-  if (result.signal === "SIGKILL") lines.push("hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not a kimi error; check host memory and re-dispatch, or split the task into smaller briefs.");
+  lines.push(
+    `relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  kimi ${result.kimiVersion ?? "?"}`,
+  );
+  if (result.signal === "SIGKILL")
+    lines.push(
+      "hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not a kimi error; check host memory and re-dispatch, or split the task into smaller briefs.",
+    );
   if (result.resumed) lines.push("mode: resumed an existing session");
-  if (result.sessionId) lines.push(`session id (resume with: --session ${result.sessionId}): ${result.sessionId}`);
+  if (result.sessionId)
+    lines.push(`session id (resume with: --session ${result.sessionId}): ${result.sessionId}`);
   const touched = result.touchedFiles;
   if (touched === null) {
     lines.push("touched files: git unavailable - inspect the working tree directly");
@@ -448,7 +496,9 @@ function printSummary(result, resultPath) {
   lines.push("--- end report ---");
   lines.push("");
   lines.push(`result: ${resultPath}`);
-  lines.push("relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.");
+  lines.push(
+    "relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.",
+  );
   process.stdout.write(`${lines.join("\n")}\n`);
 }
 

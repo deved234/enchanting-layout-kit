@@ -24,17 +24,17 @@ Inline code spans and code blocks are claim-dense; prose hides claims in verbs (
 
 ## Step 2: Verify each claim type
 
-| Claim type | Source of truth | How |
-|---|---|---|
-| Symbol exists | The codebase | Grep definition (`function name`, `class Name`, `def name`, export) — not usages, the definition |
-| Signature | The definition site | Read parameters, defaults, return; compare name-by-name with the doc |
-| CLI flag | The argument parser source, or `--help` output if runnable | Read the parser registration; flags in README but not in the parser are hallucinations |
-| Endpoint | Route registration (router file, `register_rest_route`, annotations) | Match path, method, and handler |
-| Config key | The code that reads it (`getenv`, config schema, `get_option`) | A documented key nothing reads is dead documentation |
-| Default value | The definition, not the docs of the definition | Defaults drift silently; read the current line |
-| Version claim | Changelog, git tags, dependency manifests | "Since 2.3" must appear in the 2.3 changelog or tag diff |
-| Behavioral claim | The implementation path | Read the function; trace the claimed behavior (retry loop, case fold, guard clause) |
-| Internal link/anchor | The target file/heading | Resolve the relative path; slugify the heading and compare |
+| Claim type           | Source of truth                                                      | How                                                                                              |
+| -------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Symbol exists        | The codebase                                                         | Grep definition (`function name`, `class Name`, `def name`, export) — not usages, the definition |
+| Signature            | The definition site                                                  | Read parameters, defaults, return; compare name-by-name with the doc                             |
+| CLI flag             | The argument parser source, or `--help` output if runnable           | Read the parser registration; flags in README but not in the parser are hallucinations           |
+| Endpoint             | Route registration (router file, `register_rest_route`, annotations) | Match path, method, and handler                                                                  |
+| Config key           | The code that reads it (`getenv`, config schema, `get_option`)       | A documented key nothing reads is dead documentation                                             |
+| Default value        | The definition, not the docs of the definition                       | Defaults drift silently; read the current line                                                   |
+| Version claim        | Changelog, git tags, dependency manifests                            | "Since 2.3" must appear in the 2.3 changelog or tag diff                                         |
+| Behavioral claim     | The implementation path                                              | Read the function; trace the claimed behavior (retry loop, case fold, guard clause)              |
+| Internal link/anchor | The target file/heading                                              | Resolve the relative path; slugify the heading and compare                                       |
 
 ## Step 3: Record what you verified
 

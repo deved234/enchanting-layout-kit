@@ -30,16 +30,16 @@ path. See [`SKILL.md`](../SKILL.md) if you need to locate it.)
 
 Options:
 
-| Flag | Effect |
-| --- | --- |
-| `--brief <file>` | The brief. Omit it to read the brief from stdin (`node relay.mjs … < brief.txt`). |
-| `--cd <dir>` | Working root for Codex (default: current directory). |
-| `--model <name>` | Codex model (default: Codex's own configured default). |
-| `--sandbox <mode>` | `read-only` \| `workspace-write` \| `danger-full-access` (default: `workspace-write`). |
-| `--read-only` | Shortcut for `--sandbox read-only` — review/diagnosis with no edits. |
-| `--resume-last` | Continue the most recent Codex session; send only the delta brief (see review-and-land). |
-| `--skip-git-repo-check` | Allow running outside a git repo. |
-| `--out-dir <dir>` | Where artifacts go (default: a fresh dir under the system temp dir). |
+| Flag                    | Effect                                                                                   |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
+| `--brief <file>`        | The brief. Omit it to read the brief from stdin (`node relay.mjs … < brief.txt`).        |
+| `--cd <dir>`            | Working root for Codex (default: current directory).                                     |
+| `--model <name>`        | Codex model (default: Codex's own configured default).                                   |
+| `--sandbox <mode>`      | `read-only` \| `workspace-write` \| `danger-full-access` (default: `workspace-write`).   |
+| `--read-only`           | Shortcut for `--sandbox read-only` — review/diagnosis with no edits.                     |
+| `--resume-last`         | Continue the most recent Codex session; send only the delta brief (see review-and-land). |
+| `--skip-git-repo-check` | Allow running outside a git repo.                                                        |
+| `--out-dir <dir>`       | Where artifacts go (default: a fresh dir under the system temp dir).                     |
 
 Artifacts default to the system temp dir on purpose: the repo under review stays clean, so the
 touched-files report shows only Codex's edits and nothing of the helper's own.
@@ -71,10 +71,10 @@ The helper blocks until Codex finishes. Back it with whatever your orchestrator 
 - **Claude Code:** run the `Bash` call with `run_in_background: true`; you're notified on completion,
   then read `result.json`.
 - **Plain shell / other agents:** foreground for short tasks, or background and poll — `node relay.mjs
-  … &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
+… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
   `start /b` in cmd). A run is done when `result.json` exists with a `status`. **But** a pre-run usage
-  error (bad args, empty brief) exits with code 2 *before* writing any file — so check the exit code
-  too, don't only watch for the file. (A missing `codex` binary exits 127 but *does* write a
+  error (bad args, empty brief) exits with code 2 _before_ writing any file — so check the exit code
+  too, don't only watch for the file. (A missing `codex` binary exits 127 but _does_ write a
   `result.json` with status `codex_unavailable`.)
 
 Trust the working tree and the process state over any progress display. A run is finished when the

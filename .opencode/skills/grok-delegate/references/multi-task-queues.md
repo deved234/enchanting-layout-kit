@@ -13,7 +13,7 @@ landing each (review + gates + commit) before dispatching the next. Three reason
   exists" only if the previous step actually committed.
 - **One commit per task** keeps the history reviewable and any single step revertible.
 - **Each review is honest.** A clean working tree before each dispatch means the next task's
-  `touchedFiles` shows only *its* changes, not a pile-up from earlier tasks.
+  `touchedFiles` shows only _its_ changes, not a pile-up from earlier tasks.
 
 Parallelism is occasionally worth it for genuinely independent tasks on separate files, but it
 sacrifices the clean-tree-per-task property and makes review harder. Default to sequential.
@@ -60,7 +60,7 @@ Proceed without asking on anything that follows from the agreed plan — that's 
 opting into the queue. Stop and surface when:
 
 - A task can't be completed correctly within its brief's scope (a scope change is the human's call).
-- A review finds something that calls the *plan* into question, not just the implementation.
+- A review finds something that calls the _plan_ into question, not just the implementation.
 - The gates reveal a problem that affects tasks already "done."
 
 Then report where you are, what's committed, and what the open question is — and wait. A queue that

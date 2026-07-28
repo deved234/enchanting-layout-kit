@@ -1,6 +1,6 @@
 # SOLID — the five principles
 
-Source: Robert C. Martin. The five principles were collected on Uncle Bob's "Principles of OOD" page on objectmentor.com (mirrored at butunclebob.com) and updated on blog.cleancoder.com. Original papers from *C++ Report* circa 1995–1996.
+Source: Robert C. Martin. The five principles were collected on Uncle Bob's "Principles of OOD" page on objectmentor.com (mirrored at butunclebob.com) and updated on blog.cleancoder.com. Original papers from _C++ Report_ circa 1995–1996.
 
 ## Contents
 
@@ -16,7 +16,7 @@ Source: Robert C. Martin. The five principles were collected on Uncle Bob's "Pri
 
 ## S — Single Responsibility Principle
 
-**Definition (Martin 2014, hardened from the original).** *"A module should be responsible to one, and only one, actor."*
+**Definition (Martin 2014, hardened from the original).** _"A module should be responsible to one, and only one, actor."_
 
 Older form: "A class should have only one reason to change."
 
@@ -24,7 +24,7 @@ Source: blog.cleancoder.com — SRP, 2014.
 
 ### Why
 
-The axis is *people*. Different stakeholders (Accounting, HR, DBA) want different things from the same class. When their needs change, they edit the same file, conflict, and break each other.
+The axis is _people_. Different stakeholders (Accounting, HR, DBA) want different things from the same class. When their needs change, they edit the same file, conflict, and break each other.
 
 ### Smells to flag
 
@@ -34,7 +34,7 @@ The axis is *people*. Different stakeholders (Accounting, HR, DBA) want differen
 
 ### Common misinterpretation
 
-*"A class should do one thing."* No. SRP is about **cohesion around an actor**, not method count. A 12-method `InvoiceRepository` answerable only to the data-access layer satisfies SRP. A 3-method class with one HTTP call, one Jinja render, and one DB write does not.
+_"A class should do one thing."_ No. SRP is about **cohesion around an actor**, not method count. A 12-method `InvoiceRepository` answerable only to the data-access layer satisfies SRP. A 3-method class with one HTTP call, one Jinja render, and one DB write does not.
 
 ### Bad
 
@@ -57,9 +57,9 @@ EmployeeRepository  // Data storage owner
 
 ## O — Open/Closed Principle
 
-**Definition.** *"Software entities (classes, modules, functions) should be open for extension, but closed for modification."*
+**Definition.** _"Software entities (classes, modules, functions) should be open for extension, but closed for modification."_
 
-Originally Bertrand Meyer (1988, *Object-Oriented Software Construction*); Martin refocused it on polymorphic abstraction rather than implementation inheritance.
+Originally Bertrand Meyer (1988, _Object-Oriented Software Construction_); Martin refocused it on polymorphic abstraction rather than implementation inheritance.
 
 Source: blog.cleancoder.com — OCP, 2014; Martin's 1996 paper PDF (Duke mirror).
 
@@ -75,7 +75,7 @@ Protect stable high-level policy from churn in low-level variants. New behavior 
 
 ### Common misinterpretation
 
-*"Never modify code."* The principle is that *modules containing high-level policy* should not be modified to accommodate new variants. Leaf code changes freely.
+_"Never modify code."_ The principle is that _modules containing high-level policy_ should not be modified to accommodate new variants. Leaf code changes freely.
 
 ### Bad
 
@@ -105,7 +105,7 @@ export(record, kind):
 
 ## L — Liskov Substitution Principle
 
-**Definition (Liskov & Wing, 1994).** *"If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2, then S is a subtype of T."*
+**Definition (Liskov & Wing, 1994).** _"If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2, then S is a subtype of T."_
 
 Source: Martin's LSP paper PDF (LaBRI mirror).
 
@@ -122,7 +122,8 @@ Substitutability. Callers written against a base type must continue to work when
 
 ### Common misinterpretation
 
-*"Subclasses must have the same methods."* That's signature compatibility, which is just type-checking. LSP is **behavioral**:
+_"Subclasses must have the same methods."_ That's signature compatibility, which is just type-checking. LSP is **behavioral**:
+
 - Preconditions can only **weaken** in the subtype.
 - Postconditions and invariants can only **strengthen**.
 - Parameter types are contravariant; return types covariant.
@@ -143,15 +144,16 @@ Square extends Rectangle
     this.width = height   // invariant: width == height
     this.height = height
 ```
+
 A caller holding a `Rectangle` reference does `r.set_width(5); r.set_height(4); assert r.area() == 20`. With a `Square`, the assertion fails — LSP violated.
 
-The fix is *not* to fix the methods. The fix is that `Square is-not-a Rectangle` in the behavioral sense. Compose, don't inherit.
+The fix is _not_ to fix the methods. The fix is that `Square is-not-a Rectangle` in the behavioral sense. Compose, don't inherit.
 
 ---
 
 ## I — Interface Segregation Principle
 
-**Definition.** *"Clients should not be forced to depend on methods they do not use."* Equivalently: many client-specific interfaces beat one general-purpose interface.
+**Definition.** _"Clients should not be forced to depend on methods they do not use."_ Equivalently: many client-specific interfaces beat one general-purpose interface.
 
 Source: Martin's 1996 ISP paper, catalogued at butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod.
 
@@ -167,7 +169,7 @@ Fat interfaces create transitive coupling. Clients are dragged into recompiles a
 
 ### Common misinterpretation
 
-*"Make interfaces small."* As a count rule, no. ISP is **client-centric** — segregation is driven by *the set of methods a particular client uses*, not by an arbitrary method-count ceiling. Two clients with identical method needs can share one interface even if it has 20 methods.
+_"Make interfaces small."_ As a count rule, no. ISP is **client-centric** — segregation is driven by _the set of methods a particular client uses_, not by an arbitrary method-count ceiling. Two clients with identical method needs can share one interface even if it has 20 methods.
 
 ### Bad
 
@@ -182,6 +184,7 @@ UserService
   audit(...)
   export(...)
 ```
+
 The audit logger only needs `audit`. It now depends transitively on the email and export subsystems.
 
 ### Good
@@ -201,10 +204,10 @@ Implementations can satisfy multiple protocols. Callers depend only on what they
 ## D — Dependency Inversion Principle
 
 **Definition (verbatim, two clauses).**
-*(a) High-level modules should not depend on low-level modules. Both should depend on abstractions.*
-*(b) Abstractions should not depend on details. Details should depend on abstractions.*
+_(a) High-level modules should not depend on low-level modules. Both should depend on abstractions._
+_(b) Abstractions should not depend on details. Details should depend on abstractions._
 
-Source: Martin's 1996 *C++ Report* paper, archived at Wayback / objectmentor.com.
+Source: Martin's 1996 _C++ Report_ paper, archived at Wayback / objectmentor.com.
 
 ### Why
 
@@ -214,12 +217,12 @@ Control the direction of the import graph. Policy must not transitively `import`
 
 - A high-level module imports a concrete low-level client inside business logic.
 - A constructor that `new`/instantiates concrete collaborators instead of accepting them as parameters.
-- Abstractions defined in the *low-level* package (the interface lives next to its database or service implementation) — ownership reversed. The interface should live in the **client's** package.
+- Abstractions defined in the _low-level_ package (the interface lives next to its database or service implementation) — ownership reversed. The interface should live in the **client's** package.
 - Function signatures typed against concrete classes instead of interfaces, protocols, or abstract contracts.
 
 ### Common misinterpretation
 
-*"DIP means use a DI container."* No. DIP is about **the direction of source-code dependencies**. You can satisfy DIP with plain constructor injection and no framework; you can violate DIP while using Spring.
+_"DIP means use a DI container."_ No. DIP is about **the direction of source-code dependencies**. You can satisfy DIP with plain constructor injection and no framework; you can violate DIP while using Spring.
 
 ### Bad
 

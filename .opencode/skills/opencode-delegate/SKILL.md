@@ -103,7 +103,7 @@ when it returns:
   the result file — `… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job`
   in PowerShell, `start /b` in cmd). The run is done when `result.json` exists with a `status`. (A
   pre-run usage error — bad args or an empty brief — instead exits with code 2 and writes no result
-  file, so check the exit code too. A missing `opencode` binary exits 127 but *does* write a
+  file, so check the exit code too. A missing `opencode` binary exits 127 but _does_ write a
   `result.json` with status `opencode_unavailable`.)
 
 Do not trust progress trackers over reality: a run is finished when `result.json` is written and the
@@ -145,7 +145,7 @@ Permissions **auto-approve by default**: the relay passes `--auto` so a headless
 prompt no one can answer. That is the point of unattended delegation — the orchestrator's diff review
 and the implementer sweep (step 4) are the safety net, not a per-action prompt. Pass `--no-auto` to
 honor the agent's own permission config instead (allow/ask/deny per action); pair it with an agent whose
-in-workspace permissions are set to *allow*, or a headless run can hang waiting on an `ask`.
+in-workspace permissions are set to _allow_, or a headless run can hang waiting on an `ask`.
 **Read-only (`plan`) runs never get `--auto`** — auto-approving would let the plan agent's ask-gated
 edit/bash permissions through and defeat "read-only," so a review can't be tricked into touching the tree.
 

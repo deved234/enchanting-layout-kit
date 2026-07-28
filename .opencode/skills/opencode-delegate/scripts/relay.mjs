@@ -99,18 +99,42 @@ function parseArgs(argv) {
         process.stdout.write(headerComment());
         process.exit(0);
         break;
-      case "--brief": opts.brief = next(); break;
-      case "--cd": opts.cd = resolve(next()); break;
-      case "--model": opts.model = next(); break;
-      case "--agent": opts.agent = next(); break;
-      case "--read-only": opts.agent = "plan"; break;
-      case "--variant": opts.variant = next(); break;
-      case "--auto": opts.auto = true; break;
-      case "--no-auto": opts.auto = false; break;
-      case "--resume-last": opts.resumeLast = true; break;
-      case "--session": opts.session = next(); break;
-      case "--pure": opts.pure = true; break;
-      case "--out-dir": opts.outDir = resolve(next()); break;
+      case "--brief":
+        opts.brief = next();
+        break;
+      case "--cd":
+        opts.cd = resolve(next());
+        break;
+      case "--model":
+        opts.model = next();
+        break;
+      case "--agent":
+        opts.agent = next();
+        break;
+      case "--read-only":
+        opts.agent = "plan";
+        break;
+      case "--variant":
+        opts.variant = next();
+        break;
+      case "--auto":
+        opts.auto = true;
+        break;
+      case "--no-auto":
+        opts.auto = false;
+        break;
+      case "--resume-last":
+        opts.resumeLast = true;
+        break;
+      case "--session":
+        opts.session = next();
+        break;
+      case "--pure":
+        opts.pure = true;
+        break;
+      case "--out-dir":
+        opts.outDir = resolve(next());
+        break;
       default:
         fail(`unknown option: ${arg}`);
     }
@@ -150,7 +174,10 @@ function opencodeVersion() {
     // auto-appends .exe, never .cmd, so launching it needs shell:true there or it
     // ENOENTs on a working install. POSIX is unaffected. (git installs a real
     // git.exe and must NOT get this flag — see gitTouchedFiles.)
-    return execFileSync("opencode", ["--version"], { encoding: "utf8", shell: process.platform === "win32" }).trim();
+    return execFileSync("opencode", ["--version"], {
+      encoding: "utf8",
+      shell: process.platform === "win32",
+    }).trim();
   } catch {
     return null;
   }
@@ -162,7 +189,10 @@ function gitTouchedFiles(cwd) {
   // [] means git ran and the working tree is clean.
   try {
     const out = execFileSync("git", ["status", "--porcelain"], { cwd, encoding: "utf8" });
-    return out.split("\n").map((line) => line.trimEnd()).filter(Boolean);
+    return out
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .filter(Boolean);
   } catch {
     return null;
   }
@@ -225,7 +255,10 @@ function makeEventScanner(onObject) {
       // Only track strings inside an object (depth > 0). At depth 0 we're skipping a
       // junk prefix (e.g. a terminal-notify escape), and an unmatched `"` there must
       // not swallow the real `{...}` that follows in the same chunk.
-      if (ch === '"') { if (depth > 0) inString = true; continue; }
+      if (ch === '"') {
+        if (depth > 0) inString = true;
+        continue;
+      }
       if (ch === "{") {
         if (depth === 0) start = i;
         depth += 1;
@@ -234,7 +267,11 @@ function makeEventScanner(onObject) {
           depth -= 1;
           if (depth === 0 && start !== -1) {
             const slice = buf.slice(start, i + 1);
-            try { onObject(JSON.parse(slice)); } catch { /* not a JSON object we care about */ }
+            try {
+              onObject(JSON.parse(slice));
+            } catch {
+              /* not a JSON object we care about */
+            }
             start = -1;
           }
         }
@@ -261,7 +298,9 @@ function prepareRunDir(opts, brief) {
   const startedAt = new Date().toISOString();
   // Default the run dir to system temp so the repo under review stays pristine —
   // the touched-files report must show only OpenCode's edits, not relay's artifacts.
-  const outDir = opts.outDir || join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
+  const outDir =
+    opts.outDir ||
+    join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
   mkdirSync(outDir, { recursive: true });
   const run = {
     startedAt,
@@ -303,9 +342,19 @@ function makeResultWriter(opts, version, run) {
 }
 
 function reportUnavailable(writeResult, resultPath) {
-  const result = writeResult({ status: "opencode_unavailable", exitCode: 127, signal: null, sessionId: null, finalMessage: "", touchedFiles: null, cost: null });
+  const result = writeResult({
+    status: "opencode_unavailable",
+    exitCode: 127,
+    signal: null,
+    sessionId: null,
+    finalMessage: "",
+    touchedFiles: null,
+    cost: null,
+  });
   printSummary(result, resultPath);
-  process.stderr.write("relay: `opencode` not found on PATH. Install it (npm i -g opencode-ai) and run `opencode auth login`.\n");
+  process.stderr.write(
+    "relay: `opencode` not found on PATH. Install it (npm i -g opencode-ai) and run `opencode auth login`.\n",
+  );
   process.exit(127);
 }
 
@@ -374,7 +423,10 @@ function dispatchToOpenCode(opts, brief, run, writeResult) {
   });
 
   const assembleFinal = () => {
-    const message = textOrder.map((id) => textParts.get(id)).join("").trim();
+    const message = textOrder
+      .map((id) => textParts.get(id))
+      .join("")
+      .trim();
     if (message) writeFileSync(run.finalPath, message, "utf8");
     return message;
   };
@@ -383,7 +435,16 @@ function dispatchToOpenCode(opts, brief, run, writeResult) {
   child.on("error", (err) => {
     if (settled) return;
     settled = true;
-    const result = writeResult({ status: "failed", exitCode: 1, signal: null, sessionId, finalMessage: assembleFinal(), touchedFiles: gitTouchedFiles(opts.cd), cost: sawCost ? totalCost : null, error: String(err && err.message ? err.message : err) });
+    const result = writeResult({
+      status: "failed",
+      exitCode: 1,
+      signal: null,
+      sessionId,
+      finalMessage: assembleFinal(),
+      touchedFiles: gitTouchedFiles(opts.cd),
+      cost: sawCost ? totalCost : null,
+      error: String(err && err.message ? err.message : err),
+    });
     printSummary(result, run.resultPath);
     process.exit(1);
   });
@@ -425,7 +486,9 @@ function main() {
   // OpenCode has no safe default model (a bare `opencode run` errors), so a fresh run must name one.
   // A resumed run inherits its session's model, so --model is optional there.
   if (!opts.model && !opts.resumeLast && !opts.session) {
-    fail("no model given: pass --model provider/model — opencode has no safe default (e.g. a plan you're subscribed to, like opencode-go/kimi-k2.7-code)");
+    fail(
+      "no model given: pass --model provider/model — opencode has no safe default (e.g. a plan you're subscribed to, like opencode-go/kimi-k2.7-code)",
+    );
   }
 
   const version = opencodeVersion();
@@ -443,10 +506,17 @@ function main() {
 function printSummary(result, resultPath) {
   const lines = [];
   lines.push("");
-  lines.push(`relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  opencode ${result.opencodeVersion ?? "?"}`);
-  if (result.signal === "SIGKILL") lines.push("hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not an opencode error; check host memory and re-dispatch, or split the task into smaller briefs.");
-  if (result.resumeLast || result.agent === "(inherited from resumed session)") lines.push("mode: resumed existing session");
-  if (result.sessionId) lines.push(`session id (resume with: --session ${result.sessionId}): ${result.sessionId}`);
+  lines.push(
+    `relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  opencode ${result.opencodeVersion ?? "?"}`,
+  );
+  if (result.signal === "SIGKILL")
+    lines.push(
+      "hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not an opencode error; check host memory and re-dispatch, or split the task into smaller briefs.",
+    );
+  if (result.resumeLast || result.agent === "(inherited from resumed session)")
+    lines.push("mode: resumed existing session");
+  if (result.sessionId)
+    lines.push(`session id (resume with: --session ${result.sessionId}): ${result.sessionId}`);
   if (typeof result.cost === "number") lines.push(`cost: $${result.cost}`);
   const touched = result.touchedFiles;
   if (touched === null) {
@@ -466,7 +536,9 @@ function printSummary(result, resultPath) {
   lines.push("--- end report ---");
   lines.push("");
   lines.push(`result: ${resultPath}`);
-  lines.push("relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.");
+  lines.push(
+    "relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.",
+  );
   process.stdout.write(`${lines.join("\n")}\n`);
 }
 

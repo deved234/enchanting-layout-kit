@@ -7,7 +7,7 @@ green gate can't see.**
 
 ## Check the tests before trusting the gates
 
-If the diff touches existing tests, review those edits *first* — before the gate re-run means anything.
+If the diff touches existing tests, review those edits _first_ — before the gate re-run means anything.
 A weakened assertion, an added skip, or a deleted test makes the gate measure less than it did before
 the run; green is only meaningful if the yardstick wasn't shortened.
 
@@ -22,7 +22,7 @@ the run; green is only meaningful if the yardstick wasn't shortened.
 
 `result.json` carries OpenCode's own claim that the gates passed. Treat that as a claim, not evidence —
 re-run the project's actual test/lint/build commands in the working tree and read the output. And keep
-the result in proportion: **passing is necessary, not sufficient.** An implementer can *game* a gate,
+the result in proportion: **passing is necessary, not sufficient.** An implementer can _game_ a gate,
 not just misreport it — that is what the test check above and the sweep below exist to catch.
 
 For changes with their own verification shape, go further:
@@ -50,13 +50,13 @@ Generated code fails in systematic ways that gates are structurally blind to —
 a diff whose tests are all green. Walk them against every diff before you commit:
 
 - **Hardcoded success or fixture data** on a path the brief says does real work — a canned
-  `{status: "ok"}` or default return passes tests *by design*. If OpenCode couldn't implement something,
+  `{status: "ok"}` or default return passes tests _by design_. If OpenCode couldn't implement something,
   the diff should fail loudly, not pretend.
 - **Catch-all error handling that returns a default** instead of propagating — the suppressed failure is
   exactly what the gate would have caught. A broad catch is only acceptable with a recovery path the
   contract documents.
 - **Unverified imports and API calls** — confirm every new dependency, method, and signature exists in
-  the *installed* version (read the lockfile or the package, don't trust plausibility).
+  the _installed_ version (read the lockfile or the package, don't trust plausibility).
 - **Dead weight** — unused imports, helpers nothing calls, unreachable branches, "Step 1/Step 2"
   comment scaffolding, comments that restate the line below them.
 - **A second way to do what the file already does** — a new HTTP client, error idiom, or logging style
@@ -80,7 +80,7 @@ above is the built-in floor; the guards go deeper.
 ## The commit boundary
 
 When the gates pass and the diff holds, **you commit** — the orchestrator, never the implementer. The
-`build` agent *can* write the working tree, but committing should be the act of the party that verified
+`build` agent _can_ write the working tree, but committing should be the act of the party that verified
 the work, not the one that produced it. Write a clear message describing what landed. If your project
 attributes co-authorship, that's the place for it.
 

@@ -14,17 +14,17 @@ Three short principles. Often confused. Often applied wrong by AI agents (and hu
 
 ## DRY — Don't Repeat Yourself
 
-**Definition (Hunt & Thomas, *The Pragmatic Programmer*, verbatim).** *"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system."*
+**Definition (Hunt & Thomas, _The Pragmatic Programmer_, verbatim).** _"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system."_
 
-Source: pragprog official DRY excerpt PDF; Wikipedia summary; O'Reilly *97 Things Every Programmer Should Know*, Ch. 30.
+Source: pragprog official DRY excerpt PDF; Wikipedia summary; O'Reilly _97 Things Every Programmer Should Know_, Ch. 30.
 
 ### The misreading
 
-*"Don't have any duplicate code."* No. Hunt and Thomas frame DRY as duplication "of knowledge, of intent... expressing the same thing in two different places, possibly in two totally different ways." Two functions that **look alike but encode different rules** are not a DRY violation. **One rule** expressed in code + database schema + documentation **is**.
+_"Don't have any duplicate code."_ No. Hunt and Thomas frame DRY as duplication "of knowledge, of intent... expressing the same thing in two different places, possibly in two totally different ways." Two functions that **look alike but encode different rules** are not a DRY violation. **One rule** expressed in code + database schema + documentation **is**.
 
 ### Smells worth flagging
 
-These are textual signals that *probably* indicate knowledge duplication, but verify the underlying meaning before refactoring:
+These are textual signals that _probably_ indicate knowledge duplication, but verify the underlying meaning before refactoring:
 
 - Identical token sequence of ≥5 non-trivial lines appearing in ≥2 functions.
 - The same regex, SQL fragment, or URL literal repeated in ≥3 sites.
@@ -33,20 +33,20 @@ These are textual signals that *probably* indicate knowledge duplication, but ve
 
 ### The Rule of 3 — wait for the third occurrence
 
-Don't extract an abstraction the first time you see duplication. Don't extract on the second. Wait for the third — by then you have enough signal about the *real* shape of the shared knowledge to abstract correctly. The Rule of 3 is folklore from refactoring practice; the underlying principle (don't abstract too early) is in Fowler's *Refactoring* (refactoring.com/catalog) and in the wrong-abstraction work below.
+Don't extract an abstraction the first time you see duplication. Don't extract on the second. Wait for the third — by then you have enough signal about the _real_ shape of the shared knowledge to abstract correctly. The Rule of 3 is folklore from refactoring practice; the underlying principle (don't abstract too early) is in Fowler's _Refactoring_ (refactoring.com/catalog) and in the wrong-abstraction work below.
 
 ### The Sandi Metz corollary — wrong abstraction is worse than duplication
 
-From Sandi Metz, "The Wrong Abstraction" (Jan 2016): *"duplication is far cheaper than the wrong abstraction."*
+From Sandi Metz, "The Wrong Abstraction" (Jan 2016): _"duplication is far cheaper than the wrong abstraction."_
 
 If an abstraction has accumulated per-caller branches and special cases, it is the wrong abstraction. The remedy:
 
 1. Re-inline the abstraction back into each caller.
 2. Delete the per-caller dead branches.
 3. Live with honest duplication for a while.
-4. Re-abstract only when the *real* shared knowledge becomes obvious.
+4. Re-abstract only when the _real_ shared knowledge becomes obvious.
 
-**Rule.** Do not introduce an abstraction to eliminate three lines of duplication unless you can name the underlying *knowledge* the lines represent. If you can't name it, leave the duplication.
+**Rule.** Do not introduce an abstraction to eliminate three lines of duplication unless you can name the underlying _knowledge_ the lines represent. If you can't name it, leave the duplication.
 
 ---
 
@@ -54,7 +54,7 @@ If an abstraction has accumulated per-caller branches and special cases, it is t
 
 **Origin.** Coined by Clarence "Kelly" Johnson at Lockheed's Skunk Works (U-2, SR-71). His designers were handed a basic toolkit; the aircraft had to be repairable by an average mechanic in a combat field with only those tools. The "stupid" refers to the mismatch between break-conditions and repair sophistication — not to the engineer.
 
-Original phrasing: *"Keep it simple stupid"* (no comma). First documented use by the U.S. Navy in 1960.
+Original phrasing: _"Keep it simple stupid"_ (no comma). First documented use by the U.S. Navy in 1960.
 
 Source: Wikipedia, KISS principle; Braithwaite background story.
 
@@ -62,20 +62,20 @@ Source: Wikipedia, KISS principle; Braithwaite background story.
 
 KISS is fuzzy without numbers. Use these as defaults:
 
-- **Cognitive Complexity ≤10 per function.** SonarSource's Cognitive Complexity metric measures *how hard the code is to understand* rather than the count of independent paths. It's the dominant 2026 metric — adopted by SonarQube, Biome, and ReSharper. Target <7 for greenfield code; <15 is the upper bound before refactor is mandatory.
+- **Cognitive Complexity ≤10 per function.** SonarSource's Cognitive Complexity metric measures _how hard the code is to understand_ rather than the count of independent paths. It's the dominant 2026 metric — adopted by SonarQube, Biome, and ReSharper. Target <7 for greenfield code; <15 is the upper bound before refactor is mandatory.
 - **Cyclomatic complexity ≤10 per function.** McCabe's original 1976 metric, still useful as a structural floor. 11–20 is moderate risk; 21–50 is high risk; >50 is untestable. Source: McCabe NIST 235r; JetBrains ReSharper threshold guidance. Use Cognitive Complexity for human-readability judgement; use cyclomatic for "is this testable" judgement. When they disagree, prefer Cognitive Complexity.
 - **Nesting depth ≤5.** Source: Aivosto, Project Metrics: Complexity.
 - **Function length:** no canonical absolute, but common static-analysis defaults (SonarQube, PMD) flag >50–60 lines. Pair with complexity ceiling rather than relying on LOC alone.
 
 ### Self-check
 
-When you see a function exceed cyclo 10 or nest depth 5, refactor *before* finishing — not "later." Extract a helper, replace nested `if/else` with early returns or a lookup table.
+When you see a function exceed cyclo 10 or nest depth 5, refactor _before_ finishing — not "later." Extract a helper, replace nested `if/else` with early returns or a lookup table.
 
 ---
 
 ## YAGNI — You Aren't Gonna Need It
 
-**Canonical reference.** Martin Fowler, *bliki: Yagni* (May 2015). *"A mantra from ExtremeProgramming... capabilities we presume our software needs in the future should not be built now because 'you aren't gonna need it.'"*
+**Canonical reference.** Martin Fowler, _bliki: Yagni_ (May 2015). _"A mantra from ExtremeProgramming... capabilities we presume our software needs in the future should not be built now because 'you aren't gonna need it.'"_
 
 ### Fowler's four cost categories
 
@@ -101,7 +101,7 @@ LLMs over-produce speculative surface area. These are the patterns to spot:
 
 ### Self-check
 
-For every parameter, class, file, or abstraction you introduce, answer: *who calls this today?* If the answer is "nobody yet," delete it.
+For every parameter, class, file, or abstraction you introduce, answer: _who calls this today?_ If the answer is "nobody yet," delete it.
 
 ---
 
@@ -116,7 +116,7 @@ By frequency observed (engineering-blog-grade, not from a controlled study):
 5. **Speculative config surface** — settings objects with 15 fields where 3 are read.
 6. **Plugin / registry scaffolding for two cases.**
 7. **`utils.py` / `common.py` modules** — magnets for unrelated functions; violate DRY's "single authoritative representation" by location.
-8. **Re-implementing what the platform already gives you** — custom retry loops, enums, or record-like types the standard library provides; hand-rolled validation a database/schema constraint, the type system, or a framework's declarative rule would enforce; a native platform feature replaced by hand-written app code. Prefer the cheapest existing solution: stdlib or native feature over new code, a declarative constraint over an imperative check. The flip side is mode 15 in [ai-failure-modes.md](ai-failure-modes.md) — don't reach for a *new* dependency for what a few lines already cover either.
+8. **Re-implementing what the platform already gives you** — custom retry loops, enums, or record-like types the standard library provides; hand-rolled validation a database/schema constraint, the type system, or a framework's declarative rule would enforce; a native platform feature replaced by hand-written app code. Prefer the cheapest existing solution: stdlib or native feature over new code, a declarative constraint over an imperative check. The flip side is mode 15 in [ai-failure-modes.md](ai-failure-modes.md) — don't reach for a _new_ dependency for what a few lines already cover either.
 9. **Excessive layering** (Controller → Service → Manager → Repository) for CRUD — four files to read one row.
 10. **Wrapping libraries "to make them swappable"** — thin pass-through adapters around an HTTP, database, or SDK client you will never swap.
 
@@ -126,7 +126,7 @@ By frequency observed (engineering-blog-grade, not from a controlled study):
 
 Before you ship code:
 
-1. (DRY) Did you eliminate duplication of *knowledge*, or just duplication of *text*? Can you name the underlying rule?
+1. (DRY) Did you eliminate duplication of _knowledge_, or just duplication of _text_? Can you name the underlying rule?
 2. (DRY/Metz) If you introduced an abstraction, are there at least two callers today whose code is structurally identical? Or is the abstraction speculative?
 3. (KISS) Any function over cyclomatic 10 or nest depth 5?
 4. (YAGNI) Any optional parameter, config flag, env var, interface, factory, or base class without a caller using it today?

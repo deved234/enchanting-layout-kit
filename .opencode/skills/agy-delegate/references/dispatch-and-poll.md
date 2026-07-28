@@ -25,20 +25,20 @@ node "<skill-dir>/scripts/relay.mjs" --brief brief.txt --cd /path/to/repo
 
 Options:
 
-| Flag | Effect |
-| --- | --- |
-| `--brief <file>` | The brief. Omit it to read the brief from stdin before passing it to `agy --print`. |
-| `--cd <dir>` | Working root for Antigravity (default: current directory). |
-| `--model <name>` | Antigravity model label. Optional; a fresh run can use Antigravity's configured default. |
-| `--project <id>` | Use an existing Antigravity project. |
-| `--new-project` | Force a fresh Antigravity project. This is the default for fresh dispatches. |
-| `--resume-last` | Continue the most recent Antigravity conversation; send only the delta brief. |
-| `--conversation <id>` | Continue a specific Antigravity conversation; send only the delta brief. |
-| `--sandbox` | Enable Antigravity's terminal sandbox for the run. |
-| `--dangerously-skip-permissions` | Pass Antigravity's permission-bypass flag. Never use this unless the human explicitly accepts it. |
-| `--print-timeout <duration>` | Timeout for print mode (default: `30m`). |
-| `--add-dir <dir>` | Add an extra workspace directory. Repeatable; relative paths resolve against `--cd`. Fresh runs always add the `--cd` repo (absolute path) as a workspace dir. Edits inside extra workspaces are not reported in `touchedFiles`. |
-| `--out-dir <dir>` | Where artifacts go (default: a fresh dir under the system temp dir). |
+| Flag                             | Effect                                                                                                                                                                                                                           |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--brief <file>`                 | The brief. Omit it to read the brief from stdin before passing it to `agy --print`.                                                                                                                                              |
+| `--cd <dir>`                     | Working root for Antigravity (default: current directory).                                                                                                                                                                       |
+| `--model <name>`                 | Antigravity model label. Optional; a fresh run can use Antigravity's configured default.                                                                                                                                         |
+| `--project <id>`                 | Use an existing Antigravity project.                                                                                                                                                                                             |
+| `--new-project`                  | Force a fresh Antigravity project. This is the default for fresh dispatches.                                                                                                                                                     |
+| `--resume-last`                  | Continue the most recent Antigravity conversation; send only the delta brief.                                                                                                                                                    |
+| `--conversation <id>`            | Continue a specific Antigravity conversation; send only the delta brief.                                                                                                                                                         |
+| `--sandbox`                      | Enable Antigravity's terminal sandbox for the run.                                                                                                                                                                               |
+| `--dangerously-skip-permissions` | Pass Antigravity's permission-bypass flag. Never use this unless the human explicitly accepts it.                                                                                                                                |
+| `--print-timeout <duration>`     | Timeout for print mode (default: `30m`).                                                                                                                                                                                         |
+| `--add-dir <dir>`                | Add an extra workspace directory. Repeatable; relative paths resolve against `--cd`. Fresh runs always add the `--cd` repo (absolute path) as a workspace dir. Edits inside extra workspaces are not reported in `touchedFiles`. |
+| `--out-dir <dir>`                | Where artifacts go (default: a fresh dir under the system temp dir).                                                                                                                                                             |
 
 Artifacts default to the system temp dir on purpose: the repo under review stays clean, so the
 touched-files report shows only Antigravity's edits and nothing of the helper's own.

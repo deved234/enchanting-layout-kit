@@ -105,18 +105,42 @@ function parseArgs(argv) {
         process.stdout.write(headerComment());
         process.exit(0);
         break;
-      case "--brief": opts.brief = next(); break;
-      case "--cd": opts.cd = resolve(next()); break;
-      case "--model": opts.model = next(); break;
-      case "--project": opts.project = next(); break;
-      case "--new-project": opts.newProject = true; break;
-      case "--resume-last": opts.resumeLast = true; break;
-      case "--conversation": opts.conversation = next(); break;
-      case "--sandbox": opts.sandbox = true; break;
-      case "--dangerously-skip-permissions": opts.dangerouslySkipPermissions = true; break;
-      case "--print-timeout": opts.printTimeout = next(); break;
-      case "--add-dir": opts.addDirs.push(next()); break;
-      case "--out-dir": opts.outDir = resolve(next()); break;
+      case "--brief":
+        opts.brief = next();
+        break;
+      case "--cd":
+        opts.cd = resolve(next());
+        break;
+      case "--model":
+        opts.model = next();
+        break;
+      case "--project":
+        opts.project = next();
+        break;
+      case "--new-project":
+        opts.newProject = true;
+        break;
+      case "--resume-last":
+        opts.resumeLast = true;
+        break;
+      case "--conversation":
+        opts.conversation = next();
+        break;
+      case "--sandbox":
+        opts.sandbox = true;
+        break;
+      case "--dangerously-skip-permissions":
+        opts.dangerouslySkipPermissions = true;
+        break;
+      case "--print-timeout":
+        opts.printTimeout = next();
+        break;
+      case "--add-dir":
+        opts.addDirs.push(next());
+        break;
+      case "--out-dir":
+        opts.outDir = resolve(next());
+        break;
       default:
         fail(`unknown option: ${arg}`);
     }
@@ -197,7 +221,10 @@ function gitTouchedFiles(cwd) {
   // [] means git ran and the working tree is clean.
   try {
     const out = execFileSync("git", ["status", "--porcelain"], { cwd, encoding: "utf8" });
-    return out.split("\n").map((line) => line.trimEnd()).filter(Boolean);
+    return out
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .filter(Boolean);
   } catch {
     return null;
   }
@@ -209,7 +236,9 @@ function timestamp() {
 
 function prepareRunDir(opts, brief) {
   const startedAt = new Date().toISOString();
-  const outDir = opts.outDir || join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
+  const outDir =
+    opts.outDir ||
+    join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
   mkdirSync(outDir, { recursive: true });
   const run = {
     startedAt,
@@ -310,9 +339,17 @@ function makeResultWriter(opts, version, run) {
 }
 
 function reportUnavailable(writeResult, resultPath) {
-  const result = writeResult({ status: "agy_unavailable", exitCode: 127, signal: null, finalMessage: "", touchedFiles: null });
+  const result = writeResult({
+    status: "agy_unavailable",
+    exitCode: 127,
+    signal: null,
+    finalMessage: "",
+    touchedFiles: null,
+  });
   printSummary(result, resultPath);
-  process.stderr.write("relay: `agy` not found on PATH. Install the Antigravity CLI and complete first-launch setup.\n");
+  process.stderr.write(
+    "relay: `agy` not found on PATH. Install the Antigravity CLI and complete first-launch setup.\n",
+  );
   process.exit(127);
 }
 
@@ -400,7 +437,11 @@ function dispatchToAgy(opts, brief, run, writeResult) {
       finalMessage,
       touchedFiles: gitTouchedFiles(opts.cd),
       ...(succeeded ? {} : { stderrTail: stderrTail.slice(-20) }),
-      ...(watchdogFired ? { error: `agy did not exit within --print-timeout ${opts.printTimeout} plus 60s grace; killed by the relay watchdog` } : {}),
+      ...(watchdogFired
+        ? {
+            error: `agy did not exit within --print-timeout ${opts.printTimeout} plus 60s grace; killed by the relay watchdog`,
+          }
+        : {}),
     });
     printSummary(result, run.resultPath);
     process.exit(result.exitCode);
@@ -418,7 +459,9 @@ function main() {
   const briefBytes = Buffer.byteLength(brief, "utf8");
   const MAX_BRIEF_BYTES = 120 * 1024;
   if (briefBytes > MAX_BRIEF_BYTES) {
-    fail(`brief is ${Math.round(briefBytes / 1024)}KB; agy passes the prompt as a CLI argument, which the OS caps (~128KB on Linux). Trim it, or have agy read large context from the workspace instead of inlining it.`);
+    fail(
+      `brief is ${Math.round(briefBytes / 1024)}KB; agy passes the prompt as a CLI argument, which the OS caps (~128KB on Linux). Trim it, or have agy read large context from the workspace instead of inlining it.`,
+    );
   }
 
   const version = agyVersion();
@@ -436,11 +479,19 @@ function main() {
 function printSummary(result, resultPath) {
   const lines = [];
   lines.push("");
-  lines.push(`relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  agy ${result.agyVersion ?? "?"}`);
-  if (result.signal === "SIGKILL") lines.push("hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not an agy error; check host memory and re-dispatch, or split the task into smaller briefs.");
+  lines.push(
+    `relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  agy ${result.agyVersion ?? "?"}`,
+  );
+  if (result.signal === "SIGKILL")
+    lines.push(
+      "hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not an agy error; check host memory and re-dispatch, or split the task into smaller briefs.",
+    );
   if (result.resumed) lines.push("mode: resumed an existing conversation");
   if (result.projectId) lines.push(`project id: ${result.projectId}`);
-  if (result.conversationId) lines.push(`conversation id (resume with: --conversation ${result.conversationId}): ${result.conversationId}`);
+  if (result.conversationId)
+    lines.push(
+      `conversation id (resume with: --conversation ${result.conversationId}): ${result.conversationId}`,
+    );
   const touched = result.touchedFiles;
   if (touched === null) {
     lines.push("touched files: git unavailable - inspect the working tree directly");
@@ -459,7 +510,9 @@ function printSummary(result, resultPath) {
   lines.push("--- end report ---");
   lines.push("");
   lines.push(`result: ${resultPath}`);
-  lines.push("relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.");
+  lines.push(
+    "relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.",
+  );
   process.stdout.write(`${lines.join("\n")}\n`);
 }
 

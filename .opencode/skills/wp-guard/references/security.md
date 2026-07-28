@@ -15,30 +15,30 @@
 
 Escape at the moment of output, with the function matching the destination context:
 
-| Output context | Function |
-|---|---|
-| HTML body text | `esc_html()` |
-| HTML attribute | `esc_attr()` |
-| URL (href/src/action) | `esc_url()` (display) / `esc_url_raw()` (storage/redirects) |
-| Data for inline JS | `wp_json_encode()` + `wp_add_inline_script()`; `esc_js()` is legacy — single-quoted strings in inline attributes only |
-| Textarea content | `esc_textarea()` |
-| Rich/user HTML | `wp_kses_post()` or `wp_kses()` with an explicit allowlist |
-| Translation + output | `esc_html__()`, `esc_html_e()`, `esc_attr__()` — escape and translate in one call |
+| Output context        | Function                                                                                                              |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| HTML body text        | `esc_html()`                                                                                                          |
+| HTML attribute        | `esc_attr()`                                                                                                          |
+| URL (href/src/action) | `esc_url()` (display) / `esc_url_raw()` (storage/redirects)                                                           |
+| Data for inline JS    | `wp_json_encode()` + `wp_add_inline_script()`; `esc_js()` is legacy — single-quoted strings in inline attributes only |
+| Textarea content      | `esc_textarea()`                                                                                                      |
+| Rich/user HTML        | `wp_kses_post()` or `wp_kses()` with an explicit allowlist                                                            |
+| Translation + output  | `esc_html__()`, `esc_html_e()`, `esc_attr__()` — escape and translate in one call                                     |
 
 Trust nothing at output time — not even your own stored options; another plugin or a compromised import may have written them. "Escaped on save" is not a defense.
 
 ## Sanitization: input type → function
 
-| Expected input | Function |
-|---|---|
-| Plain text line | `sanitize_text_field()` |
-| Multiline text | `sanitize_textarea_field()` |
-| Integer / ID | `absint()` or `intval()` |
-| Slug/key | `sanitize_key()` / `sanitize_title()` |
-| Email | `sanitize_email()` + `is_email()` check |
-| URL | `esc_url_raw()` |
-| HTML payload | `wp_kses_post()` / `wp_kses()` |
-| File name | `sanitize_file_name()` |
+| Expected input      | Function                                                       |
+| ------------------- | -------------------------------------------------------------- |
+| Plain text line     | `sanitize_text_field()`                                        |
+| Multiline text      | `sanitize_textarea_field()`                                    |
+| Integer / ID        | `absint()` or `intval()`                                       |
+| Slug/key            | `sanitize_key()` / `sanitize_title()`                          |
+| Email               | `sanitize_email()` + `is_email()` check                        |
+| URL                 | `esc_url_raw()`                                                |
+| HTML payload        | `wp_kses_post()` / `wp_kses()`                                 |
+| File name           | `sanitize_file_name()`                                         |
 | Anything enumerable | strict allowlist comparison (`in_array( $v, $allowed, true )`) |
 
 ## The unslash-then-sanitize order
@@ -55,8 +55,8 @@ $status = sanitize_key( wp_unslash( $_POST['ncs_status'] ?? '' ) );
 
 Both checks, always, for any state change. They answer different questions:
 
-- `current_user_can( 'manage_options' )` — is this user *allowed* to do this? (authorization)
-- `check_admin_referer( 'ncs_save_settings' )` / `check_ajax_referer( 'ncs_action', 'nonce' )` — did this request *intend* this action? (CSRF protection)
+- `current_user_can( 'manage_options' )` — is this user _allowed_ to do this? (authorization)
+- `check_admin_referer( 'ncs_save_settings' )` / `check_ajax_referer( 'ncs_action', 'nonce' )` — did this request _intend_ this action? (CSRF protection)
 
 A nonce without a capability check lets any logged-in subscriber fire admin actions. A capability check without a nonce leaves CSRF open. AI-generated handlers routinely have one, the other, or neither — verify both exist on every `admin_post_*`, `wp_ajax_*`, and form handler.
 
@@ -82,7 +82,7 @@ $row = $wpdb->get_row(
 
 - Placeholders: `%s`, `%d`, `%f`; `%i` for table/column identifiers (WP ≥ 6.2).
 - `IN ( … )` lists: build placeholders dynamically — `implode( ',', array_fill( 0, count( $ids ), '%d' ) )` — then prepare with the spread array.
-- LIKE queries: `$wpdb->esc_like()` the term *before* passing it as a `%s` parameter.
+- LIKE queries: `$wpdb->esc_like()` the term _before_ passing it as a `%s` parameter.
 - Never interpolate `$_REQUEST` data anywhere near SQL, even "validated" data.
 - Prefer `WP_Query`, `get_posts()`, meta/term/option APIs when they can express the query — they bring caching for free.
 

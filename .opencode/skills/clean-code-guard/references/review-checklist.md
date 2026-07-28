@@ -53,6 +53,7 @@ One line per section: the findings it produced, or `clean` (walked it, found not
 ```
 
 Severity:
+
 - **Critical** — security, correctness, data loss, swallowed exceptions, hardcoded "success" returns.
 - **Important** — design defects with maintenance cost: SOLID violations, premature abstractions, parameter explosion, generic naming.
 - **Nit** — style, single-letter names outside loops, missing docstring contracts on public APIs.
@@ -63,7 +64,7 @@ Every finding carries its quoted code or observed behavior and a named fix — t
 
 Before walking the sections, classify the review:
 
-- **Refactor review:** the user wants the code to be cleaner, not different. **Observable behavior must not change** — same inputs, same outputs, same exceptions, same side effects. If you'd suggest a change that alters behavior, mark it as a *separate finding* labelled "Behavior change — confirm with author" and do not bundle it with refactor recommendations. Refactoring is *"a change made to the internal structure of software... without changing its observable behavior"* (Fowler, *Refactoring*).
+- **Refactor review:** the user wants the code to be cleaner, not different. **Observable behavior must not change** — same inputs, same outputs, same exceptions, same side effects. If you'd suggest a change that alters behavior, mark it as a _separate finding_ labelled "Behavior change — confirm with author" and do not bundle it with refactor recommendations. Refactoring is _"a change made to the internal structure of software... without changing its observable behavior"_ (Fowler, _Refactoring_).
 - **Code-review for correctness:** the user wants you to find bugs. Behavior changes are in scope. Flag them at Critical severity if they affect the contract.
 
 If you can't tell which one the user wants, ask before writing the review.
@@ -77,7 +78,7 @@ Pull [naming-and-functions.md](naming-and-functions.md) if you need source citat
 1. Scan all identifiers. Flag generic ones: `data`, `result`, `item`, `temp`, `value`, `obj`, `info`, `helper`, `manager`, `utils`, `handle_*`, `process_*`, `do_*` without qualifier.
 2. For each function: lines ≤20? params ≤4? one thing? one level of abstraction? Flag violations.
 3. Flag boolean flag arguments.
-4. Flag functions that both return value *and* mutate observable state ambiguously (CQS violation).
+4. Flag functions that both return value _and_ mutate observable state ambiguously (CQS violation).
 5. Flag getter-style or predicate-style functions that mutate.
 
 ### Section B — comments and formatting
@@ -114,7 +115,7 @@ Pull [dry-kiss-yagni.md](dry-kiss-yagni.md) if needed.
 Pull [ai-failure-modes.md](ai-failure-modes.md) for every check here.
 
 1. Any catch-all error handler that swallows without recovery? Critical.
-2. Any defensive guards for types/values the system already excludes — *inside* a trust boundary? (Validation of external or untrusted input at the boundary is not a defensive guard; do not flag it.)
+2. Any defensive guards for types/values the system already excludes — _inside_ a trust boundary? (Validation of external or untrusted input at the boundary is not a defensive guard; do not flag it.)
 3. Any premature abstraction — interface or factory with one implementation?
 4. Any comment pollution — line-by-line restating, step-number scaffolding, or documentation comments that paraphrase signatures?
 5. Any duplication of logic that already exists in a helper in the same repo?
@@ -141,10 +142,10 @@ For each finding: quote the offending code (file + line), name the principle or 
 
 ## When the review is contested
 
-If the user pushes back on a finding, cite the source from the relevant `references/` file. The rules trace to primary sources (Uncle Bob, Fowler, Hunt & Thomas, McCabe, Metz) and published 2024–2026 research on LLM code generation. If the user has a context-specific reason to override, record it as an inline comment that names **the principle, the reason, and a revisit trigger** — e.g. `// clean-code exception: 4-arg ceiling — config DTO, all fields required at construction; revisit when an optional field appears.` (the prefix is illustrative, not a required tag). On a later pass a well-formed marker downgrades the finding to *Documented exception* — don't re-flag it; a marker with **no revisit trigger is itself a finding**, since an exception with no exit is just deferred debt. Name the principle, not a rule number — a number is meaningless to a future reader.
+If the user pushes back on a finding, cite the source from the relevant `references/` file. The rules trace to primary sources (Uncle Bob, Fowler, Hunt & Thomas, McCabe, Metz) and published 2024–2026 research on LLM code generation. If the user has a context-specific reason to override, record it as an inline comment that names **the principle, the reason, and a revisit trigger** — e.g. `// clean-code exception: 4-arg ceiling — config DTO, all fields required at construction; revisit when an optional field appears.` (the prefix is illustrative, not a required tag). On a later pass a well-formed marker downgrades the finding to _Documented exception_ — don't re-flag it; a marker with **no revisit trigger is itself a finding**, since an exception with no exit is just deferred debt. Name the principle, not a rule number — a number is meaningless to a future reader.
 
 ## What this review does not do
 
 - Run linters or formatters. That's tooling.
-- Execute the code or run tests. Add a finding instead: *"No tests for the new `charge` path — recommend adding."*
+- Execute the code or run tests. Add a finding instead: _"No tests for the new `charge` path — recommend adding."_
 - Enforce language-specific style (Black, Prettier, PHPCS). Defer to the project's style tooling unless the user explicitly asks.

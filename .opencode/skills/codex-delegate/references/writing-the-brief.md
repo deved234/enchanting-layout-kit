@@ -56,7 +56,7 @@ profile calls for them:
 
 ## Discover the real gates — don't hardcode
 
-`<verification_loop>` is only useful if it names the project's *actual* commands. Read the repo's
+`<verification_loop>` is only useful if it names the project's _actual_ commands. Read the repo's
 `CLAUDE.md` / `AGENTS.md` / `Makefile` / `package.json` first and copy the real ones in (`make test`,
 `npm run lint`, `cargo test`, `pytest -q`, whatever it is). A brief that says "run the tests" without
 naming them gets you a Codex that guesses — or skips.

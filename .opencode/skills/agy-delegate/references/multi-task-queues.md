@@ -13,7 +13,7 @@ dispatching the next. Three reasons:
   exists" only if the previous step actually committed.
 - **One commit per task** keeps the history reviewable and any single step revertible.
 - **Each review is honest.** A clean working tree before each dispatch means the next task's
-  `touchedFiles` shows only *its* changes.
+  `touchedFiles` shows only _its_ changes.
 
 Parallelism is occasionally worth it for genuinely independent tasks on separate files, but it
 sacrifices the clean-tree-per-task property and makes review harder. Default to sequential.
@@ -53,7 +53,7 @@ verify the whole:
 Proceed without asking on anything that follows from the agreed plan. Stop and surface when:
 
 - A task cannot be completed correctly within its brief's scope.
-- A review finds something that calls the *plan* into question, not just the implementation.
+- A review finds something that calls the _plan_ into question, not just the implementation.
 - The gates reveal a problem that affects tasks already done.
 
 Then report where you are, what is committed, and what the open question is - and wait.

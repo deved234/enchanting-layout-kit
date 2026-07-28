@@ -1,11 +1,12 @@
 # Review and land
 
 Antigravity did the typing; you own the judgment. Verify against reality, never against the self-report
+
 - and read the diff as generated code, which fails in ways a green gate cannot see.
 
 ## Check the tests before trusting the gates
 
-If the diff touches existing tests, review those edits *first* - before the gate re-run means anything.
+If the diff touches existing tests, review those edits _first_ - before the gate re-run means anything.
 A weakened assertion, an added skip, or a deleted test makes the gate measure less than it did before
 the run.
 

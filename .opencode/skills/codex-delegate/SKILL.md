@@ -82,7 +82,7 @@ when it returns:
   the result file — `… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job`
   in PowerShell, `start /b` in cmd). The run is done when `result.json` exists with a `status`. (A
   pre-run usage error — bad args or an empty brief — instead exits with code 2 and a stderr message and
-  writes no result file, so check the exit code too. A missing `codex` binary exits 127 but *does* write
+  writes no result file, so check the exit code too. A missing `codex` binary exits 127 but _does_ write
   a `result.json` with status `codex_unavailable`.)
 
 Do not trust progress trackers over reality: a run is finished when `result.json` is written and the

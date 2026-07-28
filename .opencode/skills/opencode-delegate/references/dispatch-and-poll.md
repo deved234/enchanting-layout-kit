@@ -27,19 +27,19 @@ path. See [`SKILL.md`](../SKILL.md) if you need to locate it.)
 
 Options:
 
-| Flag | Effect |
-| --- | --- |
-| `--brief <file>` | The brief. Omit it to read the brief from stdin (`node relay.mjs … < brief.txt`). |
-| `--cd <dir>` | Working root for OpenCode (default: current directory). |
-| `--model <name>` | Model as `provider/model`. **Required on a fresh run** — OpenCode has no safe default (a bare `opencode run` errors); a resumed run inherits its session's model. |
-| `--agent <name>` | OpenCode agent (default: `build`, write-capable). |
-| `--read-only` | Shortcut for `--agent plan` — review/diagnosis with no edits. |
-| `--variant <name>` | Provider reasoning effort (e.g. `high`, `max`, `minimal`). |
-| `--no-auto` | The relay passes `opencode`'s `--auto` (auto-approve permissions) **by default** so a headless run doesn't hang on a prompt; `--no-auto` drops it and honors the agent's own permission config instead. A `--read-only`/`plan` run never gets `--auto`, so it can't be auto-approved into edits. |
-| `--resume-last` | Continue the most recent OpenCode session; send only the delta brief (see review-and-land). |
-| `--session <id>` | Continue a specific session id (`ses_…`); send only the delta brief. |
-| `--pure` | Run OpenCode without external plugins (cleaner event stream). |
-| `--out-dir <dir>` | Where artifacts go (default: a fresh dir under the system temp dir). |
+| Flag               | Effect                                                                                                                                                                                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--brief <file>`   | The brief. Omit it to read the brief from stdin (`node relay.mjs … < brief.txt`).                                                                                                                                                                                                                |
+| `--cd <dir>`       | Working root for OpenCode (default: current directory).                                                                                                                                                                                                                                          |
+| `--model <name>`   | Model as `provider/model`. **Required on a fresh run** — OpenCode has no safe default (a bare `opencode run` errors); a resumed run inherits its session's model.                                                                                                                                |
+| `--agent <name>`   | OpenCode agent (default: `build`, write-capable).                                                                                                                                                                                                                                                |
+| `--read-only`      | Shortcut for `--agent plan` — review/diagnosis with no edits.                                                                                                                                                                                                                                    |
+| `--variant <name>` | Provider reasoning effort (e.g. `high`, `max`, `minimal`).                                                                                                                                                                                                                                       |
+| `--no-auto`        | The relay passes `opencode`'s `--auto` (auto-approve permissions) **by default** so a headless run doesn't hang on a prompt; `--no-auto` drops it and honors the agent's own permission config instead. A `--read-only`/`plan` run never gets `--auto`, so it can't be auto-approved into edits. |
+| `--resume-last`    | Continue the most recent OpenCode session; send only the delta brief (see review-and-land).                                                                                                                                                                                                      |
+| `--session <id>`   | Continue a specific session id (`ses_…`); send only the delta brief.                                                                                                                                                                                                                             |
+| `--pure`           | Run OpenCode without external plugins (cleaner event stream).                                                                                                                                                                                                                                    |
+| `--out-dir <dir>`  | Where artifacts go (default: a fresh dir under the system temp dir).                                                                                                                                                                                                                             |
 
 Artifacts default to the system temp dir on purpose: the repo under review stays clean, so the
 touched-files report shows only OpenCode's edits and nothing of the helper's own.
@@ -79,10 +79,10 @@ The helper blocks until OpenCode finishes. Back it with whatever your orchestrat
 - **Claude Code:** run the `Bash` call with `run_in_background: true`; you're notified on completion,
   then read `result.json`.
 - **Plain shell / other agents:** foreground for short tasks, or background and poll — `node relay.mjs
-  … &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
+… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
   `start /b` in cmd). A run is done when `result.json` exists with a `status`. **But** a pre-run usage
-  error (bad args, empty brief) exits with code 2 *before* writing any file — so check the exit code
-  too, don't only watch for the file. (A missing `opencode` binary exits 127 but *does* write a
+  error (bad args, empty brief) exits with code 2 _before_ writing any file — so check the exit code
+  too, don't only watch for the file. (A missing `opencode` binary exits 127 but _does_ write a
   `result.json` with status `opencode_unavailable`.)
 
 Trust the working tree and the process state over any progress display. A run is finished when the
@@ -105,7 +105,7 @@ process has exited and `result.json` is written — not when a status line says 
   [writing-the-brief.md](writing-the-brief.md)).
 - **A run hangs:** an agent with an `ask` permission can block waiting for approval that never comes in
   headless mode. Runs pass `--auto` by default precisely to avoid this — so a hang almost always means
-  you passed `--no-auto`. Either drop it, or set the agent's permissions to *allow* (not ask) the
+  you passed `--no-auto`. Either drop it, or set the agent's permissions to _allow_ (not ask) the
   actions the task needs.
 
 ## What the helper is doing (and the alternatives)

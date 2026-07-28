@@ -110,16 +110,36 @@ function parseArgs(argv) {
         process.stdout.write(headerComment());
         process.exit(0);
         break;
-      case "--brief": opts.brief = next(); break;
-      case "--cd": opts.cd = resolve(next()); break;
-      case "--model": opts.model = next(); break;
-      case "--effort": opts.effort = next(); break;
-      case "--max-turns": opts.maxTurns = next(); break;
-      case "--read-only": opts.autonomy = "read-only"; break;
-      case "--full-access": opts.autonomy = "full-access"; break;
-      case "--resume-last": opts.resumeLast = true; break;
-      case "--session": opts.session = next(); break;
-      case "--out-dir": opts.outDir = resolve(next()); break;
+      case "--brief":
+        opts.brief = next();
+        break;
+      case "--cd":
+        opts.cd = resolve(next());
+        break;
+      case "--model":
+        opts.model = next();
+        break;
+      case "--effort":
+        opts.effort = next();
+        break;
+      case "--max-turns":
+        opts.maxTurns = next();
+        break;
+      case "--read-only":
+        opts.autonomy = "read-only";
+        break;
+      case "--full-access":
+        opts.autonomy = "full-access";
+        break;
+      case "--resume-last":
+        opts.resumeLast = true;
+        break;
+      case "--session":
+        opts.session = next();
+        break;
+      case "--out-dir":
+        opts.outDir = resolve(next());
+        break;
       default:
         fail(`unknown option: ${arg}`);
     }
@@ -178,9 +198,15 @@ function grokVersion() {
     // git.exe and must NOT get this flag — see gitTouchedFiles.)
     // Prefer `grok version` (documented subcommand); fall back to `--version`.
     try {
-      return execFileSync("grok", ["version"], { encoding: "utf8", shell: process.platform === "win32" }).trim();
+      return execFileSync("grok", ["version"], {
+        encoding: "utf8",
+        shell: process.platform === "win32",
+      }).trim();
     } catch {
-      return execFileSync("grok", ["--version"], { encoding: "utf8", shell: process.platform === "win32" }).trim();
+      return execFileSync("grok", ["--version"], {
+        encoding: "utf8",
+        shell: process.platform === "win32",
+      }).trim();
     }
   } catch {
     return null;
@@ -193,7 +219,10 @@ function gitTouchedFiles(cwd) {
   // [] means git ran and the working tree is clean.
   try {
     const out = execFileSync("git", ["status", "--porcelain"], { cwd, encoding: "utf8" });
-    return out.split("\n").map((line) => line.trimEnd()).filter(Boolean);
+    return out
+      .split("\n")
+      .map((line) => line.trimEnd())
+      .filter(Boolean);
   } catch {
     return null;
   }
@@ -236,8 +265,10 @@ function buildArgv(opts, run) {
   const argv = [
     "--no-auto-update",
     "--no-alt-screen",
-    "--output-format", "streaming-json",
-    "--cwd", quotePath(opts.cd),
+    "--output-format",
+    "streaming-json",
+    "--cwd",
+    quotePath(opts.cd),
   ];
 
   if (opts.resumeLast) argv.push("--continue");
@@ -276,7 +307,10 @@ function makeEventScanner(onObject) {
         else if (ch === '"') inString = false;
         continue;
       }
-      if (ch === '"') { if (depth > 0) inString = true; continue; }
+      if (ch === '"') {
+        if (depth > 0) inString = true;
+        continue;
+      }
       if (ch === "{") {
         if (depth === 0) start = i;
         depth += 1;
@@ -285,7 +319,11 @@ function makeEventScanner(onObject) {
           depth -= 1;
           if (depth === 0 && start !== -1) {
             const slice = buf.slice(start, i + 1);
-            try { onObject(JSON.parse(slice)); } catch { /* ignore non-objects */ }
+            try {
+              onObject(JSON.parse(slice));
+            } catch {
+              /* ignore non-objects */
+            }
             start = -1;
           }
         }
@@ -324,7 +362,9 @@ function prepareRunDir(opts, brief) {
   const startedAt = new Date().toISOString();
   // Default the run dir to system temp so the repo under review stays pristine —
   // the touched-files report must show only Grok's edits, not relay's artifacts.
-  const outDir = opts.outDir || join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
+  const outDir =
+    opts.outDir ||
+    join(tmpdir(), "delegate-relay", `${basename(opts.cd) || "repo"}-${timestamp()}`);
   mkdirSync(outDir, { recursive: true });
   const run = {
     startedAt,
@@ -365,9 +405,19 @@ function makeResultWriter(opts, version, run) {
 }
 
 function reportUnavailable(writeResult, resultPath) {
-  const result = writeResult({ status: "grok_unavailable", exitCode: 127, signal: null, sessionId: null, finalMessage: "", usage: null, touchedFiles: null });
+  const result = writeResult({
+    status: "grok_unavailable",
+    exitCode: 127,
+    signal: null,
+    sessionId: null,
+    finalMessage: "",
+    usage: null,
+    touchedFiles: null,
+  });
   printSummary(result, resultPath);
-  process.stderr.write("relay: `grok` not found on PATH. Install it with `npm i -g @xai-official/grok` and run `grok login`.\n");
+  process.stderr.write(
+    "relay: `grok` not found on PATH. Install it with `npm i -g @xai-official/grok` and run `grok login`.\n",
+  );
   process.exit(127);
 }
 
@@ -458,7 +508,12 @@ function dispatchToGrok(opts, run, writeResult) {
       usage,
       touchedFiles,
       ...(opts.autonomy === "read-only"
-        ? { readOnlyViolation: beforeTree !== null && touchedFiles !== null && JSON.stringify(beforeTree) !== JSON.stringify(touchedFiles) }
+        ? {
+            readOnlyViolation:
+              beforeTree !== null &&
+              touchedFiles !== null &&
+              JSON.stringify(beforeTree) !== JSON.stringify(touchedFiles),
+          }
         : {}),
       ...(code === 0 ? {} : { stderrTail: stderrTail.slice(-20) }),
     });
@@ -487,9 +542,17 @@ function main() {
 function printSummary(result, resultPath) {
   const lines = [];
   lines.push("");
-  lines.push(`relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  grok ${result.grokVersion ?? "?"}`);
-  if (result.signal === "SIGKILL") lines.push("hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not a grok error; check host memory and re-dispatch, or split the task into smaller briefs.");
-  if (result.readOnlyViolation) lines.push("warning: this --read-only run modified the working tree — grok's read-only is best-effort; review the diff before trusting the run.");
+  lines.push(
+    `relay: ${result.status} (exit ${result.exitCode}${result.signal ? `, killed by ${result.signal}` : ""})  ·  grok ${result.grokVersion ?? "?"}`,
+  );
+  if (result.signal === "SIGKILL")
+    lines.push(
+      "hint: the host killed the process (commonly the OOM killer or a supervisor timeout) — this is not a grok error; check host memory and re-dispatch, or split the task into smaller briefs.",
+    );
+  if (result.readOnlyViolation)
+    lines.push(
+      "warning: this --read-only run modified the working tree — grok's read-only is best-effort; review the diff before trusting the run.",
+    );
   lines.push(`autonomy: ${result.autonomy}`);
   if (result.resumeLast) lines.push("mode: resumed most recent session (--continue)");
   else if (result.sessionId && result.status !== "grok_unavailable") {
@@ -497,7 +560,9 @@ function printSummary(result, resultPath) {
   }
   if (result.usage) {
     const u = result.usage;
-    lines.push(`tokens: ${u.total_tokens ?? "?"} total (in ${u.input_tokens ?? "?"}, out ${u.output_tokens ?? "?"})`);
+    lines.push(
+      `tokens: ${u.total_tokens ?? "?"} total (in ${u.input_tokens ?? "?"}, out ${u.output_tokens ?? "?"})`,
+    );
   }
   const touched = result.touchedFiles;
   if (touched === null) {
@@ -517,7 +582,9 @@ function printSummary(result, resultPath) {
   lines.push("--- end report ---");
   lines.push("");
   lines.push(`result: ${resultPath}`);
-  lines.push("relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.");
+  lines.push(
+    "relay does not commit. Review the diff, re-run the project gates yourself, then commit from the orchestrator.",
+  );
   process.stdout.write(`${lines.join("\n")}\n`);
 }
 

@@ -42,4 +42,4 @@ For every fenced block, run the [code-samples.md](code-samples.md) checklist: im
 
 ## Reporting
 
-Use the SKILL.md reporting format (Claim / Reality / Fix). Lead with the count: "N claims checked, M false, K unverifiable." End with a verdict — publish / fix first / do not publish — and at most three things the docs do well. A review that verifies 40 claims and finds 2 false is a *good* result; say so.
+Use the SKILL.md reporting format (Claim / Reality / Fix). Lead with the count: "N claims checked, M false, K unverifiable." End with a verdict — publish / fix first / do not publish — and at most three things the docs do well. A review that verifies 40 claims and finds 2 false is a _good_ result; say so.

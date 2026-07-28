@@ -30,18 +30,18 @@ path. See [`SKILL.md`](../SKILL.md) if you need to locate it.)
 
 Options:
 
-| Flag | Effect |
-| --- | --- |
-| `--brief <file>` | The brief. Omit it to read the brief from stdin (`node relay.mjs … < brief.txt`). |
-| `--cd <dir>` | Working root for Grok (default: current directory); passed as `--cwd`. |
-| `--model <name>` | Grok model (default: Grok's own configured default). |
-| `--effort <level>` | Reasoning effort for this run (`--effort`). |
-| `--max-turns <n>` | Maximum number of agent turns for this run (`--max-turns`). |
-| `--read-only` | Review/diagnosis intent (`--sandbox read-only --permission-mode plan`). **Best-effort, not enforced** — grok can still edit the tree headlessly. The relay snapshots `git status` before the run and sets `readOnlyViolation: true` in `result.json` if the tree changed. |
-| `--full-access` | Unrestricted auto-approve (`--always-approve --sandbox off`); opt-in. |
-| `--resume-last` | Continue the most recent Grok session for this cwd; send only the delta brief. |
-| `--session <id>` | Continue a specific session id; mutually exclusive with `--resume-last`. |
-| `--out-dir <dir>` | Where artifacts go (default: a fresh dir under the system temp dir). |
+| Flag               | Effect                                                                                                                                                                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--brief <file>`   | The brief. Omit it to read the brief from stdin (`node relay.mjs … < brief.txt`).                                                                                                                                                                                         |
+| `--cd <dir>`       | Working root for Grok (default: current directory); passed as `--cwd`.                                                                                                                                                                                                    |
+| `--model <name>`   | Grok model (default: Grok's own configured default).                                                                                                                                                                                                                      |
+| `--effort <level>` | Reasoning effort for this run (`--effort`).                                                                                                                                                                                                                               |
+| `--max-turns <n>`  | Maximum number of agent turns for this run (`--max-turns`).                                                                                                                                                                                                               |
+| `--read-only`      | Review/diagnosis intent (`--sandbox read-only --permission-mode plan`). **Best-effort, not enforced** — grok can still edit the tree headlessly. The relay snapshots `git status` before the run and sets `readOnlyViolation: true` in `result.json` if the tree changed. |
+| `--full-access`    | Unrestricted auto-approve (`--always-approve --sandbox off`); opt-in.                                                                                                                                                                                                     |
+| `--resume-last`    | Continue the most recent Grok session for this cwd; send only the delta brief.                                                                                                                                                                                            |
+| `--session <id>`   | Continue a specific session id; mutually exclusive with `--resume-last`.                                                                                                                                                                                                  |
+| `--out-dir <dir>`  | Where artifacts go (default: a fresh dir under the system temp dir).                                                                                                                                                                                                      |
 
 Default autonomy (neither `--read-only` nor `--full-access`) is **workspace-write**:
 `--always-approve --sandbox workspace`. Grok's native default is `ask`, which would hang a headless
@@ -83,10 +83,10 @@ The helper blocks until Grok finishes. Back it with whatever your orchestrator o
 - **Claude Code:** run the `Bash` call with `run_in_background: true`; you're notified on completion,
   then read `result.json`.
 - **Plain shell / other agents:** foreground for short tasks, or background and poll — `node relay.mjs
-  … &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
+… &` in bash/zsh (including Git Bash/WSL), or your shell's equivalent (`Start-Job` in PowerShell,
   `start /b` in cmd). A run is done when `result.json` exists with a `status`. **But** a pre-run usage
-  error (bad args, empty brief) exits with code 2 *before* writing any file — so check the exit code
-  too, don't only watch for the file. (A missing `grok` binary exits 127 but *does* write a
+  error (bad args, empty brief) exits with code 2 _before_ writing any file — so check the exit code
+  too, don't only watch for the file. (A missing `grok` binary exits 127 but _does_ write a
   `result.json` with status `grok_unavailable`.)
 
 Trust the working tree and the process state over any progress display. A run is finished when the

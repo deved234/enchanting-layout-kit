@@ -77,11 +77,11 @@ Declare only what is true — a false `custom_order_tables` declaration on postm
 
 ## Violation table for review
 
-| Grep hit | Why it fails |
-|---|---|
-| `get_post_meta( $order_id` | HPOS: order meta is not postmeta |
-| `post_type => 'shop_order'` (or `shop_order_refund`) | HPOS: orders are not posts |
-| `update_post_meta( $product_id` | Skips lookup tables, hooks, caches |
-| `wp_update_post` on order/product IDs | Same class of bypass |
-| `$wpdb` joins on `postmeta` for order data | HPOS + fragile schema coupling |
-| `posts_per_page => -1` over products/orders | Unbounded query, store-sized blast radius |
+| Grep hit                                             | Why it fails                              |
+| ---------------------------------------------------- | ----------------------------------------- |
+| `get_post_meta( $order_id`                           | HPOS: order meta is not postmeta          |
+| `post_type => 'shop_order'` (or `shop_order_refund`) | HPOS: orders are not posts                |
+| `update_post_meta( $product_id`                      | Skips lookup tables, hooks, caches        |
+| `wp_update_post` on order/product IDs                | Same class of bypass                      |
+| `$wpdb` joins on `postmeta` for order data           | HPOS + fragile schema coupling            |
+| `posts_per_page => -1` over products/orders          | Unbounded query, store-sized blast radius |
