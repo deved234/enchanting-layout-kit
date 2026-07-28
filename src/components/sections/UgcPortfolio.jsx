@@ -43,6 +43,13 @@ export function UgcPortfolio() {
           ))}
         </div>
 
+        <div className="mt-12 mb-20">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl md:text-3xl font-bold">ماذا يقول عملاؤنا</h3>
+          </div>
+          <TestimonialSlider items={TESTIMONIALS.filter((t) => t.service === "ugc")} />
+        </div>
+
         <div className="space-y-20">
           <div>
             <div className="text-center mb-10">
@@ -86,7 +93,7 @@ export function UgcPortfolio() {
               {PACKAGES.ugc
                 .filter((p) => p.type === "bundle")
                 .map((p, i) => {
-                  const saved = i === 0 ? "وفر 189 ر.س" : "وفر 389 ر.س";
+                  const saved = i === 0 ? "وفر $189" : "وفر $389";
                   return (
                     <PricingCard
                       key={p.id}
@@ -134,10 +141,6 @@ export function UgcPortfolio() {
                 ))}
             </div>
           </div>
-        </div>
-
-        <div className="mt-24">
-          <TestimonialSlider items={TESTIMONIALS.filter((t) => t.service === "ugc")} />
         </div>
       </div>
     </section>

@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 
+import "../lib/gsap";
 import appCss from "../styles.css?url";
 import { COMPANY } from "../config/company";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -125,11 +126,7 @@ export const Route = createRootRouteWithContext()({
             telephone: COMPANY.phone,
             contactType: "customer service",
           },
-          sameAs: [
-            COMPANY.social.instagram,
-            COMPANY.social.tiktok,
-            COMPANY.social.facebook,
-          ],
+          sameAs: [COMPANY.social.instagram, COMPANY.social.tiktok, COMPANY.social.facebook],
         }),
       },
     ],
@@ -168,6 +165,12 @@ function RootShell({ children }) {
         <HeadContent />
       </head>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-white focus:text-brand-pulse focus:rounded-xl focus:shadow-lg focus:border focus:border-brand-pulse/30 focus:text-sm focus:font-bold"
+        >
+          تخطى إلى المحتوى الرئيسي
+        </a>
         <CustomCursor />
         {children}
         <Scripts />

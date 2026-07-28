@@ -48,12 +48,13 @@ export function CustomCursor() {
     };
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted || (typeof window !== "undefined" && "ontouchstart" in window)) return null;
 
   return (
     <>
       <div
         ref={dotRef}
+        aria-hidden="true"
         className="fixed top-0 start-0 w-2 h-2 rounded-full pointer-events-none z-[9999] transition-opacity duration-300"
         style={{
           background: "linear-gradient(135deg, #db003e, #f94c10)",
@@ -63,6 +64,7 @@ export function CustomCursor() {
       />
       <div
         ref={ringRef}
+        aria-hidden="true"
         className="fixed top-0 start-0 w-8 h-8 rounded-full pointer-events-none z-[9999] transition-opacity duration-300"
         style={{
           border: "2px solid #db003e",

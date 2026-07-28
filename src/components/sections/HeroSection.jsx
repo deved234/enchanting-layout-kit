@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { gsap, useGSAP, ScrollTrigger } from "../../lib/gsap";
 import { Reveal } from "../shared/Reveal";
 import { Icon } from "../shared/Icon";
 import { Counter } from "../shared/Counter";
@@ -8,40 +9,90 @@ import { HERO_STATS } from "../../data/content";
 
 export function HeroSection() {
   const orbsRef = useRef(null);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const el = orbsRef.current;
-    if (!el) return;
-    const orbs = el.children;
-    const handleMouse = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      for (let i = 0; i < orbs.length; i++) {
-        const factor = (i + 1) * 15;
-        orbs[i].style.setProperty("transform", `translate(${x * factor}px, ${y * factor}px)`);
-      }
-    };
-    document.addEventListener("mousemove", handleMouse);
+  useGSAP(() => {
+    const orbs = orbsRef.current?.children;
+    if (!orbs) return;
 
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.to(orbs[0], {
+        y: -80,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.5,
+        },
+      });
+      gsap.to(orbs[1], {
+        y: -120,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 2,
+        },
+      });
+      gsap.to(orbs[2], {
+        y: -60,
+        x: -40,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+    return () => mm.revert();
+  }, []);
+
+  useGSAP(() => {
+    const el = headingRef.current;
+    if (!el) return;
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.fromTo(
+        el.children,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: "power3.out",
+          delay: 0.3,
+        },
+      );
+    });
+    return () => mm.revert();
+  }, []);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 200);
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouse);
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10 md:py-16 sm-hero-gradient">
+    <section
+      ref={sectionRef}
+      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10 md:py-16 sm-hero-gradient"
+    >
       <div className="container mx-auto px-5 md:px-8 relative z-10 text-center">
         <Reveal className="inline-flex items-center gap-2 px-4 py-2 sm-glass rounded-full text-brand-pulse mb-8 border border-brand-pulse/10">
           <Icon name="auto_awesome" className="!text-base" filled />
           <span className="text-sm font-semibold tracking-wider">نصنع مستقبلك الرقمي اليوم</span>
         </Reveal>
         <Reveal delay={120}>
-          <h1 className="text-[40px] md:text-[64px] font-bold leading-tight max-w-4xl mx-auto mb-8 tracking-tight">
+          <h1
+            ref={headingRef}
+            className="text-[40px] md:text-[64px] font-bold leading-tight max-w-4xl mx-auto mb-8 tracking-tight"
+          >
             <TextReveal text="نحول خيالك إلى" delay={120} />{" "}
             <span className="sm-animated-gradient inline-block">واقع ملموس</span>
           </h1>

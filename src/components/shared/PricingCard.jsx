@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { gsap, useGSAP } from "../../lib/gsap";
 import { Icon } from "./Icon";
 import { Reveal } from "./Reveal";
 import { MagneticButton } from "./MagneticButton";
@@ -15,6 +17,48 @@ export function PricingCard({
   badge,
   duration,
 }) {
+  const cardRef = useRef(null);
+
+  useGSAP(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const handleMove = (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        gsap.to(card, {
+          rotationX: -y * 4,
+          rotationY: x * 4,
+          transformPerspective: 1000,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+      };
+
+      const handleLeave = () => {
+        gsap.to(card, {
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.4,
+          ease: "power2.out",
+        });
+      };
+
+      card.addEventListener("mousemove", handleMove);
+      card.addEventListener("mouseleave", handleLeave);
+
+      return () => {
+        card.removeEventListener("mousemove", handleMove);
+        card.removeEventListener("mouseleave", handleLeave);
+      };
+    });
+
+    return () => mm.revert();
+  }, []);
+
   const isPulse = accent === "pulse";
   const accentBg = isPulse ? "bg-brand-pulse/10" : "bg-brand-motion/10";
   const accentDot = isPulse ? "bg-brand-pulse" : "bg-brand-motion";
@@ -24,12 +68,12 @@ export function PricingCard({
   else priceClass += " text-brand-motion";
   if (custom) priceClass = "text-2xl text-brand-muted font-bold";
 
-  const btnBase = "w-full py-3.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-center text-sm";
+  const btnBase =
+    "w-full py-3.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 active:scale-95 text-center text-sm";
   let btnClass = `${btnBase} border-2`;
   if (isPulse)
     btnClass += " border-brand-pulse text-brand-pulse hover:bg-brand-pulse hover:text-white";
-  else
-    btnClass += " border-brand-motion text-brand-motion hover:bg-brand-motion hover:text-white";
+  else btnClass += " border-brand-motion text-brand-motion hover:bg-brand-motion hover:text-white";
   if (custom)
     btnClass = `${btnBase} border-2 border-brand-ink/30 text-brand-muted hover:bg-brand-ink hover:text-white hover:border-brand-ink`;
 
@@ -39,7 +83,7 @@ export function PricingCard({
 
   return (
     <Reveal delay={delay}>
-      <div className={containerClass}>
+      <div ref={cardRef} className={containerClass} style={{ transformStyle: "preserve-3d" }}>
         {badge && (
           <div className="flex justify-center mb-4">
             <span className="inline-flex items-center gap-1 bg-gradient-to-r from-brand-pulse to-brand-pulse/80 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg shadow-brand-pulse/20">
@@ -69,11 +113,17 @@ export function PricingCard({
         ) : (
           <ul className="space-y-2 mb-6 grow">
             {features.map((f) => (
-              <li key={f} className="flex items-start gap-2 text-xs text-brand-muted leading-relaxed">
+              <li
+                key={f}
+                className="flex items-start gap-2 text-xs text-brand-muted leading-relaxed"
+              >
                 <span
                   className={`w-4 h-4 rounded-full ${accentBg} flex items-center justify-center shrink-0 mt-0.5`}
                 >
-                  <Icon name="done" className={`!text-xs ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`} />
+                  <Icon
+                    name="done"
+                    className={`!text-xs ${isPulse ? "text-brand-pulse" : "text-brand-motion"}`}
+                  />
                 </span>
                 {f}
               </li>

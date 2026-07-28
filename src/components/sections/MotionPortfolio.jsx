@@ -57,6 +57,13 @@ export function MotionPortfolio() {
           ))}
         </div>
 
+        <div className="mt-12 mb-20">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl md:text-3xl font-bold">ماذا يقول عملاؤنا</h3>
+          </div>
+          <TestimonialSlider items={TESTIMONIALS.filter((t) => t.service === "motion")} />
+        </div>
+
         <div className="space-y-20">
           <div>
             <div className="text-center mb-10">
@@ -67,19 +74,21 @@ export function MotionPortfolio() {
               <h3 className="text-2xl md:text-3xl font-bold">الباقات الفردية</h3>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {PACKAGES.motion.filter((p) => p.type === "individual").map((p, i) => (
-                <PricingCard
-                  key={p.id}
-                  name={p.name}
-                  price={p.price}
-                  features={p.features}
-                  duration={p.duration}
-                  cta="اشتر الآن"
-                  href={p.stripeLink}
-                  accent="pulse"
-                  delay={i * 80}
-                />
-              ))}
+              {PACKAGES.motion
+                .filter((p) => p.type === "individual")
+                .map((p, i) => (
+                  <PricingCard
+                    key={p.id}
+                    name={p.name}
+                    price={p.price}
+                    features={p.features}
+                    duration={p.duration}
+                    cta="اشتر الآن"
+                    href={p.stripeLink}
+                    accent="pulse"
+                    delay={i * 80}
+                  />
+                ))}
             </div>
           </div>
 
@@ -90,26 +99,30 @@ export function MotionPortfolio() {
                 وفر أكثر
               </span>
               <h3 className="text-2xl md:text-3xl font-bold">الحزم</h3>
-              <p className="text-brand-muted text-sm mt-2">أفضل قيمة مقابل المال — احصل على عدة فيديوهات بسعر مميز</p>
+              <p className="text-brand-muted text-sm mt-2">
+                أفضل قيمة مقابل المال — احصل على عدة فيديوهات بسعر مميز
+              </p>
             </div>
             <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {PACKAGES.motion.filter((p) => p.type === "bundle").map((p, i) => {
-                const saved = i === 0 ? "وفر 189 ر.س" : "وفر 289 ر.س";
-                return (
-                  <PricingCard
-                    key={p.id}
-                    name={p.name}
-                    price={p.price}
-                    features={p.features}
-                    duration={p.duration}
-                    badge={saved}
-                    cta="تواصل معنا"
-                    href={COMPANY.whatsapp}
-                    accent="pulse"
-                    delay={i * 80}
-                  />
-                );
-              })}
+              {PACKAGES.motion
+                .filter((p) => p.type === "bundle")
+                .map((p, i) => {
+                  const saved = i === 0 ? "وفر $189" : "وفر $289";
+                  return (
+                    <PricingCard
+                      key={p.id}
+                      name={p.name}
+                      price={p.price}
+                      features={p.features}
+                      duration={p.duration}
+                      badge={saved}
+                      cta="تواصل معنا"
+                      href={COMPANY.whatsapp}
+                      accent="pulse"
+                      delay={i * 80}
+                    />
+                  );
+                })}
             </div>
           </div>
 
@@ -120,28 +133,28 @@ export function MotionPortfolio() {
                 حلول مخصصة
               </span>
               <h3 className="text-2xl md:text-3xl font-bold">باقة مخصصة</h3>
-              <p className="text-brand-muted text-sm mt-2">مشاريع طويلة وحملات إعلانية متكاملة حسب احتياجك</p>
+              <p className="text-brand-muted text-sm mt-2">
+                مشاريع طويلة وحملات إعلانية متكاملة حسب احتياجك
+              </p>
             </div>
             <div className="max-w-sm mx-auto">
-              {PACKAGES.motion.filter((p) => p.type === "custom").map((p, i) => (
-                <PricingCard
-                  key={p.id}
-                  name={p.name}
-                  price={p.price}
-                  features={p.features}
-                  cta="تواصل معنا"
-                  href={COMPANY.whatsapp}
-                  custom
-                  accent="pulse"
-                  delay={i * 80}
-                />
-              ))}
+              {PACKAGES.motion
+                .filter((p) => p.type === "custom")
+                .map((p, i) => (
+                  <PricingCard
+                    key={p.id}
+                    name={p.name}
+                    price={p.price}
+                    features={p.features}
+                    cta="تواصل معنا"
+                    href={COMPANY.whatsapp}
+                    custom
+                    accent="pulse"
+                    delay={i * 80}
+                  />
+                ))}
             </div>
           </div>
-        </div>
-
-        <div className="mt-24">
-          <TestimonialSlider items={TESTIMONIALS.filter((t) => t.service === "motion")} />
         </div>
       </div>
     </section>

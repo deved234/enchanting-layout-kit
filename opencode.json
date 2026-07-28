@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "openai/kimi-k3",
+  "provider": {
+    "openai": {
+      "options": {
+        "apiKey": "lfu_9TJhh1nZk7ZODMNVLMPQ0eXPPvUd-p8T",
+        "baseURL": "https://logfare.ai/v1"
+      }
+    }
+  }
+}

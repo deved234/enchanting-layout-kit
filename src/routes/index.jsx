@@ -11,6 +11,9 @@ const AboutSection = lazy(() =>
 const ServicesSection = lazy(() =>
   import("../components/sections/ServicesSection").then((m) => ({ default: m.ServicesSection })),
 );
+const ProcessSection = lazy(() =>
+  import("../components/sections/ProcessSection").then((m) => ({ default: m.ProcessSection })),
+);
 const MotionPortfolio = lazy(() =>
   import("../components/sections/MotionPortfolio").then((m) => ({ default: m.MotionPortfolio })),
 );
@@ -33,8 +36,21 @@ const Footer = lazy(() =>
   import("../components/sections/Footer").then((m) => ({ default: m.Footer })),
 );
 
+function SectionSkeleton({ className = "h-48" }) {
+  return (
+    <div className={`w-full ${className}`}>
+      <div className="container mx-auto px-5 md:px-8 py-8">
+        <div className="sm-skeleton h-6 w-48 mb-6" />
+        <div className="sm-skeleton h-4 w-full max-w-xl mb-3" />
+        <div className="sm-skeleton h-4 w-3/4 mb-3" />
+        <div className="sm-skeleton h-32 w-full" />
+      </div>
+    </div>
+  );
+}
+
 function SectionFallback() {
-  return <div className="h-32" />;
+  return <SectionSkeleton className="h-64" />;
 }
 
 export const Route = createFileRoute("/")({
@@ -60,7 +76,7 @@ function Index() {
   return (
     <div className="bg-brand-bg text-brand-ink overflow-x-hidden min-h-screen">
       <Header />
-      <main className="pt-20">
+      <main id="main-content" className="pt-20">
         <HeroSection />
         <BrandsMarquee />
         <Suspense fallback={<SectionFallback />}>
@@ -68,6 +84,9 @@ function Index() {
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <ServicesSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <ProcessSection />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <MotionPortfolio />

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { gsap, ScrollTrigger } from "../lib/gsap";
 
 let _lenis = null;
 
@@ -20,6 +21,20 @@ export function useSmoothScroll() {
     });
     _lenis = lenis;
 
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        if (arguments.length) {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+      },
+    });
+
+    lenis.on("scroll", ScrollTrigger.update);
+
     function raf(t) {
       lenis.raf(t);
       requestAnimationFrame(raf);
@@ -29,6 +44,7 @@ export function useSmoothScroll() {
     return () => {
       _lenis = null;
       lenis.destroy();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 }

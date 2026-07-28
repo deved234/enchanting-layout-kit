@@ -11,7 +11,7 @@
   --color-brand-bg: #fdf8fb;
   --color-brand-surface: #f7f2f5;
   --color-brand-surface-2: #ebe7ea;
-  --color-brand-muted: #5d3f40;
+  --color-brand-muted: #3a2021;
   --color-brand-outline: #e6bcbd;
   --font-arabic: "IBM Plex Sans Arabic", sans-serif;
 }
@@ -187,7 +187,7 @@ html[dir="rtl"] body {
   transform-style: preserve-3d;
 }
 .sm-tilt:hover {
-  transform: perspective(1000px) rotateX(4deg) rotateY(-6deg) translateY(-8px);
+  transform: perspective(1000px) rotateX(4deg) rotateY(6deg) translateY(-8px);
   box-shadow: 0 40px 80px -20px rgba(219, 0, 62, 0.25);
 }
 
@@ -284,6 +284,44 @@ html[dir="rtl"] body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #db003e;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@keyframes sm-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.sm-skeleton {
+  background: linear-gradient(90deg, #ebe7ea 25%, #f7f2f5 50%, #ebe7ea 75%);
+  background-size: 200% 100%;
+  animation: sm-shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
 }
 
 .material-symbols-outlined {

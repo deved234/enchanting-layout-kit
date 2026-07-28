@@ -1,22 +1,90 @@
 export const PORTFOLIO_VIDEOS = {
   motion: [
-    // Landscape (عرضي)
-    { id: "motion-landscape-1", provider: "youtube", videoId: "wRxSd4z_DO0", orientation: "landscape", title: "مشروع موشن جرافيك — عرضي" },
-    { id: "motion-landscape-2", provider: "youtube", videoId: "TiIKyfynY0w", orientation: "landscape", title: "مشروع موشن جرافيك — عرضي" },
-    { id: "motion-landscape-3", provider: "youtube", videoId: "3S9V49N2tdw", orientation: "landscape", title: "مشروع موشن جرافيك — عرضي" },
-    { id: "motion-landscape-4", provider: "youtube", videoId: "y2BwJAmwpEA", orientation: "landscape", title: "مشروع موشن جرافيك — عرضي" },
-    // Portrait (طولي)
-    { id: "motion-portrait-1", provider: "youtube", videoId: "P7LFpnOtaN8", orientation: "portrait", title: "مشروع موشن جرافيك — طولي" },
-    { id: "motion-portrait-2", provider: "youtube", videoId: "UGe_ziNiwjM", orientation: "portrait", title: "مشروع موشن جرافيك — طولي" },
-    { id: "motion-portrait-3", provider: "youtube", videoId: "Y6TMpCrAv9c", orientation: "portrait", title: "مشروع موشن جرافيك — طولي" },
-    { id: "motion-portrait-4", provider: "youtube", videoId: "dYyfYfBtVsY", orientation: "portrait", title: "مشروع موشن جرافيك — طولي" },
+    {
+      id: "motion-landscape-1",
+      provider: "youtube",
+      videoId: "wRxSd4z_DO0",
+      orientation: "landscape",
+      title: "إعلان متجر إلكتروني - موشن جرافيك تسويقي",
+    },
+    {
+      id: "motion-landscape-2",
+      provider: "youtube",
+      videoId: "TiIKyfynY0w",
+      orientation: "landscape",
+      title: "فيديو ترويجي لتطبيق جوال - موشن جرافيك",
+    },
+    {
+      id: "motion-landscape-3",
+      provider: "youtube",
+      videoId: "3S9V49N2tdw",
+      orientation: "landscape",
+      title: "إعلان منتج رقمي - موشن جرافيك احترافي",
+    },
+    {
+      id: "motion-landscape-4",
+      provider: "youtube",
+      videoId: "y2BwJAmwpEA",
+      orientation: "landscape",
+      title: "فيديو تعريفي لخدمة استشارية - موشن جرافيك",
+    },
+    {
+      id: "motion-portrait-1",
+      provider: "youtube",
+      videoId: "P7LFpnOtaN8",
+      orientation: "portrait",
+      title: "إعلان سناب شات - موشن جرافيك طولي",
+    },
+    {
+      id: "motion-portrait-2",
+      provider: "youtube",
+      videoId: "UGe_ziNiwjM",
+      orientation: "portrait",
+      title: "إعلان تيك توك - موشن جرافيك طويل",
+    },
+    {
+      id: "motion-portrait-3",
+      provider: "youtube",
+      videoId: "Y6TMpCrAv9c",
+      orientation: "portrait",
+      title: "فيديو منتج قصير - موشن جرافيك طولي",
+    },
+    {
+      id: "motion-portrait-4",
+      provider: "youtube",
+      videoId: "dYyfYfBtVsY",
+      orientation: "portrait",
+      title: "إعلان تفاعلي - موشن جرافيك لمنصة رقمية",
+    },
   ],
   ugc: [
-    // Portrait — زيد
-    { id: "ugc-portrait-1", provider: "youtube", videoId: "3pfa503CeYE", orientation: "portrait", title: "UGC — زيد" },
-    { id: "ugc-portrait-2", provider: "youtube", videoId: "ZnLupJQg0oU", orientation: "portrait", title: "UGC — زيد" },
-    // Landscape — وليد
-    { id: "ugc-landscape-1", provider: "youtube", videoId: "ME1ggZjbFfg", orientation: "landscape", title: "UGC — وليد" },
-    { id: "ugc-landscape-2", provider: "youtube", videoId: "M7fPvZyTqRg", orientation: "landscape", title: "UGC — وليد" },
+    {
+      id: "ugc-portrait-1",
+      provider: "youtube",
+      videoId: "3pfa503CeYE",
+      orientation: "portrait",
+      title: "مراجعة تطبيق جوال - UGC مع زيد",
+    },
+    {
+      id: "ugc-portrait-2",
+      provider: "youtube",
+      videoId: "ZnLupJQg0oU",
+      orientation: "portrait",
+      title: "تجربة مستخدم لمنصة تعليمية - UGC مع زيد",
+    },
+    {
+      id: "ugc-landscape-1",
+      provider: "youtube",
+      videoId: "ME1ggZjbFfg",
+      orientation: "landscape",
+      title: "شهادة عميل - UGC مع وليد",
+    },
+    {
+      id: "ugc-landscape-2",
+      provider: "youtube",
+      videoId: "M7fPvZyTqRg",
+      orientation: "landscape",
+      title: "مراجعة خدمة رقمية - UGC مع وليد",
+    },
   ],
 };
