@@ -29,7 +29,7 @@ export function MotionPortfolio() {
         <div className="mb-16 text-right">
           <span className="text-brand-pulse font-bold block mb-2">معرض الأعمال</span>
           <div className="flex items-center gap-3 md:gap-4 flex-nowrap">
-            <h2 className="text-3xl md:text-4xl font-bold shrink-0">موشن جرافيك احترافي</h2>
+            <h2 className="text-2xl md:text-4xl font-bold shrink-0">موشن جرافيك احترافي</h2>
             <div className="flex gap-1.5 md:gap-2 flex-nowrap">
               <div className="flex items-center gap-1.5 bg-brand-pulse/10 text-brand-pulse px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">
                 <Icon name="check_circle" filled className="!text-sm" />
