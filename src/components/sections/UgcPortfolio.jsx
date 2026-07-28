@@ -20,9 +20,9 @@ export function UgcPortfolio() {
       <div className="container mx-auto px-5 md:px-8">
         <div className="mb-16 text-right">
           <span className="text-brand-motion font-bold block mb-2">محتوى حقيقي</span>
-          <div className="flex items-center gap-3 md:gap-4 flex-nowrap">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
             <h2 className="text-2xl md:text-4xl font-bold shrink-0">فيديوهات UGC تسويقية</h2>
-            <div className="flex items-center gap-1.5 bg-brand-motion/10 text-brand-motion px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">
+            <div className="flex items-center gap-1.5 bg-brand-motion/10 text-brand-motion px-3 py-1.5 rounded-full text-xs font-semibold w-fit whitespace-nowrap">
               <Icon name="star" filled className="!text-sm" />
               صناع محتوى محترفين
             </div>
