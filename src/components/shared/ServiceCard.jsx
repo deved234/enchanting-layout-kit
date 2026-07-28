@@ -64,7 +64,7 @@ export function ServiceCard({ service, image, delay = 0 }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         </div>
         <div className="relative z-10 text-white" style={{ transform: "translateZ(30px)" }}>
-          <h3 className="text-3xl font-bold mb-2">{service.title}</h3>
+          <h3 className="text-2xl md:text-3xl font-bold mb-2">{service.title}</h3>
           <p className="opacity-80 mb-4">{service.description}</p>
           <div className="inline-flex items-center gap-2 text-brand-flash group-hover:-translate-x-2 transition-transform">
             <span>استكشف المشاريع</span>

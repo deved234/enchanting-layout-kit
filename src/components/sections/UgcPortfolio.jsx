@@ -21,7 +21,7 @@ export function UgcPortfolio() {
         <div className="mb-16 text-right">
           <span className="text-brand-motion font-bold block mb-2">محتوى حقيقي</span>
           <div className="flex items-center gap-3 md:gap-4 flex-nowrap">
-            <h2 className="text-3xl md:text-4xl font-bold shrink-0">فيديوهات UGC تسويقية</h2>
+            <h2 className="text-2xl md:text-4xl font-bold shrink-0">فيديوهات UGC تسويقية</h2>
             <div className="flex items-center gap-1.5 bg-brand-motion/10 text-brand-motion px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">
               <Icon name="star" filled className="!text-sm" />
               صناع محتوى محترفين

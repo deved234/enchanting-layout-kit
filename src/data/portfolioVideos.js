@@ -31,7 +31,7 @@ export const PORTFOLIO_VIDEOS = {
     {
       id: "motion-portrait-1",
       provider: "youtube",
-      videoId: "P7LFpnOtaN8",
+      videoId: "128qgdDJ5go",
       orientation: "portrait",
       title: "إعلان سناب شات - موشن جرافيك طولي",
     },
