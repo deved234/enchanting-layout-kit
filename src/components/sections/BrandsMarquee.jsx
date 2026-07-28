@@ -5,8 +5,9 @@ import { BRANDS } from "../../data/brands";
 
 function BrandCard({ image, id }) {
   return (
-    <div className="w-28 md:w-36 h-16 md:h-20 flex items-center justify-center px-4 rounded-xl bg-white/60 border border-brand-outline/20 shrink-0">
-      <img src={image} alt="" className="max-w-full max-h-full object-contain" loading="lazy" />
+    <div className="flex items-center gap-3 w-36 md:w-44 h-16 md:h-20 px-4 rounded-xl bg-white/60 border border-brand-outline/20 shrink-0">
+      <span className="text-xs font-bold text-brand-muted/40 tabular-nums shrink-0">0{id}</span>
+      <img src={image} alt="" className="max-w-full max-h-full object-contain flex-1 min-w-0" loading="lazy" />
     </div>
   );
 }
@@ -14,8 +15,8 @@ function BrandCard({ image, id }) {
 export function BrandsMarquee() {
   const trackRef = useRef(null);
   const marqueeRef = useRef(null);
-
   const brands = BRANDS.map((b) => <BrandCard key={b.id} image={b.image} id={b.id} />);
+  const firstClone = <BrandCard key="clone" image={BRANDS[0].image} id={BRANDS[0].id} />;
 
   useGSAP(() => {
     const track = trackRef.current;
@@ -23,26 +24,41 @@ export function BrandsMarquee() {
 
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const dur = 30;
-      const tween = gsap.to(track, {
-        xPercent: -50,
-        repeat: -1,
-        duration: dur,
-        ease: "none",
-      });
+      let tween = null;
+      let el = marqueeRef.current;
 
-      const el = marqueeRef.current;
-      if (el) {
-        el.addEventListener("mouseenter", () => tween.pause());
-        el.addEventListener("mouseleave", () => tween.play());
+      function startAnim() {
+        if (tween) tween.kill();
+
+        const totalWidth = track.scrollWidth - (track.lastElementChild?.scrollWidth || 0);
+        if (totalWidth <= 0) return;
+
+        const dur = Math.max(20, totalWidth / 50);
+
+        tween = gsap.to(track, {
+          x: -totalWidth,
+          duration: dur,
+          ease: "none",
+          repeat: -1,
+          onRepeat() {
+            gsap.set(track, { x: 0 });
+          },
+        });
+
+        if (el) {
+          el.onmouseenter = () => tween.pause();
+          el.onmouseleave = () => tween.play();
+        }
       }
 
+      startAnim();
+
+      const ro = new ResizeObserver(() => startAnim());
+      ro.observe(el || track);
+
       return () => {
-        tween.kill();
-        if (el) {
-          el.removeEventListener("mouseenter", () => tween.pause());
-          el.removeEventListener("mouseleave", () => tween.play());
-        }
+        ro.disconnect();
+        if (tween) tween.kill();
       };
     });
 
@@ -66,7 +82,7 @@ export function BrandsMarquee() {
           style={{ display: "flex", width: "max-content" }}
         >
           <div className="flex gap-8 md:gap-12">{brands}</div>
-          <div className="flex gap-8 md:gap-12">{brands}</div>
+          <div className="flex gap-8 md:gap-12">{firstClone}</div>
         </div>
       </div>
     </section>
