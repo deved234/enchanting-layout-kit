@@ -7,10 +7,16 @@ import { MagneticButton } from "../shared/MagneticButton";
 import { TextReveal } from "../shared/TextReveal";
 import { HERO_STATS } from "../../data/content";
 
+const HERO_VIDEO =
+  "https://res.cloudinary.com/lonhworm/video/upload/v1788554147/%D8%B5%D8%A7%D8%AF_%D9%85%D9%8A%D8%AF%D9%8A%D8%A7.mp4";
+const HERO_POSTER =
+  "https://res.cloudinary.com/lonhworm/video/upload/so_0/v1788554147/%D8%B5%D8%A7%D8%AF_%D9%85%D9%8A%D8%AF%D9%8A%D8%A7.jpg";
+
 export function HeroSection() {
   const orbsRef = useRef(null);
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useGSAP(() => {
@@ -103,6 +109,40 @@ export function HeroSection() {
             الأنظار، من الموشن جرافيك الاحترافي إلى فيديوهات الـ UGC التي تلامس القلوب.
           </p>
         </Reveal>
+        <Reveal delay={300} className="max-w-4xl mx-auto mb-12">
+          <p className="text-xl md:text-2xl font-bold mb-6">تعرف علينا أكثر</p>
+          <div className="relative rounded-2xl overflow-hidden sm-soft-shadow border-4 border-white bg-black aspect-video group">
+            {videoPlaying ? (
+              <video
+                className="w-full h-full"
+                src={HERO_VIDEO}
+                poster={HERO_POSTER}
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <button
+                onClick={() => setVideoPlaying(true)}
+                aria-label="تشغيل الفيديو"
+                className="absolute inset-0 w-full h-full cursor-pointer"
+              >
+                <img
+                  loading="lazy"
+                  alt="فيديو صاد ميديا التعريفي"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  src={HERO_POSTER}
+                />
+                <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 flex items-center justify-center transition-opacity group-hover:bg-black/40">
+                  <span className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:bg-brand-pulse/80 transition-all duration-300">
+                    <Icon name="play_arrow" filled className="text-white !text-5xl ms-1" />
+                  </span>
+                </span>
+              </button>
+            )}
+          </div>
+        </Reveal>
         <Reveal delay={360} className="flex flex-col md:flex-row items-center justify-center gap-4">
           <MagneticButton
             className="sm-shine w-full md:w-auto px-10 py-5 sm-primary-gradient text-white font-bold rounded-xl text-xl shadow-xl hover:shadow-brand-pulse/30 transition-all flex items-center justify-center gap-2"
@@ -137,7 +177,6 @@ export function HeroSection() {
           ))}
         </Reveal>
       </div>
-      
     </section>
   );
 }
