@@ -81,8 +81,11 @@ export function Footer() {
           ))}
         </div>
       </div>
-      <div className="max-w-[1280px] mx-auto mt-8 pt-6 border-t border-brand-outline/30 text-center text-brand-muted text-sm">
-        © {year} {COMPANY.name}. جميع الحقوق محفوظة.
+      <div className="max-w-[1280px] mx-auto mt-8 pt-6 border-t border-brand-outline/30 text-center text-brand-muted text-sm space-y-2">
+        <p>
+          © {year} {COMPANY.name}. جميع الحقوق محفوظة.
+        </p>
+        <p>تتبع هذه المنصة لشركة مالك الفودعي ذ.م.م الأمريكية (Malek Al-fawdaeai LLC).</p>
       </div>
     </footer>
   );
