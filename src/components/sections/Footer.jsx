@@ -85,7 +85,6 @@ export function Footer() {
         <p>
           © {year} {COMPANY.name}. جميع الحقوق محفوظة.
         </p>
-        <p>تتبع هذه المنصة لشركة مالك الفودعي ذ.م.م الأمريكية (Malek Al-fawdaeai LLC).</p>
       </div>
     </footer>
   );
