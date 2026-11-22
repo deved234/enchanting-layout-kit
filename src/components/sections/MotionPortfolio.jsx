@@ -35,10 +35,7 @@ export function MotionPortfolio() {
                 <Icon name="check_circle" filled className="!text-sm" />
                 تعديلات مفتوحة
               </div>
-              <div className="flex items-center gap-1.5 bg-brand-motion/10 text-brand-motion px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">
-                <Icon name="check_circle" filled className="!text-sm" />
-                جودة 4K
-              </div>
+             
             </div>
           </div>
         </div>
